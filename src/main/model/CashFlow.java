@@ -41,7 +41,7 @@ public class CashFlow {
     // REQUIRES: inputted account must exist in the ListOfAccount
     // MODIFIES: this
     // EFFECTS: changes the account of the CashFlow object to inputted account
-    public void setAccount() {
+    public void setAccount(String account) {
         // STUB
     }
 
