@@ -4,6 +4,7 @@ package model;
 // date, time, and description
 public class CashFlow {
     private String status;
+    private String account;
     private String category;
     private String date;
     private String time;
@@ -20,6 +21,7 @@ public class CashFlow {
     // and description
     public CashFlow(String status, String account, String category, String date, String time, String description) {
         this.status = status;
+        this.account = account;
         this.category = category;
         this.date = date;
         this.time = time;
@@ -42,7 +44,7 @@ public class CashFlow {
     // MODIFIES: this
     // EFFECTS: changes the account of the CashFlow object to inputted account
     public void setAccount(String account) {
-        // STUB
+        this.account = account;
     }
 
     // REQUIRES: inputted category must exist in the ListOfCategory
@@ -82,7 +84,7 @@ public class CashFlow {
 
     // EFFECTS: returns the account of the CashFlow object
     public String getAccount() {
-        return ""; // STUB
+        return this.account;
     }
 
     // EFFECTS: returns the category of the CashFlow object
