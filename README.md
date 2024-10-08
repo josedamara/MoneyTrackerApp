@@ -10,7 +10,7 @@ This project is based on my habit of tracking my cash flow using a digital appli
 
 ## User Stories
 
-- As a user, I want to be able to create a cash flow and add it to my cash flow collection and specify the status (credit or debit), the category, the date, the time, and the description.
+- As a user, I want to be able to create a cash flow and add it to my cash flow collection and specify the status (credit or debit), the account, the category, the date, the time, and the description.
 - As a user, I want to be able to see the list of cash flows for each month listed in sequence to one another.
 - As a user, I want to be able to select a cash flow and edit any  of the status, the category, the date, the time, and the description.
 - As a user, I want to be able to delete a cash flow from the list of cash flows.
