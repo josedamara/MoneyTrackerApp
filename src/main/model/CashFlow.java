@@ -14,7 +14,8 @@ public class CashFlow {
     // follow the constraint of specific month. 
     // 00 <= hour <= 23, 00 <= minutes <= 59.
     // category must exist in the ListOfCategory.
-    // EFFECTS: constructs a CashFlow object with a specified status,
+    // account must exist in the ListOfAccount
+    // EFFECTS: constructs a CashFlow object with a specified status, account,
     // category, date (formatted as YYYY/MM/DD), time (formatted as HH:MM),
     // and description
     public CashFlow(String status, String category, String date, String time, String description) {
@@ -35,6 +36,13 @@ public class CashFlow {
     // EFFECTS: changes the status of the CashFlow object to debit
     public void setAsDebit() {
         this.status = "debit";
+    }
+
+    // REQUIRES: inputted account must exist in the ListOfAccount
+    // MODIFIES: this
+    // EFFECTS: changes the account of the CashFlow object to inputted account
+    public void setAccount() {
+        // STUB
     }
 
     // REQUIRES: inputted category must exist in the ListOfCategory
@@ -70,6 +78,11 @@ public class CashFlow {
     // EFFECTS: returns the status of the CashFlow object
     public String getStatus() {
         return this.status;
+    }
+
+    // EFFECTS: returns the account of the CashFlow object
+    public String getAccount() {
+        return ""; // STUB
     }
 
     // EFFECTS: returns the category of the CashFlow object
