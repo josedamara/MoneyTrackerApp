@@ -18,7 +18,7 @@ public class CashFlow {
     // EFFECTS: constructs a CashFlow object with a specified status, account,
     // category, date (formatted as YYYY/MM/DD), time (formatted as HH:MM),
     // and description
-    public CashFlow(String status, String category, String date, String time, String description) {
+    public CashFlow(String status, String account, String category, String date, String time, String description) {
         this.status = status;
         this.category = category;
         this.date = date;
