@@ -17,7 +17,7 @@ public class CashFlowTest {
     @Test
     void testConstructor() {
         assertEquals(testCashFlow.getStatus(), "credit");
-        assertEquals(testCashFlow.getCategory(), "sport");
+        assertEquals(testCashFlow.getCategory(), "Sport");
         assertEquals(testCashFlow.getDate(), "2024/01/01");
         assertEquals(testCashFlow.getTime(), "22:40");
         assertEquals(testCashFlow.getDescription(), "Buying a new basketball");
