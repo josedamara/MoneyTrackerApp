@@ -12,17 +12,23 @@ public class MoneySummaryTest {
     private CashFlow cf1;
     private CashFlow cf2;
     private CashFlow cf3;
+    private CashFlow cf4;
+    private CashFlow cf5;
     
 
     @BeforeEach
     void runBefore() {
         testMoneySummary = new MoneySummary();
         cf1 = new CashFlow("credit", "ScotiaBank", "Sport", "2024/01/01",
-        "22:40", "Buying a new basketball");
+        "22:40", "Buying a new basketball", 50);
         cf2 = new CashFlow("debit", "RBC", "Salary", "2024/02/20",
-        "10:00", "Monthly salary");
+        "10:00", "Monthly salary", 5000);
         cf3 = new CashFlow("credit", "ScotiaBank", "Hobby", "2020/05/21",
-        "18:00", "Buying a new guitar");
+        "18:00", "Buying a new guitar", 500);
+        cf4 = new CashFlow("debit", "TD", "Parents", "2023/02/21",
+        "21:00", "Sent from parents", 1500);
+        cf5 = new CashFlow("debit", "ScotiaBank", "Sport", "2023/11/19",
+        "12:00", "Basketball competition prizepool", 2000);
     }
 
     @Test
@@ -43,7 +49,7 @@ public class MoneySummaryTest {
     @Test
     void testAddMultipleCashFlow() {
         addMultipleCashFlow();
-        assertEquals(testMoneySummary.getCashflows().size(), 3);
+        assertEquals(testMoneySummary.getCashflows().size(), 5);
         assertEquals(testMoneySummary.getCashflows().get(0), cf1);
         assertEquals(testMoneySummary.getCashflows().get(1), cf2);
     }
@@ -59,9 +65,9 @@ public class MoneySummaryTest {
     @Test
     void testDeleteMultipleCashFlow() {
         addMultipleCashFlow();
-        assertEquals(testMoneySummary.getCashflows().size(), 3);
+        assertEquals(testMoneySummary.getCashflows().size(), 5);
         deleteMultipleCashFlow();
-        assertEquals(testMoneySummary.getCashflows().size(), 1);
+        assertEquals(testMoneySummary.getCashflows().size(), 3);
     }
 
     @Test
@@ -132,15 +138,15 @@ public class MoneySummaryTest {
     @Test
     void testFilterDebitCategory() {
         addMultipleCashFlow();
-        List<CashFlow> filteredSalary = testMoneySummary.filterDebitCategory("Salary");
-        assertEquals(filteredSalary.size(), 1);
+        List<CashFlow> filteredSalary1 = testMoneySummary.filterDebitCategory("Sport");
+        assertEquals(filteredSalary1.size(), 1);
     }
 
     @Test
     void testFilterCreditCategory() {
         addMultipleCashFlow();
         List<CashFlow> filteredSport = testMoneySummary.filterCreditCategory("Sport");
-        assertEquals(filteredSport.size(), 2);
+        assertEquals(filteredSport.size(), 1);
     }
 
     @Test
@@ -151,9 +157,16 @@ public class MoneySummaryTest {
     }
 
     @Test
-    void testFilterMonth() {
+    void testFilterMonthOneDigit() {
         addMultipleCashFlow();
         List<CashFlow> filteredMonth = testMoneySummary.filterMonth(02);
+        assertEquals(filteredMonth.size(), 2);
+    }
+
+    @Test
+    void testFilterMonthTwoDigits() {
+        addMultipleCashFlow();
+        List<CashFlow> filteredMonth = testMoneySummary.filterMonth(11);
         assertEquals(filteredMonth.size(), 1);
     }
 
@@ -174,29 +187,23 @@ public class MoneySummaryTest {
     @Test
     void testDeleteAllCashFlowOfTheDebitCategory() {
         addMultipleCashFlow();
-        testMoneySummary.deleteAllCashFlowOfTheDebitCategory("Salary");
-        assertEquals(testMoneySummary.getCashflows().size(), 2);
+        testMoneySummary.deleteAllCashFlowOfTheDebitCategory("Sport");
+        assertEquals(testMoneySummary.getCashflows().size(), 4);
     }
 
     @Test
     void testDeleteAllCashFlowOfTheCreditCategory() {
         addMultipleCashFlow();
         testMoneySummary.deleteAllCashFlowOfTheCreditCategory("Sport");
-        assertEquals(testMoneySummary.getCashflows().size(), 2);
+        assertEquals(testMoneySummary.getCashflows().size(), 4);
     }
 
     @Test
     void testDeleteAllCashFlowOfTheAccount() {
         addMultipleCashFlow();
         testMoneySummary.deleteAllCashFlowOfTheAccount("ScotiaBank");
-        assertEquals(testMoneySummary.getCashflows().size(), 1);
+        assertEquals(testMoneySummary.getCashflows().size(), 2);
     }
-
-    // @Test
-    // void testGetCashflows() {
-    //     addMultipleCashFlow();
-    //     testMoneySummary.getCashflows();
-    // }
 
     void addSingleCashFlow() {
         testMoneySummary.addCreditCategory("Sport");
@@ -208,11 +215,16 @@ public class MoneySummaryTest {
         testMoneySummary.addCreditCategory("Sport");
         testMoneySummary.addCreditCategory("Hobby");
         testMoneySummary.addDebitCategory("Salary");
+        testMoneySummary.addDebitCategory("Parents");
+        testMoneySummary.addDebitCategory("Sport");
         testMoneySummary.addAccount("ScotiaBank");
         testMoneySummary.addAccount("RBC");
+        testMoneySummary.addAccount("TD");
         testMoneySummary.addCashFlow(cf1);
         testMoneySummary.addCashFlow(cf2);
         testMoneySummary.addCashFlow(cf3);
+        testMoneySummary.addCashFlow(cf4);
+        testMoneySummary.addCashFlow(cf5);
     }
 
     void deleteMultipleCashFlow() {
