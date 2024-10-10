@@ -110,4 +110,19 @@ public class MoneySummary {
     public void deleteAllOfTheAccount(String account) {
         // STUB
     }
+
+    // EFFECTS: returns the cashflows of the MoneySummary object
+    public List<CashFlow> getCashflows() {
+        return new ArrayList<>(); // STUB
+    }
+
+    // EFFECTS: returns the categories of the MoneySummary object
+    public List<String> getCategories() {
+        return new ArrayList<>(); // STUB
+    }
+
+    // EFFECTS: returns the accounts of the MoneySummary object
+    public List<String> getAccounts() {
+        return new ArrayList<>(); // STUB
+    }
 }
