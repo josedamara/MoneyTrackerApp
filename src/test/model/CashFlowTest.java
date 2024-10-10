@@ -11,7 +11,7 @@ public class CashFlowTest {
     @BeforeEach
     void runBefore() {
         testCashFlow = new CashFlow("credit", "ScotiaBank", "Sport", "2024/01/01",
-        "22:40", "Buying a new basketball");
+        "22:40", "Buying a new basketball", 50);
     }
 
     @Test
@@ -22,6 +22,7 @@ public class CashFlowTest {
         assertEquals(testCashFlow.getDate(), "2024/01/01");
         assertEquals(testCashFlow.getTime(), "22:40");
         assertEquals(testCashFlow.getDescription(), "Buying a new basketball");
+        assertEquals(testCashFlow.getAmount(), 50);
     }
 
     @Test
@@ -71,5 +72,11 @@ public class CashFlowTest {
     void testSetDescription() {
         testCashFlow.setDescription("Buying a racket");
         assertEquals(testCashFlow.getDescription(), "Buying a racket");
+    }
+
+    @Test
+    void testSetAmount() {
+        testCashFlow.setAmount(100);
+        assertEquals(testCashFlow.getAmount(), 100);
     }
 }
