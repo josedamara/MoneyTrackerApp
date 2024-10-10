@@ -152,12 +152,11 @@ public class MoneySummary {
 
     // REQUIRES: 01 <= month <= 12
     // EFFECTS: filters the cashflows with a specified month
-    public List<CashFlow> filterMonth(int month) {
+    public List<CashFlow> filterMonth(String month) {
         List<CashFlow> filteredByMonth = new ArrayList<>();
 
         for (int i = 0; i < this.cashflows.size(); i++) {
-            if (this.cashflows.get(i).getDate().substring(5,7).equals(Integer.toString(month)) ||
-            this.cashflows.get(i).getDate().substring(6,7).equals(Integer.toString(month))) {
+            if (this.cashflows.get(i).getDate().substring(5,7).equals(month)) {
                 filteredByMonth.add(this.cashflows.get(i));
             }
         }
