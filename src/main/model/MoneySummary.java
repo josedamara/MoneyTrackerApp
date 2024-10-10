@@ -167,11 +167,11 @@ public class MoneySummary {
 
     // REQUIRES: date constraint must follow its specific month constraint
     // EFFECTS: filters the cashflows with a specified date
-    public List<CashFlow> filterDate(int date) {
+    public List<CashFlow> filterDate(String date) {
         List<CashFlow> filteredByDate = new ArrayList<>();
 
         for (int i = 0; i < this.cashflows.size(); i++) {
-            if (this.cashflows.get(i).getDate().substring(8,10).equals(Integer.toString(date)) || this.cashflows.get(i).getDate().substring(9,10).equals(Integer.toString(date))) {
+            if (this.cashflows.get(i).getDate().substring(8,10).equals(date)) {
                 filteredByDate.add(this.cashflows.get(i));
             }
         }
