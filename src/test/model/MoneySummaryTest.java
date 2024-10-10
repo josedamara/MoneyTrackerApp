@@ -173,7 +173,7 @@ public class MoneySummaryTest {
     @Test
     void testFilterDate() {
         addMultipleCashFlow();
-        List<CashFlow> filteredDate = testMoneySummary.filterDate(20);
+        List<CashFlow> filteredDate = testMoneySummary.filterDate("20");
         assertEquals(filteredDate.size(), 1);
     }
 
