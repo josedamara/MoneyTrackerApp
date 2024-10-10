@@ -157,17 +157,10 @@ public class MoneySummaryTest {
     }
 
     @Test
-    void testFilterMonthOneDigit() {
+    void testFilterMonth() {
         addMultipleCashFlow();
-        List<CashFlow> filteredMonth = testMoneySummary.filterMonth(02);
+        List<CashFlow> filteredMonth = testMoneySummary.filterMonth("02");
         assertEquals(filteredMonth.size(), 2);
-    }
-
-    @Test
-    void testFilterMonthTwoDigits() {
-        addMultipleCashFlow();
-        List<CashFlow> filteredMonth = testMoneySummary.filterMonth(11);
-        assertEquals(filteredMonth.size(), 1);
     }
 
     @Test
