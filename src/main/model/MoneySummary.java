@@ -66,7 +66,7 @@ public class MoneySummary {
     // REQUIRES: account exists in the accounts
     // MODIFIES: this
     // EFFECTS: deletes a account in the accounts
-    public void deleteAcccount(String account) {
+    public void deleteAccount(String account) {
         // STUB
     }
 
