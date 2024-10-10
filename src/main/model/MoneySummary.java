@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.ArrayList;
 
 // A class representing the summary of someone's money, including the
-// specification of their list of cash flows, list of categories, and
-// list of accounts
+// specification of their list of cash flows, list of debit and credit
+// categories, and list of accounts
 public class MoneySummary {
     // EFFECTS: constructs a MoneySummary object with an empty list of
-    // cash flows initially, list of some provided categories, and empty list
-    // of accounts initially
+    // cash flows initially, list of some provided debit and credit categories,
+    // and empty list of accounts initially
     public MoneySummary() {
         // STUB
     }
@@ -28,17 +28,31 @@ public class MoneySummary {
         // STUB
     }
 
-    // REQUIRES: category must not exist in the categories
+    // REQUIRES: debitCategory must not exist in the debitCategories
     // MODIFIES: this
-    // EFFECTS: adds a category to the categories
-    public void addCategory(String category) {
+    // EFFECTS: adds a debitCategory to the debitCategories
+    public void addDebitCategory(String debitCategory) {
         // STUB
     }
 
-    // REQUIRES: category exists in the categories
+    // REQUIRES: debitCategory exists in the debitCategories
     // MODIFIES: this
-    // EFFECTS: deletes a category in the categories
-    public void deleteCategory(String category) {
+    // EFFECTS: deletes a debitCategory in the debitCategories
+    public void deleteDebitCategory(String debitCategory) {
+        // STUB
+    }
+
+    // REQUIRES: creditCategory must not exist in the creditCategories
+    // MODIFIES: this
+    // EFFECTS: adds a creditCategory to the creditCategories
+    public void addCreditCategory(String creditCategory) {
+        // STUB
+    }
+
+    // REQUIRES: creditCategory exists in the creditCategories
+    // MODIFIES: this
+    // EFFECTS: deletes a creditCategory in the creditCategories
+    public void deleteCreditCategory(String creditCategory) {
         // STUB
     }
     
@@ -68,9 +82,15 @@ public class MoneySummary {
         return new ArrayList<>(); // STUB
     }
 
-    // REQUIRES: category must exist in categories
-    // EFFECTS: filters the cashflows with a specified category
-    public List<CashFlow> filterCategory(String category) {
+    // REQUIRES: debitCategory must exist in debitCategories
+    // EFFECTS: filters the cashflows with a specified debitCategory
+    public List<CashFlow> filterDebitCategory(String debitCategory) {
+        return new ArrayList<>(); // STUB
+    }
+
+    // REQUIRES: creditCategory must exist in creditCategories
+    // EFFECTS: filters the cashflows with a specified creditCategory
+    public List<CashFlow> filterCreditCategory(String creditCategory) {
         return new ArrayList<>(); // STUB
     }
 
@@ -99,15 +119,22 @@ public class MoneySummary {
 
     // MODIFIES: this
     // EFFECTS: deletes all CashFlow in the MoneySummary when its category is
-    // deleted from the categories
-    public void deleteAllOfTheCategory(String category) {
+    // deleted from the debitCategories
+    public void deleteAllCashFlowOfTheDebitCategory(String debitCategory) {
+        // STUB
+    }
+
+    // MODIFIES: this
+    // EFFECTS: deletes all CashFlow in the MoneySummary when its category is
+    // deleted from the creditCategories
+    public void deleteAllCashFlowOfTheCreditCategory(String creditCategory) {
         // STUB
     }
 
     // MODIFIES: this
     // EFFECTS: deletes all CashFlow in the MoneySummary when its account is
     // deleted from the accounts
-    public void deleteAllOfTheAccount(String account) {
+    public void deleteAllCashFlowOfTheAccount(String account) {
         // STUB
     }
 
@@ -116,8 +143,13 @@ public class MoneySummary {
         return new ArrayList<>(); // STUB
     }
 
-    // EFFECTS: returns the categories of the MoneySummary object
-    public List<String> getCategories() {
+    // EFFECTS: returns the debitCategories of the MoneySummary object
+    public List<String> getDebitCategories() {
+        return new ArrayList<>(); // STUB
+    }
+
+    // EFFECTS: returns the creditCategories of the MoneySummary object
+    public List<String> getCreditCategories() {
         return new ArrayList<>(); // STUB
     }
 
