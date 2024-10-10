@@ -9,6 +9,7 @@ public class CashFlow {
     private String date;
     private String time;
     private String description;
+    private double amount;
 
     // REQUIRES: 
     // 1900 <= year <= 2100, 01 <= month <= 12, and date constraint should
@@ -16,17 +17,18 @@ public class CashFlow {
     // 00 <= hour <= 23, 00 <= minutes <= 59.
     // category must exist in the ListOfCategory.
     // account must exist in the ListOfAccount.
-    // amount > 0
+    // amount > 0.0
     // EFFECTS: constructs a CashFlow object with a specified status, account,
     // category, date (formatted as YYYY/MM/DD), time (formatted as HH:MM),
     // and description
-    public CashFlow(String status, String account, String category, String date, String time, String description) {
+    public CashFlow(String status, String account, String category, String date, String time, String description, double amount) {
         this.status = status;
         this.account = account;
         this.category = category;
         this.date = date;
         this.time = time;
         this.description = description;
+        this.amount = amount;
     }
 
     // MODIFIES: this
@@ -82,7 +84,7 @@ public class CashFlow {
     // EFFECTS: changes the amount of money in the CashFlow object to inputted
     // amount
     public void setAmount(double amount) {
-        // STUB
+        this.amount = amount;
     }
  
     // EFFECTS: returns the status of the CashFlow object
@@ -117,6 +119,6 @@ public class CashFlow {
 
     // EFFECTS: returns the amount of the CashFlow object
     public double getAmount() {
-        return 0.0; // STUB
+        return this.amount;
     }
 }
