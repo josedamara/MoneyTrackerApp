@@ -438,6 +438,7 @@ public class MoneyTrackerApp {
         }
     }
 
+    // MODIFIES this
     // EFFECTS: find a CashFlow based on status inputted by the user
     public void editCashFlowByStatus() {
         spaceSeparator();
@@ -452,8 +453,9 @@ public class MoneyTrackerApp {
             System.out.println("No cash flow found. Please try again!");
             handleEditCashFlow();
         }
-    }
+    } 
 
+    // MODIFIES: this
     // EFFECTS: find a CashFlow based on account inputted by the user
     public void editCashFlowByAccount() {
         spaceSeparator();
@@ -470,6 +472,7 @@ public class MoneyTrackerApp {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: find a CashFlow based on category inputted by the user
     public void editCashFlowByCategory() {
         spaceSeparator();
@@ -493,6 +496,7 @@ public class MoneyTrackerApp {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: find a CashFlow based on date inputted by the user
     public void editCashFlowByDate() {
         spaceSeparator();
@@ -528,7 +532,7 @@ public class MoneyTrackerApp {
         return foundCashFlow;
     }
 
-    // MODIFIES: this
+    // MODIFIES: cf
     // EFFECTS: edits a selected CashFlow
     public void editCashFlow(CashFlow cf) {
         displayEditSpecifiedCashFlowOne();
@@ -738,7 +742,8 @@ public class MoneyTrackerApp {
         }
     }
 
-    // EFFECTS: find a CashFlow based on status inputted by the user
+    // MODIFIES: this
+    // EFFECTS: find a CashFlow to be removed based on status inputted by the user
     public void removeCashFlowByStatus() {
         spaceSeparator();
         System.out.println("Please specify which status to be filtered \n");
@@ -761,7 +766,8 @@ public class MoneyTrackerApp {
         }
     }
 
-    // EFFECTS: find a CashFlow based on account inputted by the user
+    // MODIFIES: this
+    // EFFECTS: find a CashFlow to be removed based on account inputted by the user
     public void removeCashFlowByAccount() {
         spaceSeparator();
         System.out.println("Please specify which account to be filtered \n");
@@ -785,7 +791,8 @@ public class MoneyTrackerApp {
         }
     }
 
-    // EFFECTS: find a CashFlow based on category inputted by the user
+    // MODIFIES: this
+    // EFFECTS: find a CashFlow to be removed based on category inputted by the user
     public void removeCashFlowByCategory() {
         spaceSeparator();
         System.out.println("Please specify which category to be filtered \n");
@@ -808,7 +815,8 @@ public class MoneyTrackerApp {
         }
     }
 
-    // EFFECTS: find a CashFlow based on date inputted by the user
+    // MODIFIES: this
+    // EFFECTS: find a CashFlow to be removed based on date inputted by the user
     public void removeCashFlowByDate() {
         spaceSeparator();
         System.out.println("Please specify which date to be filtered \n");
