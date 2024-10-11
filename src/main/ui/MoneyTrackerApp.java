@@ -135,7 +135,7 @@ public class MoneyTrackerApp {
                 handleRemoveCashFlow();
                 break;
             case "v":
-                viewCashFlow();
+                viewAllCashFlow();
                 break;
             case "b":
                 handleMainMenu();
@@ -189,7 +189,7 @@ public class MoneyTrackerApp {
         return this.moneySummary.getAccounts().size() == 0;
     }
 
-    // EFFECTS: check if user's input is a valid status or not
+    // EFFECTS: check user's status input is a valid status or not
     public String checkStatus() {
         System.out.println("Please specify the status: (credit/debit)");
         System.out.println("q: Quit the MoneyTracker application \n");
@@ -200,7 +200,7 @@ public class MoneyTrackerApp {
         } else if (isValidStatus(status)) {
             return status;
         } else {
-            status = checkStatus();
+            return status = checkStatus();
         }
 
         return status;
@@ -211,9 +211,10 @@ public class MoneyTrackerApp {
         return (status.equals("credit") || status.equals("debit"));
     }
 
-    // EFFECTS: check if user's account input is listed in accounts or not
+    // EFFECTS: check user's account input is a valid account or not
     public String checkAccount() {
-        System.out.println("Please specify the account:");
+        System.out.println("Please type the account name:");
+        displayAccountList();
         System.out.println("q: Quit the MoneyTracker application \n");
         String account = this.scanner.nextLine();
 
@@ -228,6 +229,19 @@ public class MoneyTrackerApp {
         return account;
     }
 
+    // EFFECTS: displays the list of registered accounts
+    public void displayAccountList() {
+        List<String> accounts = this.moneySummary.getAccounts();
+        String accountList = "";
+        for (int i = 0; i < accounts.size(); i++) {
+            accountList += Integer.toString(i + 1) + ". " + accounts.get(i);
+            if (i != accounts.size() - 1) {
+                accountList += "\n";
+            }
+        }
+        System.out.println(accountList);
+    }
+
     // EFFECTS: returns true if inputted account exists in accounts
     public boolean isValidAccount(String account) {
         return this.moneySummary.getAccounts().indexOf(account) != -1;
@@ -236,7 +250,8 @@ public class MoneyTrackerApp {
     // EFFECTS: check if user's category input is listed in its category
     // (debit/credit)
     public String checkCategory(String status) {
-        System.out.println("Please specify the category:");
+        System.out.println("Please type the category name:");
+        displayCategoryList(status);
         System.out.println("q: Quit the MoneyTracker application \n");
         String category = this.scanner.nextLine();
 
@@ -253,6 +268,15 @@ public class MoneyTrackerApp {
         }
         
         return category = checkCategory(status);
+    }
+
+    // EFFECTS: output the list of category based on selected status
+    public void displayCategoryList(String status) {
+        if (status.equals("credit")) {
+            viewCreditCategory();
+        } else {
+            viewDebitCategory();
+        }
     }
 
     // EFFECTS: returns true if inputted credit category exists in creditCategories
@@ -422,14 +446,7 @@ public class MoneyTrackerApp {
         spaceSeparator();
         System.out.println("Please specify which status to be filtered \n");
         String status = this.scanner.nextLine();
-        List<CashFlow> cashFlowList = this.moneySummary.getCashflows();
-        List<CashFlow> newCashFlowList = new ArrayList<>();
-
-        for (int i = 0; i < cashFlowList.size(); i++) {
-            if (cashFlowList.get(i).getStatus().equals(status)) {
-                newCashFlowList.add(cashFlowList.get(i));
-            }
-        }
+        List<CashFlow> newCashFlowList = this.moneySummary.filterStatus(status);
 
         if (newCashFlowList.size() > 0) {
             CashFlow foundCashFlow = pickCashFlow(newCashFlowList);
@@ -445,14 +462,7 @@ public class MoneyTrackerApp {
         spaceSeparator();
         System.out.println("Please specify which account to be filtered");
         String account = this.scanner.nextLine();
-        List<CashFlow> cashFlowList = this.moneySummary.getCashflows();
-        List<CashFlow> newCashFlowList = new ArrayList<>();
-
-        for (int i = 0; i < cashFlowList.size(); i++) {
-            if (cashFlowList.get(i).getAccount().equals(account)) {
-                newCashFlowList.add(cashFlowList.get(i));
-            }
-        }
+        List<CashFlow> newCashFlowList = this.moneySummary.filterAccount(account);
 
         if (newCashFlowList.size() > 0) {
             CashFlow foundCashFlow = pickCashFlow(newCashFlowList);
@@ -489,7 +499,8 @@ public class MoneyTrackerApp {
     // EFFECTS: find a CashFlow based on date inputted by the user
     public void editCashFlowByDate() {
         spaceSeparator();
-        System.out.println("Please specify which account to be filtered");
+        System.out.println("Please specify which account to be filtered \n");
+        displayAccountList();
         String date = this.scanner.nextLine();
         List<CashFlow> cashFlowList = this.moneySummary.getCashflows();
         List<CashFlow> newCashFlowList = new ArrayList<>();
@@ -601,11 +612,14 @@ public class MoneyTrackerApp {
     // EFFECTS: changes the account of the CashFlow object
     public void editAccount(CashFlow cf) {
         spaceSeparator();
-        System.out.println("Please specify the new account \n");
+        System.out.println("Please specify the new account");
+        displayAccountList();
         String account = this.scanner.nextLine();
         if (isValidAccount(account)) {
             cf.setAccount(account);
             System.out.println("\nThe cash flow has been edited");
+        } else {
+            editAccount(cf);
         }
     }
 
@@ -613,9 +627,10 @@ public class MoneyTrackerApp {
     // EFFECTS: changes the category of the CashFlow object
     public void editCategory(CashFlow cf) {
         spaceSeparator();
-        System.out.println("Please specify the new category \n");
-        String category = this.scanner.nextLine();
+        System.out.println("Please specify the new category");
         String status = cf.getStatus();
+        displayCategoryList(status);
+        String category = this.scanner.nextLine();
 
         if (category.equals("q")) {
             System.exit(0);
@@ -753,6 +768,7 @@ public class MoneyTrackerApp {
     public void removeCashFlowByAccount() {
         spaceSeparator();
         System.out.println("Please specify which account to be filtered \n");
+        displayAccountList();
         String account = this.scanner.nextLine();
         List<CashFlow> cashFlowList = this.moneySummary.getCashflows();
         List<CashFlow> newCashFlowList = new ArrayList<>();
@@ -798,7 +814,7 @@ public class MoneyTrackerApp {
     // EFFECTS: find a CashFlow based on date inputted by the user
     public void removeCashFlowByDate() {
         spaceSeparator();
-        System.out.println("Please specify which account to be filtered \n");
+        System.out.println("Please specify which date to be filtered \n");
         String date = this.scanner.nextLine();
         List<CashFlow> cashFlowList = this.moneySummary.getCashflows();
         List<CashFlow> newCashFlowList = new ArrayList<>();
@@ -827,7 +843,7 @@ public class MoneyTrackerApp {
     }
 
     // EFFECTS: displays all registered cash flows
-    public void viewCashFlow() {
+    public void viewAllCashFlow() {
         spaceSeparator();
         displayCashFlow(this.moneySummary.getCashflows());
     }
@@ -838,10 +854,11 @@ public class MoneyTrackerApp {
             CashFlow cf = cashFlowList.get(i);
             System.out.println(Integer.toString(i + 1) + ".");
             System.out.println("Status: " + cf.getStatus());
+            System.out.println("Account: " + cf.getAccount());
             System.out.println("Category: " + cf.getCategory());
             System.out.println("Date: " + cf.getDate());
             System.out.println("Time: " + cf.getTime());
-            System.out.println("Description " + cf.getDescription());
+            System.out.println("Description: " + cf.getDescription());
             System.out.println("Amount: " + cf.getAmount());
         }
     }
@@ -916,6 +933,7 @@ public class MoneyTrackerApp {
                 deleteInputtedDebitCategory();
                 break;
             case "v":
+                spaceSeparator();
                 viewDebitCategory();
                 break;
             case "c":
@@ -951,7 +969,8 @@ public class MoneyTrackerApp {
     // EFFECTS: deletes a debit category from debitCategories
     public void deleteInputtedDebitCategory() {
         spaceSeparator();
-        System.out.println("Please specify a debit category to be deleted");
+        System.out.println("Please type a debit category to be deleted");
+        viewDebitCategory();
         System.out.println("q: Quit the MoneyTracker application \n");
         String debitCategory = this.scanner.nextLine();
 
@@ -959,6 +978,7 @@ public class MoneyTrackerApp {
             System.exit(0);
         } else if (this.moneySummary.getDebitCategories().indexOf(debitCategory) != -1) {
             this.moneySummary.deleteDebitCategory(debitCategory);
+            this.moneySummary.deleteAllCashFlowOfTheDebitCategory(debitCategory);
         } else {
             deleteInputtedDebitCategory();
         }
@@ -966,8 +986,15 @@ public class MoneyTrackerApp {
 
     // EFFECTS: displays all registered debit category
     public void viewDebitCategory() {
-        spaceSeparator();
-        System.out.println(this.moneySummary.getDebitCategories());
+        List<String> debitCategories = this.moneySummary.getDebitCategories();
+        String debitCategoryList = "";
+        for (int i = 0; i < debitCategories.size(); i++) {
+            debitCategoryList += Integer.toString(i + 1) + ". " + debitCategories.get(i);
+            if (i != debitCategories.size() - 1) {
+                debitCategoryList += "\n";
+            }
+        }
+        System.out.println(debitCategoryList);
     }
 
     // EFFECTS: runs an interactive creditCategories menu that allows user to add
@@ -1000,6 +1027,7 @@ public class MoneyTrackerApp {
                 deleteInputtedCreditCategory();
                 break;
             case "v":
+                spaceSeparator();
                 viewCreditCategory();
                 break;
             case "c":
@@ -1035,7 +1063,8 @@ public class MoneyTrackerApp {
     // EFFECTS: deletes a credit category from creditCategories
     public void deleteInputtedCreditCategory() {
         spaceSeparator();
-        System.out.println("Please specify a credit category to be deleted");
+        System.out.println("Please type a credit category to be deleted");
+        viewCreditCategory();
         System.out.println("q: Quit the MoneyTracker application \n");
         String creditCategory = this.scanner.nextLine();
 
@@ -1043,15 +1072,23 @@ public class MoneyTrackerApp {
             System.exit(0);
         } else if (this.moneySummary.getCreditCategories().indexOf(creditCategory) != -1) {
             this.moneySummary.deleteCreditCategory(creditCategory);
+            this.moneySummary.deleteAllCashFlowOfTheCreditCategory(creditCategory);
         } else {
             deleteInputtedCreditCategory();
         }
     }
 
     // EFFECTS: displays all registered credit category
-    public void viewCreditCategory() {
-        spaceSeparator();
-        System.out.println(this.moneySummary.getCreditCategories());
+    public void viewCreditCategory() { 
+        List<String> creditCategories = this.moneySummary.getCreditCategories();
+        String creditCategoryList = "";
+        for (int i = 0; i < creditCategories.size(); i++) {
+            creditCategoryList += Integer.toString(i + 1) + ". " + creditCategories.get(i);
+            if (i != creditCategories.size() - 1) {
+                creditCategoryList += "\n";
+            }
+        }
+        System.out.println(creditCategoryList);
     }
 
     // EFFECTS: runs an interactive accounts menu that allows user to add or
@@ -1123,7 +1160,8 @@ public class MoneyTrackerApp {
     // EFFECTS: deletes an inputted account from the accounts
     public void deleteInputtedAccount() {
         spaceSeparator();
-        System.out.println("Please specify an account to be deleted");
+        System.out.println("Please type a registered account to be deleted");
+        displayAccountList();
         System.out.println("q: Quit the MoneyTracker application \n");
         String account = this.scanner.nextLine();
 
@@ -1131,6 +1169,7 @@ public class MoneyTrackerApp {
             System.exit(0);
         } else if (this.moneySummary.getAccounts().indexOf(account) != -1) {
             this.moneySummary.deleteAccount(account);
+            this.moneySummary.deleteAllCashFlowOfTheAccount(account);
         } else {
             deleteInputtedAccount();
         }
@@ -1139,13 +1178,16 @@ public class MoneyTrackerApp {
     // EFFECTS: displays all accounts in the accounts
     public void viewAccounts() {
         spaceSeparator();
-        System.out.println(this.moneySummary.getAccounts());
+        System.out.println("Registered accounts: \n");
+        displayAccountList();
     }
 
     // EFFECTS: displays the balance of a specified account
     public void viewBalance() {
         spaceSeparator();
-        System.out.println("Please specify the account \n");
+        System.out.println("Please type the account name");
+        displayAccountList();
+        System.out.println("");
         String account = this.scanner.nextLine();
         double balance = 0;
 
