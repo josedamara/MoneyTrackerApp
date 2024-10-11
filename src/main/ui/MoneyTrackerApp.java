@@ -6,6 +6,7 @@ import model.MoneySummary;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -28,6 +29,8 @@ public class MoneyTrackerApp {
 
         while (this.isProgramRunning) {
             handleMainMenu();
+            sortByTime();
+            sortByDate();
         }
     }
 
@@ -37,6 +40,26 @@ public class MoneyTrackerApp {
         this.moneySummary = new MoneySummary();
         this.scanner = new Scanner(System.in);
         this.isProgramRunning = true;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sorts the CashFlows based on the time
+    public void sortByTime() {
+        Collections.sort(this.moneySummary.getCashflows(), new Comparator<CashFlow>() {
+            public int compare(CashFlow cf1, CashFlow cf2) {
+                return cf1.getTime().compareTo(cf2.getTime());
+            }
+        });
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sorts the CashFlows based on the date
+    public void sortByDate() {
+        Collections.sort(this.moneySummary.getCashflows(), new Comparator<CashFlow>() {
+            public int compare(CashFlow cf1, CashFlow cf2) {
+                return cf1.getDate().compareTo(cf2.getDate());
+            }
+        });
     }
 
     // EFFECTS: runs an interactive main menu to help user navigate what
@@ -227,21 +250,19 @@ public class MoneyTrackerApp {
             if (isValidDebitCategory(category)) {
                 return category;
             }
-        } else {
-            category = checkCategory(status);
         }
-
-        return category;
+        
+        return category = checkCategory(status);
     }
 
     // EFFECTS: returns true if inputted credit category exists in creditCategories
     public boolean isValidCreditCategory(String category) {
-        return this.moneySummary.getCreditCategories().indexOf(category) == -1;
+        return this.moneySummary.getCreditCategories().indexOf(category) != -1;
     }
 
     // EFFECTS: returns true if inputted debit category exists in debitCategories
     public boolean isValidDebitCategory(String category) {
-        return this.moneySummary.getDebitCategories().indexOf(category) == -1;
+        return this.moneySummary.getDebitCategories().indexOf(category) != -1;
     }
 
     // EFFECTS: check if user's date input is a valid date or not
