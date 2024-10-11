@@ -114,7 +114,8 @@ public class MoneySummary {
         List<CashFlow> filteredByDebitCategory = new ArrayList<>();
 
         for (int i = 0; i < this.cashflows.size(); i++) {
-            if (this.cashflows.get(i).getCategory().equals(debitCategory) && this.cashflows.get(i).getStatus().equals("debit")) {
+            if (this.cashflows.get(i).getCategory().equals(debitCategory)
+                    && this.cashflows.get(i).getStatus().equals("debit")) {
                 filteredByDebitCategory.add(this.cashflows.get(i));
             }
         }
@@ -128,7 +129,8 @@ public class MoneySummary {
         List<CashFlow> filteredByCreditCategory = new ArrayList<>();
 
         for (int i = 0; i < this.cashflows.size(); i++) {
-            if (this.cashflows.get(i).getCategory() == creditCategory && this.cashflows.get(i).getStatus() == "credit") {
+            if (this.cashflows.get(i).getCategory() == creditCategory
+                    && this.cashflows.get(i).getStatus() == "credit") {
                 filteredByCreditCategory.add(this.cashflows.get(i));
             }
         }
@@ -208,7 +210,8 @@ public class MoneySummary {
     // deleted from the creditCategories
     public void deleteAllCashFlowOfTheCreditCategory(String creditCategory) {
         for (int i = 0; i < this.cashflows.size(); i++) {
-            if (this.cashflows.get(i).getCategory() == creditCategory && this.cashflows.get(i).getStatus() == "credit") {
+            if (this.cashflows.get(i).getCategory() == creditCategory
+                    && this.cashflows.get(i).getStatus() == "credit") {
                 this.cashflows.remove(i);
                 i--;
             }
