@@ -86,7 +86,7 @@ public class MoneySummary {
         List<CashFlow> filteredByStatus = new ArrayList<>();
 
         for (int i = 0; i < this.cashflows.size(); i++) {
-            if (this.cashflows.get(i).getStatus() == status) {
+            if (this.cashflows.get(i).getStatus().equals(status)) {
                 filteredByStatus.add(this.cashflows.get(i));
             }
         }
@@ -129,8 +129,8 @@ public class MoneySummary {
         List<CashFlow> filteredByCreditCategory = new ArrayList<>();
 
         for (int i = 0; i < this.cashflows.size(); i++) {
-            if (this.cashflows.get(i).getCategory() == creditCategory
-                    && this.cashflows.get(i).getStatus() == "credit") {
+            if (this.cashflows.get(i).getCategory().equals(creditCategory)
+                    && this.cashflows.get(i).getStatus().equals("credit")) {
                 filteredByCreditCategory.add(this.cashflows.get(i));
             }
         }
@@ -198,7 +198,7 @@ public class MoneySummary {
     // deleted from the debitCategories
     public void deleteAllCashFlowOfTheDebitCategory(String debitCategory) {
         for (int i = 0; i < this.cashflows.size(); i++) {
-            if (this.cashflows.get(i).getCategory() == debitCategory && this.cashflows.get(i).getStatus() == "debit") {
+            if (this.cashflows.get(i).getCategory().equals(debitCategory) && this.cashflows.get(i).getStatus().equals("debit")) {
                 this.cashflows.remove(i);
                 i--;
             }
@@ -210,8 +210,8 @@ public class MoneySummary {
     // deleted from the creditCategories
     public void deleteAllCashFlowOfTheCreditCategory(String creditCategory) {
         for (int i = 0; i < this.cashflows.size(); i++) {
-            if (this.cashflows.get(i).getCategory() == creditCategory
-                    && this.cashflows.get(i).getStatus() == "credit") {
+            if (this.cashflows.get(i).getCategory().equals(creditCategory)
+                    && this.cashflows.get(i).getStatus().equals("credit")) {
                 this.cashflows.remove(i);
                 i--;
             }
@@ -223,7 +223,7 @@ public class MoneySummary {
     // deleted from the accounts
     public void deleteAllCashFlowOfTheAccount(String account) {
         for (int i = 0; i < this.cashflows.size(); i++) {
-            if (this.cashflows.get(i).getAccount() == account) {
+            if (this.cashflows.get(i).getAccount().equals(account)) {
                 this.cashflows.remove(i);
                 i--;
             }
