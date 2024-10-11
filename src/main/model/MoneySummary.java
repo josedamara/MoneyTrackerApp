@@ -198,7 +198,8 @@ public class MoneySummary {
     // deleted from the debitCategories
     public void deleteAllCashFlowOfTheDebitCategory(String debitCategory) {
         for (int i = 0; i < this.cashflows.size(); i++) {
-            if (this.cashflows.get(i).getCategory().equals(debitCategory) && this.cashflows.get(i).getStatus().equals("debit")) {
+            if (this.cashflows.get(i).getCategory().equals(debitCategory) 
+                    && this.cashflows.get(i).getStatus().equals("debit")) {
                 this.cashflows.remove(i);
                 i--;
             }
