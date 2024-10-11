@@ -3,9 +3,6 @@ package ui;
 import model.CashFlow;
 import model.MoneySummary;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.*;
 
 import java.time.LocalDate;
@@ -117,7 +114,7 @@ public class MoneyTrackerApp {
         System.out.println("a: Add a cash flow");
         System.out.println("e: Edit a cash flow");
         System.out.println("r: Remove a cash flow");
-        System.out.println("v: View all cash flows");
+        System.out.println("v: View cash flows");
         System.out.println("b: Back to main menu");
         System.out.println("q: Quit the MoneyTracker application");
     }
@@ -135,7 +132,7 @@ public class MoneyTrackerApp {
                 handleRemoveCashFlow();
                 break;
             case "v":
-                viewAllCashFlow();
+                viewCashFlow();
                 break;
             case "b":
                 handleMainMenu();
@@ -841,6 +838,37 @@ public class MoneyTrackerApp {
         System.out.println("");
         System.out.println("The cash flow has been removed");
     }
+    
+    // EFFECTS: gives options to view all cashflows or monthly cashflows
+    public void viewCashFlow() {
+        displayViewCashFlow();
+        System.out.println("");
+        String input = this.scanner.nextLine();
+        processViewCashflow(input);
+    }
+    
+    // EFFECTS: displays the menu of viewCashFlow
+    public void displayViewCashFlow() {
+        spaceSeparator();
+        System.out.println("Please select an option: \n");
+        System.out.println("a: View all cash flow");
+        System.out.println("m: View month-specific cash flow");
+    }
+
+    // EFFECTS: processes the input of user in the Money Tracker menu
+    public void processViewCashflow(String input) {
+        switch (input) {
+            case "a":
+                viewAllCashFlow();
+                break;
+            case "m":
+                viewMonthlyCashFlow();
+                break;
+            default:
+                System.out.println("Invalid option inputted. Please try again!");
+                viewCashFlow();
+        }
+    }
 
     // EFFECTS: displays all registered cash flows
     public void viewAllCashFlow() {
@@ -848,9 +876,49 @@ public class MoneyTrackerApp {
         displayCashFlow(this.moneySummary.getCashflows());
     }
 
+    // EFFECTS: displays cash flows based on specified year and month
+    public void viewMonthlyCashFlow() {
+        spaceSeparator();
+        System.out.println("Please type the year:");
+        String year = this.scanner.nextLine();
+        System.out.println("Please type the month");
+        String month = this.scanner.nextLine();
+        System.out.println();
+        if (isValidYear(year) && isValidMonth(month)) {
+            List<CashFlow> cashflows = this.moneySummary.getCashflows();
+            List<CashFlow> filtered = new ArrayList<>();
+        
+            for (int i = 0; i < cashflows.size(); i++) {
+                if (cashflows.get(i).getDate().substring(0,4).equals(year) 
+                        && cashflows.get(i).getDate().substring(5,7).equals(month)) {
+                    filtered.add(cashflows.get(i));
+                }
+            }
+
+            displayCashFlow(filtered);
+        } else {
+            viewMonthlyCashFlow();
+        }
+
+    }
+
+    // EFFECTS: returns true if it is a valid year
+    public boolean isValidYear(String year) {
+        String yearForm = "(19[0-9][0-9]|20[0-9][0-9]|2100)";
+
+        return year.matches(yearForm);
+    }
+
+    // EFFECTS: returns true if it is a valid month
+    public boolean isValidMonth(String month) {
+        String monthForm = "(0[1-9]|1[0-2])";
+
+        return month.matches(monthForm);
+    }
+
     // EFFECTS: displays selected cash flows
     public void displayCashFlow(List<CashFlow> cashFlowList) {
-        for (int i = 0; i < cashFlowList.size(); i++){
+        for (int i = 0; i < cashFlowList.size(); i++) {
             CashFlow cf = cashFlowList.get(i);
             System.out.println(Integer.toString(i + 1) + ".");
             System.out.println("Status: " + cf.getStatus());
