@@ -1,7 +1,7 @@
 {
     "cashflows": [],
     "debitCategories": [],
-    "crediCategories": [],
+    "creditCategories": [],
     "accounts" : [],
     "name": "My Money Summary"
 }
