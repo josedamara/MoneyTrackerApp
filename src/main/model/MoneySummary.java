@@ -11,16 +11,16 @@ public class MoneySummary {
     private ArrayList<String> debitCategories;
     private ArrayList<String> creditCategories;
     private ArrayList<String> accounts;
+    private String name;
 
     // EFFECTS: constructs a MoneySummary object with an empty list of
     // cash flows initially, list of some provided debit and credit categories,
     // and empty list of accounts initially
     public MoneySummary() {
+        this.name = "My Money Summary";
         this.cashflows = new ArrayList<>();
         this.debitCategories = new ArrayList<>();
         this.creditCategories = new ArrayList<>();
-        addInitialDebitCategories();
-        addInitialCreditCategories();
         this.accounts = new ArrayList<>();
     }
 
@@ -233,7 +233,7 @@ public class MoneySummary {
 
     // EFFECTS: returns the name of the MoneySummary object
     public String getName() {
-        // STUB
+        return this.name;
     }
 
     // EFFECTS: returns the cashflows of the MoneySummary object
@@ -257,7 +257,7 @@ public class MoneySummary {
     }
 
     // EFFECTS: add some initial common debit categories
-    private void addInitialDebitCategories() {
+    public void addInitialDebitCategories() {
         this.debitCategories.add("Cheque");
         this.debitCategories.add("Parents");
         this.debitCategories.add("Other");
@@ -266,7 +266,7 @@ public class MoneySummary {
     }
 
     // EFFECTS: add some initial common credit categories
-    private void addInitialCreditCategories() {
+    public void addInitialCreditCategories() {
         this.creditCategories.add("Education");
         this.creditCategories.add("Grocery");
         this.creditCategories.add("Hobby");
