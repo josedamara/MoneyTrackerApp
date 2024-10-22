@@ -89,7 +89,7 @@ public class JsonReader {
     // MODIFIES: ms
     // EFFECTS: parses creditCategories from JSON object and adds them to moneysummary
     private void addCreditCategories(MoneySummary ms, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("debitCategories");
+        JSONArray jsonArray = jsonObject.getJSONArray("creditCategories");
         for (Object json : jsonArray) {
             String nextCreditCategory = (String) json;
             ms.addCreditCategory(nextCreditCategory);
@@ -99,7 +99,7 @@ public class JsonReader {
     // MODIFIES: ms
     // EFFECTS: parses accounts from JSON object and adds them to moneysummary
     private void addAccounts(MoneySummary ms, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("debitCategories");
+        JSONArray jsonArray = jsonObject.getJSONArray("accounts");
         for (Object json : jsonArray) {
             String nextAccount = (String) json;
             ms.addAccount(nextAccount);

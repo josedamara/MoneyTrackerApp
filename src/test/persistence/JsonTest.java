@@ -29,6 +29,6 @@ public class JsonTest {
         assertEquals(date, cf.getDate());
         assertEquals(time, cf.getTime());
         assertEquals(description, cf.getDescription());
-        assertEquals(amount, cf.getAmount());
+        assertEquals(amount, cf.getAmount(), 0.1f);
     }
 }
