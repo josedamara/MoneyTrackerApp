@@ -251,6 +251,7 @@ public class MoneySummary {
         return this.accounts;
     }
 
+    // EFFECTS: add some initial common debit categories
     private void addInitialDebitCategories() {
         this.debitCategories.add("Cheque");
         this.debitCategories.add("Parents");
@@ -259,6 +260,7 @@ public class MoneySummary {
         this.debitCategories.add("Sport");
     }
 
+    // EFFECTS: add some initial common credit categories
     private void addInitialCreditCategories() {
         this.creditCategories.add("Education");
         this.creditCategories.add("Grocery");
