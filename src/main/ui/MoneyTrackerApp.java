@@ -35,6 +35,8 @@ public class MoneyTrackerApp {
     // EFFECTS: initializes some initial values needed for MoneyTrackerApp
     public void initMoneyTrackerApp() {
         this.moneySummary = new MoneySummary();
+        moneySummary.addInitialDebitCategories();
+        moneySummary.addInitialCreditCategories();
         this.scanner = new Scanner(System.in);
         this.isProgramRunning = true;
     }
