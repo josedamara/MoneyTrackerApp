@@ -1,0 +1,50 @@
+{
+    "cahsflows": [
+        {
+            "status": "credit",
+            "account": "ScotiaBank",
+            "category": "Sport",
+            "date": "2024/01/01",
+            "time": "22:40",
+            "description": "Buying a new basketball",
+            "amount": 50
+        },
+        {
+            "status": "debit",
+            "account": "RBC",
+            "category": "Salary",
+            "date": "2024/02/20",
+            "time": "10:00",
+            "description": "Monthly salary",
+            "amount": 5000
+        },
+        {
+            "status": "credit",
+            "account": "ScotiaBank",
+            "category": "Hobby",
+            "date": "2020/05/21",
+            "time": "18:00",
+            "description": "Buying a new guitar",
+            "amount": 500
+        }
+    ],
+    "debitCategories": [
+        "Cheque",
+        "Parents",
+        "Other",
+        "Salary",
+        "Sport"
+    ],
+    "crediCategories": [
+        "Education",
+        "Grocery",
+        "Hobby",
+        "Other",
+        "Sport"
+    ],
+    "accounts" : [
+        "ScotiaBank",
+        "RBC"
+    ],
+    "name": "My Money Summary"
+}
