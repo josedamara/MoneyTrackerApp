@@ -231,6 +231,11 @@ public class MoneySummary {
         }
     }
 
+    // EFFECTS: returns the name of the MoneySummary object
+    public String getName() {
+        // STUB
+    }
+
     // EFFECTS: returns the cashflows of the MoneySummary object
     public List<CashFlow> getCashflows() {
         return this.cashflows;
