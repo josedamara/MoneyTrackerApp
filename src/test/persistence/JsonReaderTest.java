@@ -65,7 +65,7 @@ public class JsonReaderTest extends JsonTest {
             assertEquals(3, cashflows.size());
             checkCashFlow("credit", "ScotiaBank", "Sport", "2024/01/01", "22:40", "Buying a new basketball", 50,
                     cashflows.get(0));
-            checkCashFlow("debit", "RBC", "Salary", "2024/02/20", "11:00", "Monthly salary", 5000,
+            checkCashFlow("debit", "RBC", "Salary", "2024/02/20", "10:00", "Monthly salary", 5000,
                     cashflows.get(1));
             checkCashFlow("credit", "ScotiaBank", "Hobby", "2020/05/21", "18:00", "Buying a new guitar", 500,
                     cashflows.get(2));
@@ -76,7 +76,7 @@ public class JsonReaderTest extends JsonTest {
             List<String> creditCategories = ms.getCreditCategories();
             checkCategory(expectedCreditCategories, creditCategories);
 
-            List<String> accounts = ms.getDebitCategories();
+            List<String> accounts = ms.getAccounts();
             checkAccount(expectedAccounts, accounts);
         } catch (IOException e) {
             fail("Couldn't read from the file specified");
