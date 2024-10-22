@@ -34,8 +34,8 @@ public class MoneySummaryTest {
     @Test
     void testConstructor() {
         assertEquals(testMoneySummary.getCashflows().size(), 0);
-        assertEquals(testMoneySummary.getDebitCategories().size(), 5);
-        assertEquals(testMoneySummary.getCreditCategories().size(), 5);
+        assertEquals(testMoneySummary.getDebitCategories().size(), 0);
+        assertEquals(testMoneySummary.getCreditCategories().size(), 0);
         assertEquals(testMoneySummary.getAccounts().size(), 0);
     }
 
@@ -72,6 +72,7 @@ public class MoneySummaryTest {
 
     @Test
     void testAddDebitCategory() {
+        initCategory();
         testMoneySummary.addDebitCategory("Freelance");
         assertEquals(testMoneySummary.getDebitCategories().size(), 6);
         testMoneySummary.addDebitCategory("Online Shop");
@@ -80,6 +81,7 @@ public class MoneySummaryTest {
 
     @Test
     void testDeleteDebitCategory() {
+        initCategory();
         testMoneySummary.deleteDebitCategory("Salary");
         assertEquals(testMoneySummary.getDebitCategories().size(), 4);
         testMoneySummary.deleteDebitCategory("Cheque");
@@ -88,6 +90,7 @@ public class MoneySummaryTest {
 
     @Test
     void testAddCreditCategory() {
+        initCategory();
         testMoneySummary.addCreditCategory("Games");
         assertEquals(testMoneySummary.getCreditCategories().size(), 6);
         testMoneySummary.addCreditCategory("Food");
@@ -96,6 +99,7 @@ public class MoneySummaryTest {
 
     @Test
     void testDeleteCreditCategory() {
+        initCategory();
         testMoneySummary.deleteCreditCategory("Education");
         assertEquals(testMoneySummary.getCreditCategories().size(), 4);
         testMoneySummary.deleteCreditCategory("Hobby");
@@ -223,5 +227,10 @@ public class MoneySummaryTest {
     void deleteMultipleCashFlow() {
         testMoneySummary.deleteCashFlow(cf1);
         testMoneySummary.deleteCashFlow(cf2);
+    }
+
+    void initCategory() {
+        testMoneySummary.addInitialCreditCategories();
+        testMoneySummary.addInitialDebitCategories();
     }
 }
