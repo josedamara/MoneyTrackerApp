@@ -6,7 +6,8 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import java.util.*;
-
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -43,12 +44,78 @@ public class MoneyTrackerApp {
 
     // EFFECTS: runs an interactive menu with options to load data from file or not
     private void handleLoadMenu() {
-        // STUB
+        displayLoadMenu();
+        System.out.println("");
+        String input = this.scanner.nextLine();
+        processLoadMenuCommands(input);
     }
 
     // EFFECTS: runs an interactive menu with options to save data to file or not
     private void handleSaveMenu() {
-        // STUB
+        displaySaveMenu();
+        System.out.println("");
+        String input = this.scanner.nextLine();
+        processSaveMenuCommands(input);
+    }
+
+    // EFFECTS: displays options for load data from file or not
+    private void displayLoadMenu() {
+        spaceSeparator();
+        System.out.println("Please select an option:\n");
+        System.out.println("l: load data");
+        System.out.println("n: do not load data");
+    }
+
+    // EFFECTS: processes user's input to load data or not
+    private void processLoadMenuCommands(String input) {
+        switch (input) {
+            case "l":
+                loadData();
+                break;
+            case "n":
+                break;
+        }
+    }
+
+    // EFFECTS: loads moneysummary to the file
+    private void loadData() {
+        try {
+            moneySummary = jsonReader.read();
+            System.out.println("Loaded " + moneySummary.getName() +  " from " + JSON_FILE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file " + JSON_FILE);
+        }
+    }
+
+    // EFFECTS: displays options for save data to file or not
+    private void displaySaveMenu() {
+        spaceSeparator();
+        System.out.println("Please select an option:\n");
+        System.out.println("s: save data");
+        System.out.println("n: do not save data");
+    }
+
+    // EFFECTS: processes user's input to load data or not
+    private void processSaveMenuCommands(String input) {
+        switch (input) {
+            case "s":
+                saveData();
+                break;
+            case "n":
+                break;
+        }
+    }
+    
+    // EFFECTS: saves moneysummary to the file
+    private void saveData() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(moneySummary);
+            jsonWriter.close();
+            System.out.println("Saved " + moneySummary.getName() +  " to " + JSON_FILE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file " + JSON_FILE);
+        }
     }
 
     // MODIFIES: this
