@@ -1,8 +1,14 @@
 package model;
 
+import java.util.Collection;
+
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 // A class representing a cash flow with a status (credit/debit), category,
 // date, time, and description
-public class CashFlow {
+public class CashFlow implements Writable {
     private String status;
     private String account;
     private String category;
@@ -121,5 +127,19 @@ public class CashFlow {
     // EFFECTS: returns the amount of the CashFlow object
     public double getAmount() {
         return this.amount;
+    }
+
+    // EFFECTS: return cashflow object as a JSON Object
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("status", status);
+        json.put("account", account);
+        json.put("category", category);
+        json.put("date", date);
+        json.put("time", time);
+        json.put("description", description);
+        json.put("amount", amount);
+        return json;
     }
 }
