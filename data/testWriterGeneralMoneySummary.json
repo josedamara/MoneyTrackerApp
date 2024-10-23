@@ -1,0 +1,50 @@
+{
+    "creditCategories": [
+        "Education",
+        "Grocery",
+        "Hobby",
+        "Other",
+        "Sport"
+    ],
+    "name": "My Money Summary",
+    "accounts": [
+        "ScotiaBank",
+        "RBC"
+    ],
+    "debitCategories": [
+        "Cheque",
+        "Parents",
+        "Other",
+        "Salary",
+        "Sport"
+    ],
+    "cashflows": [
+        {
+            "date": "2024/01/01",
+            "amount": 50,
+            "description": "Buying a new basketball",
+            "time": "22:40",
+            "category": "Sport",
+            "account": "ScotiaBank",
+            "status": "credit"
+        },
+        {
+            "date": "2024/02/20",
+            "amount": 5000,
+            "description": "Monthly salary",
+            "time": "10:00",
+            "category": "Salary",
+            "account": "RBC",
+            "status": "debit"
+        },
+        {
+            "date": "2020/05/21",
+            "amount": 500,
+            "description": "Buying a new guitar",
+            "time": "18:00",
+            "category": "Hobby",
+            "account": "ScotiaBank",
+            "status": "credit"
+        }
+    ]
+}
