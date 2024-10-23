@@ -1,12 +1,17 @@
 package model;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import persistence.Writable;
 
 // A class representing the summary of someone's money, including the
 // specification of their list of cash flows, list of debit and credit
 // categories, and list of accounts
-public class MoneySummary {
+public class MoneySummary implements Writable {
     private List<CashFlow> cashflows;
     private ArrayList<String> debitCategories;
     private ArrayList<String> creditCategories;
@@ -272,5 +277,61 @@ public class MoneySummary {
         this.creditCategories.add("Hobby");
         this.creditCategories.add("Other");
         this.creditCategories.add("Sport");
+    }
+
+    // EFFECTS: changes MoneySummary object to a JSON object
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("cashflows", cashflowsToJson());
+        json.put("debitCategories", debitCategoriesToJson());
+        json.put("creditCategories", creditCategoriesToJson());
+        json.put("accounts", accountsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns cashflows in this moneysummary as a JSON array
+    private JSONArray cashflowsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (CashFlow cf : cashflows) {
+            jsonArray.put(cf.toJson());
+        }
+
+        return jsonArray;
+    }
+
+    // EFFECTS: returns debitCategories in this moneysummary as a JSON array
+    private JSONArray debitCategoriesToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (String cf : debitCategories) {
+            jsonArray.put(cf);
+        }
+
+        return jsonArray;
+    }
+
+    // EFFECTS: returns creditCategories in this moneysummary as a JSON array
+    private JSONArray creditCategoriesToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (String cf : creditCategories) {
+            jsonArray.put(cf);
+        }
+
+        return jsonArray;
+    }
+
+    // EFFECTS: returns debitCategories in this moneysummary as a JSON array
+    private JSONArray accountsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (String cf : accounts) {
+            jsonArray.put(cf);
+        }
+
+        return jsonArray;
     }
 }
