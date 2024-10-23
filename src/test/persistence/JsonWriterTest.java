@@ -20,7 +20,7 @@ public class JsonWriterTest extends JsonTest {
     void testWriterInvalidFile() {
         try {
             MoneySummary ms = new MoneySummary();
-            JsonWriter writer = new JsonWriter("./data/invalidfile.json");
+            JsonWriter writer = new JsonWriter("./data/\0illegal:invalidfile.json");
             writer.open();
             fail("IOException was expected");
         } catch (IOException e) {
@@ -54,12 +54,12 @@ public class JsonWriterTest extends JsonTest {
         try {
             MoneySummary ms = new MoneySummary();
             initMoneySummary(ms);
-            JsonWriter writer = new JsonWriter("./data/testWriterEmptyMoneySummary.json");
+            JsonWriter writer = new JsonWriter("./data/testWriterGeneralMoneySummary.json");
             writer.open();
             writer.write(ms);
             writer.close();
 
-            JsonReader reader = new JsonReader("./data/testWriterEmptyMoneySummary.json");
+            JsonReader reader = new JsonReader("./data/testWriterGeneralMoneySummary.json");
             ms = reader.read();
             assertEquals("My Money Summary", ms.getName());
             List<CashFlow> cashflows = ms.getCashflows();
