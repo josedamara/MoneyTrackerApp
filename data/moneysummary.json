@@ -1,0 +1,20 @@
+{
+    "creditCategories": [
+        "Education",
+        "Grocery",
+        "Hobby",
+        "Other",
+        "Sport",
+        "Food"
+    ],
+    "name": "My Money Summary",
+    "accounts": [],
+    "debitCategories": [
+        "Cheque",
+        "Parents",
+        "Other",
+        "Salary",
+        "Sport"
+    ],
+    "cashflows": []
+}
