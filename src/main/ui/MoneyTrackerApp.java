@@ -2,6 +2,8 @@ package ui;
 
 import model.CashFlow;
 import model.MoneySummary;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import java.util.*;
 
@@ -13,10 +15,14 @@ import java.time.format.DateTimeParseException;
 // by adding it to the list, specifying its detail, editing it, and deleting
 // it if needed
 public class MoneyTrackerApp {
+    private static final String JSON_FILE = "./data/moneysummary.json";
     private MoneySummary moneySummary;
 
     private Boolean isProgramRunning;
     private Scanner scanner;
+
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: creates an instance of the MoneyTracker application
     public MoneyTrackerApp() {
@@ -24,11 +30,25 @@ public class MoneyTrackerApp {
 
         System.out.println("Welcome to the MoneyTrackerApp");
 
+        handleLoadMenu();
+
         while (this.isProgramRunning) {
             handleMainMenu();
             sortByTime();
             sortByDate();
         }
+
+        handleSaveMenu();
+    }
+
+    // EFFECTS: runs an interactive menu with options to load data from file or not
+    private void handleLoadMenu() {
+        // STUB
+    }
+
+    // EFFECTS: runs an interactive menu with options to save data to file or not
+    private void handleSaveMenu() {
+        // STUB
     }
 
     // MODIFIES: this
@@ -39,6 +59,8 @@ public class MoneyTrackerApp {
         moneySummary.addInitialCreditCategories();
         this.scanner = new Scanner(System.in);
         this.isProgramRunning = true;
+        jsonWriter = new JsonWriter(JSON_FILE);
+        jsonReader = new JsonReader(JSON_FILE);
     }
 
     // MODIFIES: this
