@@ -1334,20 +1334,26 @@ public class MoneyTrackerApp {
     // MODIFIES: this
     // EFFECTS: deletes an inputted account from the accounts
     public void deleteInputtedAccount() {
-        spaceSeparator();
-        System.out.println("Please type a registered account to be deleted");
-        displayAccountList();
-        System.out.println("q: Quit the MoneyTracker application \n");
-        String account = this.scanner.nextLine();
+        if (isAccountNotEmpty()) {
+            spaceSeparator();
+            System.out.println("Please type a registered account to be deleted");
+            displayAccountList();
+            System.out.println("q: Quit the MoneyTracker application \n");
+            String account = this.scanner.nextLine();
 
-        if (account.equals("q")) {
-            System.exit(0);
-        } else if (this.moneySummary.getAccounts().indexOf(account) != -1) {
-            this.moneySummary.deleteAccount(account);
-            this.moneySummary.deleteAllCashFlowOfTheAccount(account);
+            if (account.equals("q")) {
+                System.exit(0);
+            } else if (this.moneySummary.getAccounts().indexOf(account) != -1) {
+                this.moneySummary.deleteAccount(account);
+                this.moneySummary.deleteAllCashFlowOfTheAccount(account);
+            } else {
+                deleteInputtedAccount();
+            }
         } else {
-            deleteInputtedAccount();
+            System.out.println("Please add an account first");
+            handleAccountsMenu();
         }
+        
     }
 
     // EFFECTS: displays all accounts in the accounts
@@ -1359,11 +1365,32 @@ public class MoneyTrackerApp {
 
     // EFFECTS: displays the balance of a specified account
     public void viewBalance() {
-        spaceSeparator();
-        System.out.println("Please type the account name");
-        displayAccountList();
-        System.out.println("");
-        String account = this.scanner.nextLine();
+        if (isAccountNotEmpty()) {
+            spaceSeparator();
+            System.out.println("Please type the account name");
+            displayAccountList();
+            System.out.println("");
+            String account = this.scanner.nextLine();
+            if (isValidAccount(account)) {
+                double balance = calculateBalance(account);
+                System.out.println("");
+                System.out.println("The balance of" + " " + account + " " + "is" + " " + balance);
+            } else {
+                viewBalance();
+            }
+        } else {
+            System.out.println("Please add an account first");
+            handleAccountsMenu();
+        }
+    }
+
+    // EFFECTS: returns true if accounts contains at least one account
+    public boolean isAccountNotEmpty() {
+        return moneySummary.getAccounts().size() != 0;
+    }
+
+    // EFFECTS: calculates the balance of inputted account
+    private double calculateBalance(String account) {
         double balance = 0;
 
         for (int i = 0; i < this.moneySummary.getCashflows().size(); i++) {
@@ -1377,8 +1404,7 @@ public class MoneyTrackerApp {
             }
         }
 
-        System.out.println("");
-        System.out.println("The balance of" + " " + account + " " + "is" + " " + balance);
+        return balance;
     }
 
     // MODIFIES: this
