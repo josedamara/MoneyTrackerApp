@@ -166,6 +166,8 @@ public class MoneyTrackerApp {
         System.out.println("m: Money Tracker menu");
         System.out.println("c: Category menu");
         System.out.println("a: Accounts menu");
+        System.out.println("s: Save menu");
+        System.out.println("l: Load menu");
         System.out.println("q: Quit the MoneyTracker application");
     }
 
@@ -180,6 +182,12 @@ public class MoneyTrackerApp {
                 break;
             case "a":
                 handleAccountsMenu();
+                break;
+            case "s":
+                handleSaveMenu();
+                break;
+            case "l":
+                handleLoadMenu();
                 break;
             case "q":
                 quitMoneyTrackerApp();
