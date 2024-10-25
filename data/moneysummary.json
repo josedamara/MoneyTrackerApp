@@ -8,7 +8,10 @@
         "Food"
     ],
     "name": "My Money Summary",
-    "accounts": [],
+    "accounts": [
+        "RBC",
+        "ScotiaBank"
+    ],
     "debitCategories": [
         "Cheque",
         "Parents",
@@ -16,5 +19,13 @@
         "Salary",
         "Sport"
     ],
-    "cashflows": []
+    "cashflows": [{
+        "date": "2004/11/11",
+        "amount": 4000,
+        "description": "Tuition Fee",
+        "time": "14:00",
+        "category": "Education",
+        "account": "RBC",
+        "status": "credit"
+    }]
 }
