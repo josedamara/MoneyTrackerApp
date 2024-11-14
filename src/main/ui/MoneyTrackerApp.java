@@ -32,6 +32,9 @@ public class MoneyTrackerApp extends JFrame {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
+    private JFrame window;
+    private ImagePanel ip;
+
     // EFFECTS: creates an instance of the MoneyTracker application
     public MoneyTrackerApp() {
         initMoneyTrackerApp();
@@ -69,7 +72,14 @@ public class MoneyTrackerApp extends JFrame {
 
     // EFFECTS: creates a JFrame as the base of the MoneyTrackerApp
     public void initFrame() {
-        // STUB
+        window = new JFrame();
+        window.setTitle("MoneyTrackerApp");
+        window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        window.setSize(800, 600);
+        window.setLocationRelativeTo(null);
+        window.setVisible(true);
+        ip = new ImagePanel();
+        window.add(ip, BorderLayout.NORTH);
     }
 
     // EFFECTS: runs an interactive menu with options to load data from file or not
