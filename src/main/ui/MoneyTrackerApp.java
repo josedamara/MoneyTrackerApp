@@ -6,8 +6,15 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import java.util.*;
+
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+
+import java.awt.BorderLayout;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -15,7 +22,7 @@ import java.time.format.DateTimeParseException;
 // A money tracker application that allows user to track their cash flows
 // by adding it to the list, specifying its detail, editing it, and deleting
 // it if needed
-public class MoneyTrackerApp {
+public class MoneyTrackerApp extends JFrame {
     private static final String JSON_FILE = "./data/moneysummary.json";
     private MoneySummary moneySummary;
 
@@ -28,6 +35,12 @@ public class MoneyTrackerApp {
     // EFFECTS: creates an instance of the MoneyTracker application
     public MoneyTrackerApp() {
         initMoneyTrackerApp();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                initFrame();
+            }
+        });
 
         System.out.println("Welcome to the MoneyTrackerApp");
 
@@ -40,6 +53,23 @@ public class MoneyTrackerApp {
         }
 
         handleSaveMenu();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initializes some initial values needed for MoneyTrackerApp
+    public void initMoneyTrackerApp() {
+        this.moneySummary = new MoneySummary();
+        moneySummary.addInitialDebitCategories();
+        moneySummary.addInitialCreditCategories();
+        this.scanner = new Scanner(System.in);
+        this.isProgramRunning = true;
+        jsonWriter = new JsonWriter(JSON_FILE);
+        jsonReader = new JsonReader(JSON_FILE);
+    }
+
+    // EFFECTS: creates a JFrame as the base of the MoneyTrackerApp
+    public void initFrame() {
+        // STUB
     }
 
     // EFFECTS: runs an interactive menu with options to load data from file or not
@@ -116,18 +146,6 @@ public class MoneyTrackerApp {
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file " + JSON_FILE);
         }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: initializes some initial values needed for MoneyTrackerApp
-    public void initMoneyTrackerApp() {
-        this.moneySummary = new MoneySummary();
-        moneySummary.addInitialDebitCategories();
-        moneySummary.addInitialCreditCategories();
-        this.scanner = new Scanner(System.in);
-        this.isProgramRunning = true;
-        jsonWriter = new JsonWriter(JSON_FILE);
-        jsonReader = new JsonReader(JSON_FILE);
     }
 
     // MODIFIES: this
