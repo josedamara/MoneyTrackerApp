@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import java.awt.BorderLayout;
-
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -72,13 +72,19 @@ public class MoneyTrackerApp extends JFrame {
 
     // EFFECTS: creates a JFrame as the base of the MoneyTrackerApp
     public void initFrame() {
+        int frameWidth = 800;
+        int frameHeight = 600;
+        int imagePanelWidth = frameWidth;
+        int imagePanelHeight = 250;
+
         window = new JFrame();
         window.setTitle("MoneyTrackerApp");
         window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        window.setSize(800, 600);
+        window.setSize(frameWidth, frameHeight);
         window.setLocationRelativeTo(null);
         window.setVisible(true);
         ip = new ImagePanel();
+        ip.initImagePanel(imagePanelWidth, imagePanelHeight, Color.GRAY);
         window.add(ip, BorderLayout.NORTH);
     }
 
