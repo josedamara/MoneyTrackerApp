@@ -14,9 +14,8 @@ public class ImagePanel extends JPanel {
     }
 
     // EFFECTS: sets a fixed size for the image panel
-    public void initImagePanel(int width, int height, Color bg) {
+    public void initImagePanel(int width, int height) {
         setPreferredSize(new Dimension(width, height));
         setVisible(true);
-        setBackground(bg);
     }
 }

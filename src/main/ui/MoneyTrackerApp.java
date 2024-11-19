@@ -7,11 +7,18 @@ import persistence.JsonWriter;
 
 import java.util.*;
 
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -34,6 +41,9 @@ public class MoneyTrackerApp extends JFrame {
 
     private JFrame window;
     private ImagePanel ip;
+
+    private JPanel loadMenu = new JPanel();
+    private JPanel mainMenu = new JPanel();
 
     // EFFECTS: creates an instance of the MoneyTracker application
     public MoneyTrackerApp() {
@@ -75,17 +85,82 @@ public class MoneyTrackerApp extends JFrame {
         int frameWidth = 800;
         int frameHeight = 600;
         int imagePanelWidth = frameWidth;
-        int imagePanelHeight = 250;
+        int imagePanelHeight = 280;
 
         window = new JFrame();
         window.setTitle("MoneyTrackerApp");
         window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         window.setSize(frameWidth, frameHeight);
+        window.getContentPane().setBackground(Color.GRAY);
         window.setLocationRelativeTo(null);
         window.setVisible(true);
+
         ip = new ImagePanel();
-        ip.initImagePanel(imagePanelWidth, imagePanelHeight, Color.GRAY);
+        ip.initImagePanel(imagePanelWidth, imagePanelHeight);
+        ip.setBackground(Color.LIGHT_GRAY);
         window.add(ip, BorderLayout.NORTH);
+
+        setLoadMenu();
+
+    }
+
+    // EFFECTS: helper method to ensure the button sizing properly
+    private void fixWindow() {
+        window.pack();
+        window.revalidate();
+        window.repaint();
+    }
+
+    // EFFECTS: creates buttons for load option
+    public void setLoadMenu() {
+        loadMenu.setLayout(new GridLayout(1, 1));
+
+        JButton loadButton = new JButton(new LoadDataAction());
+        loadButton.setPreferredSize(new Dimension(20, 300));
+
+        JButton notLoadButton = new JButton(new NotLoadDataAction());
+        notLoadButton.setPreferredSize(new Dimension(20, 300));
+
+        loadMenu.add(loadButton);
+        loadMenu.add(notLoadButton);
+
+        window.add(loadMenu, BorderLayout.SOUTH);
+
+        fixWindow();
+    }
+
+    // EFFECTS: creates buttons for load option
+    public void setMainMenu() {
+        mainMenu.setLayout(new GridLayout(3, 3));
+
+        JButton moneyTrackerMenuButton = new JButton(new MoneyTrackerMenuAction());
+        moneyTrackerMenuButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton categoryMenuButton = new JButton(new CategoryMenuAction());
+        categoryMenuButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton accountMenuButton = new JButton(new AccountMenuAction());
+        accountMenuButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton saveMenuButton = new JButton(new SaveMenuAction());
+        saveMenuButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton loadMenuButton = new JButton(new LoadMenuAction());
+        loadMenuButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton quitButton = new JButton(new QuitAction());
+        quitButton.setPreferredSize(new Dimension(20, 100));
+
+        mainMenu.add(moneyTrackerMenuButton);
+        mainMenu.add(categoryMenuButton);
+        mainMenu.add(accountMenuButton);
+        mainMenu.add(saveMenuButton);
+        mainMenu.add(loadMenuButton);
+        mainMenu.add(quitButton);
+
+        window.add(mainMenu, BorderLayout.SOUTH);
+
+        fixWindow();
     }
 
     // EFFECTS: runs an interactive menu with options to load data from file or not
@@ -120,6 +195,111 @@ public class MoneyTrackerApp extends JFrame {
                 break;
             case "n":
                 break;
+        }
+    }
+
+    // TODO
+    private class LoadDataAction extends AbstractAction {
+        LoadDataAction() {
+            super("Load Data");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            loadData();
+            loadMenu.setVisible(false);
+            setMainMenu();
+        }
+    }
+
+    // TODO
+    private class NotLoadDataAction extends AbstractAction {
+        NotLoadDataAction() {
+            super("Do Not Load Data");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            loadMenu.setVisible(false);
+            setMainMenu();
+        }
+    }
+
+    // TODO
+    private class MoneyTrackerMenuAction extends AbstractAction {
+        MoneyTrackerMenuAction() {
+            super("Money Tracker Menu");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            mainMenu.setVisible(false);
+            setMainMenu();
+        }
+    }
+
+    // TODO
+    private class CategoryMenuAction extends AbstractAction {
+        CategoryMenuAction() {
+            super("Category Menu");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            mainMenu.setVisible(false);
+            setMainMenu();
+        }
+    }
+
+    // TODO
+    private class AccountMenuAction extends AbstractAction {
+        AccountMenuAction() {
+            super("Account Menu");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            mainMenu.setVisible(false);
+            setMainMenu();
+        }
+    }
+
+    // TODO
+    private class SaveMenuAction extends AbstractAction {
+        SaveMenuAction() {
+            super("Save Menu");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            mainMenu.setVisible(false);
+            setMainMenu();
+        }
+    }
+
+    // TODO
+    private class LoadMenuAction extends AbstractAction {
+        LoadMenuAction() {
+            super("Load Menu");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            mainMenu.setVisible(false);
+            setMainMenu();
+        }
+    }
+
+    // TODO
+    private class QuitAction extends AbstractAction {
+        QuitAction() {
+            super("Quit MoneyTrackerApp");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            mainMenu.setVisible(false);
+            setMainMenu();
         }
     }
 
