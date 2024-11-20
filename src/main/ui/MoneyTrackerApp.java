@@ -132,8 +132,13 @@ public class MoneyTrackerApp extends JFrame {
         initAccountMenu();
     }
 
-    // EFFECTS: sets all menu to be invinsible
+    // EFFECTS: sets all initialized to be invinsible
     private void setAllInvinsible() {
+        setAllMenuInvinsible();
+    }
+
+    // EFFECTS: sets all menu to be invinsible
+    private void setAllMenuInvinsible() {
         mainMenu.setVisible(false);
         moneyTrackerMenu.setVisible(false);
         loadMenu.setVisible(false);
@@ -405,7 +410,8 @@ public class MoneyTrackerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            mainMenu.setVisible(false);
+            setAllMenuInvinsible();
+            moneyTrackerMenu.setVisible(true);
         }
     }
 
@@ -419,7 +425,8 @@ public class MoneyTrackerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            mainMenu.setVisible(false);
+            setAllMenuInvinsible();
+            categoryMenu.setVisible(true);
         }
     }
 
@@ -433,7 +440,8 @@ public class MoneyTrackerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            mainMenu.setVisible(false);
+            setAllMenuInvinsible();
+            accountMenu.setVisible(true);
         }
     }
 
@@ -447,7 +455,8 @@ public class MoneyTrackerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            mainMenu.setVisible(false);
+            setAllMenuInvinsible();
+            saveMenu.setVisible(true);
         }
     }
 
@@ -461,7 +470,7 @@ public class MoneyTrackerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            mainMenu.setVisible(false);
+            setAllMenuInvinsible();
             loadMenu.setVisible(true);
         }
     }
@@ -476,7 +485,7 @@ public class MoneyTrackerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            mainMenu.setVisible(false);
+            System.exit(0);
         }
     }
 
@@ -516,10 +525,12 @@ public class MoneyTrackerApp extends JFrame {
      */
     private class AddMoneyTrackerAction extends AbstractAction {
         AddMoneyTrackerAction() {
+            super("Add a new cash flow");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            // TODO
         }
     }
 
@@ -528,10 +539,12 @@ public class MoneyTrackerApp extends JFrame {
      */
     private class ViewMoneyTrackerMenu extends AbstractAction {
         ViewMoneyTrackerMenu() {
+            super("View cash flow");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            // TODO
         }
     }
 
@@ -540,10 +553,12 @@ public class MoneyTrackerApp extends JFrame {
      */
     private class EditMoneyTracker extends AbstractAction {
         EditMoneyTracker() {
+            super("Edit a cash flow");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            // TODO
         }
     }
 
@@ -552,10 +567,12 @@ public class MoneyTrackerApp extends JFrame {
      */
     private class RemoveMoneyTracker extends AbstractAction {
         RemoveMoneyTracker() {
+            super("Remove a cash flow");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            // TODO
         }
     }
 
@@ -564,10 +581,13 @@ public class MoneyTrackerApp extends JFrame {
      */
     private class BackMainMenu extends AbstractAction {
         BackMainMenu() {
+            super("Back to main menu");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            setAllMenuInvinsible();
+            mainMenu.setVisible(true);
         }
     }
 
@@ -576,10 +596,14 @@ public class MoneyTrackerApp extends JFrame {
      */
     private class SaveDataAction extends AbstractAction {
         SaveDataAction() {
+            super("Save data");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            saveData();
+            saveMenu.setVisible(false);
+            mainMenu.setVisible(true);
         }
     }
 
@@ -588,10 +612,13 @@ public class MoneyTrackerApp extends JFrame {
      */
     private class NotSaveDataAction extends AbstractAction {
         NotSaveDataAction() {
+            super("Do not save data");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            saveMenu.setVisible(false);
+            mainMenu.setVisible(true);
         }
     }
 
@@ -600,10 +627,13 @@ public class MoneyTrackerApp extends JFrame {
      */
     private class CreditCategoryMenuAction extends AbstractAction {
         CreditCategoryMenuAction() {
+            super("Credit Category Menu");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            setAllMenuInvinsible();
+            creditCategoryMenu.setVisible(true);
         }
     }
 
@@ -612,10 +642,13 @@ public class MoneyTrackerApp extends JFrame {
      */
     private class DebitCategoryMenuAction extends AbstractAction {
         DebitCategoryMenuAction() {
+            super("Debit Category Menu");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            setAllMenuInvinsible();
+            debitCategoryMenu.setVisible(true);
         }
     }
 
@@ -624,10 +657,12 @@ public class MoneyTrackerApp extends JFrame {
      */
     private class AddDebitCategoryAction extends AbstractAction {
         AddDebitCategoryAction() {
+            super("Add a debit category");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            // TODO
         }
     }
 
@@ -636,10 +671,12 @@ public class MoneyTrackerApp extends JFrame {
      */
     private class DeleteDebitCategoryAction extends AbstractAction {
         DeleteDebitCategoryAction() {
+            super("Delete a debit category");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            // TODO
         }
     }
 
@@ -648,10 +685,12 @@ public class MoneyTrackerApp extends JFrame {
      */
     private class ViewDebitCategoryAction extends AbstractAction {
         ViewDebitCategoryAction() {
+            super("View all debit category");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            // TOOD
         }
     }
 
@@ -660,10 +699,12 @@ public class MoneyTrackerApp extends JFrame {
      */
     private class AddCreditCategoryAction extends AbstractAction {
         AddCreditCategoryAction() {
+            super("Add a credit category");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            // TODO
         }
     }
 
@@ -672,10 +713,12 @@ public class MoneyTrackerApp extends JFrame {
      */
     private class DeleteCreditCategoryAction extends AbstractAction {
         DeleteCreditCategoryAction() {
+            super("Delete a credit category");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            // TODO
         }
     }
 
@@ -684,10 +727,12 @@ public class MoneyTrackerApp extends JFrame {
      */
     private class ViewCreditCategoryAction extends AbstractAction {
         ViewCreditCategoryAction() {
+            super("View all credit category");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            // TODO
         }
     }
 
@@ -696,10 +741,12 @@ public class MoneyTrackerApp extends JFrame {
      */
     private class AddAccountAction extends AbstractAction {
         AddAccountAction() {
+            super("Add an account");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            // TODO
         }
     }
 
@@ -708,10 +755,12 @@ public class MoneyTrackerApp extends JFrame {
      */
     private class DeleteAccountAction extends AbstractAction {
         DeleteAccountAction() {
+            super("Delete an account");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            // TODO
         }
     }
 
@@ -720,10 +769,12 @@ public class MoneyTrackerApp extends JFrame {
      */
     private class ViewListOfAccountsAction extends AbstractAction {
         ViewListOfAccountsAction() {
+            super("View all accounts");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            // TODO
         }
     }
 
@@ -732,10 +783,12 @@ public class MoneyTrackerApp extends JFrame {
      */
     private class ViewAnAccountBalanceAction extends AbstractAction {
         ViewAnAccountBalanceAction() {
+            super("View an account balance");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            // TODO
         }
     }
     
