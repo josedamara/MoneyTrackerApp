@@ -182,19 +182,19 @@ public class MoneyTrackerApp extends JFrame {
     public void initMoneyTrackerMenu() {
         moneyTrackerMenu.setLayout(new GridLayout(3, 3));
 
-        JButton addMoneyTrackerButton = new JButton(new MoneyTrackerMenuAction());
+        JButton addMoneyTrackerButton = new JButton(new AddMoneyTrackerAction());
         addMoneyTrackerButton.setPreferredSize(new Dimension(20, 100));
 
-        JButton viewMoneyTrackerMenuButton = new JButton(new CategoryMenuAction());
+        JButton viewMoneyTrackerMenuButton = new JButton(new ViewMoneyTrackerMenu());
         viewMoneyTrackerMenuButton.setPreferredSize(new Dimension(20, 100));
 
-        JButton editMoneyTrackerButton = new JButton(new AccountMenuAction());
+        JButton editMoneyTrackerButton = new JButton(new EditMoneyTracker());
         editMoneyTrackerButton.setPreferredSize(new Dimension(20, 100));
 
-        JButton removeMoneyTrackerButton = new JButton(new SaveMenuAction());
+        JButton removeMoneyTrackerButton = new JButton(new RemoveMoneyTracker());
         removeMoneyTrackerButton.setPreferredSize(new Dimension(20, 100));
 
-        JButton backMainMenuButton = new JButton(new LoadMenuAction());
+        JButton backMainMenuButton = new JButton(new BackMainMenu());
         backMainMenuButton.setPreferredSize(new Dimension(20, 100));
 
         JButton quitButton = new JButton(new QuitAction());
@@ -234,10 +234,10 @@ public class MoneyTrackerApp extends JFrame {
     public void initSaveMenu() {
         saveMenu.setLayout(new GridLayout(1, 1));
 
-        JButton saveButton = new JButton(new LoadDataAction());
+        JButton saveButton = new JButton(new SaveDataAction());
         saveButton.setPreferredSize(new Dimension(20, 300));
 
-        JButton notSaveButton = new JButton(new NotLoadDataAction());
+        JButton notSaveButton = new JButton(new NotSaveDataAction());
         notSaveButton.setPreferredSize(new Dimension(20, 300));
 
         saveMenu.add(saveButton);
@@ -252,16 +252,16 @@ public class MoneyTrackerApp extends JFrame {
     public void initCategoryMenu() {
         categoryMenu.setLayout(new GridLayout(2, 2));
 
-        JButton creditCategoryMenuButton = new JButton(new MoneyTrackerMenuAction());
+        JButton creditCategoryMenuButton = new JButton(new CreditCategoryMenuAction());
         creditCategoryMenuButton.setPreferredSize(new Dimension(20, 150));
 
-        JButton debitCategoryMenuButton = new JButton(new CategoryMenuAction());
+        JButton debitCategoryMenuButton = new JButton(new DebitCategoryMenuAction());
         debitCategoryMenuButton.setPreferredSize(new Dimension(20, 150));
 
-        JButton backMainMenuButton = new JButton(new AccountMenuAction());
+        JButton backMainMenuButton = new JButton(new BackMainMenu());
         backMainMenuButton.setPreferredSize(new Dimension(20, 150));
 
-        JButton quitButton = new JButton(new SaveMenuAction());
+        JButton quitButton = new JButton(new QuitAction());
         quitButton.setPreferredSize(new Dimension(20, 150));
 
         categoryMenu.add(creditCategoryMenuButton);
@@ -278,16 +278,16 @@ public class MoneyTrackerApp extends JFrame {
     public void initDebitCategoryMenu() {
         debitCategoryMenu.setLayout(new GridLayout(2, 2));
 
-        JButton addDebitCategoryButton = new JButton(new MoneyTrackerMenuAction());
+        JButton addDebitCategoryButton = new JButton(new AddDebitCategoryAction());
         addDebitCategoryButton.setPreferredSize(new Dimension(20, 150));
 
-        JButton deleteDebitCategoryButton = new JButton(new CategoryMenuAction());
+        JButton deleteDebitCategoryButton = new JButton(new DeleteDebitCategoryAction());
         deleteDebitCategoryButton.setPreferredSize(new Dimension(20, 150));
 
-        JButton viewAllDebitCategoryButton = new JButton(new AccountMenuAction());
+        JButton viewAllDebitCategoryButton = new JButton(new ViewDebitCategoryAction());
         viewAllDebitCategoryButton.setPreferredSize(new Dimension(20, 150));
 
-        JButton backCategoryMenuButton = new JButton(new SaveMenuAction());
+        JButton backCategoryMenuButton = new JButton(new CategoryMenuAction());
         backCategoryMenuButton.setPreferredSize(new Dimension(20, 150));
 
         debitCategoryMenu.add(addDebitCategoryButton);
@@ -304,16 +304,16 @@ public class MoneyTrackerApp extends JFrame {
     public void initCreditCategoryMenu() {
         creditCategoryMenu.setLayout(new GridLayout(2, 2));
 
-        JButton addCreditCategoryButton = new JButton(new MoneyTrackerMenuAction());
+        JButton addCreditCategoryButton = new JButton(new AddCreditCategoryAction());
         addCreditCategoryButton.setPreferredSize(new Dimension(20, 150));
 
-        JButton deleteCreditCategoryButton = new JButton(new CategoryMenuAction());
+        JButton deleteCreditCategoryButton = new JButton(new DeleteCreditCategoryAction());
         deleteCreditCategoryButton.setPreferredSize(new Dimension(20, 150));
 
-        JButton viewAllCreditCategoryButton = new JButton(new AccountMenuAction());
+        JButton viewAllCreditCategoryButton = new JButton(new ViewCreditCategoryAction());
         viewAllCreditCategoryButton.setPreferredSize(new Dimension(20, 150));
 
-        JButton backCategoryMenuButton = new JButton(new SaveMenuAction());
+        JButton backCategoryMenuButton = new JButton(new CategoryMenuAction());
         backCategoryMenuButton.setPreferredSize(new Dimension(20, 150));
 
         creditCategoryMenu.add(addCreditCategoryButton);
@@ -330,19 +330,19 @@ public class MoneyTrackerApp extends JFrame {
     public void initAccountMenu() {
         accountMenu.setLayout(new GridLayout(3, 3));
 
-        JButton addAccountButton = new JButton(new MoneyTrackerMenuAction());
+        JButton addAccountButton = new JButton(new AddAccountAction());
         addAccountButton.setPreferredSize(new Dimension(20, 100));
 
-        JButton deleteAccountButton = new JButton(new CategoryMenuAction());
+        JButton deleteAccountButton = new JButton(new DeleteAccountAction());
         deleteAccountButton.setPreferredSize(new Dimension(20, 100));
 
-        JButton viewListOfAccountsButton = new JButton(new AccountMenuAction());
+        JButton viewListOfAccountsButton = new JButton(new ViewListOfAccountsAction());
         viewListOfAccountsButton.setPreferredSize(new Dimension(20, 100));
 
-        JButton viewAnAccountBalanceButton = new JButton(new SaveMenuAction());
+        JButton viewAnAccountBalanceButton = new JButton(new ViewAnAccountBalanceAction());
         viewAnAccountBalanceButton.setPreferredSize(new Dimension(20, 100));
 
-        JButton backMainMenuButton = new JButton(new LoadMenuAction());
+        JButton backMainMenuButton = new JButton(new BackMainMenu());
         backMainMenuButton.setPreferredSize(new Dimension(20, 100));
 
         JButton quitButton = new JButton(new QuitAction());
@@ -395,7 +395,9 @@ public class MoneyTrackerApp extends JFrame {
         }
     }
 
-    // TODO
+    /*
+     * Represents a class with the action to open the money tracker menu
+     */
     private class MoneyTrackerMenuAction extends AbstractAction {
         MoneyTrackerMenuAction() {
             super("Money Tracker Menu");
@@ -407,7 +409,9 @@ public class MoneyTrackerApp extends JFrame {
         }
     }
 
-    // TODO
+    /*
+     * Represents a class with the action to open the category menu
+     */
     private class CategoryMenuAction extends AbstractAction {
         CategoryMenuAction() {
             super("Category Menu");
@@ -419,7 +423,9 @@ public class MoneyTrackerApp extends JFrame {
         }
     }
 
-    // TODO
+    /*
+     * Represents a class with the action to open the account menu
+     */
     private class AccountMenuAction extends AbstractAction {
         AccountMenuAction() {
             super("Account Menu");
@@ -431,7 +437,9 @@ public class MoneyTrackerApp extends JFrame {
         }
     }
 
-    // TODO
+    /*
+     * Represents a class with the action to open the save menu
+     */
     private class SaveMenuAction extends AbstractAction {
         SaveMenuAction() {
             super("Save Menu");
@@ -443,7 +451,9 @@ public class MoneyTrackerApp extends JFrame {
         }
     }
 
-    // TODO
+    /*
+     * Represents a class with the action to open the load menu
+     */
     private class LoadMenuAction extends AbstractAction {
         LoadMenuAction() {
             super("Load Menu");
@@ -456,7 +466,9 @@ public class MoneyTrackerApp extends JFrame {
         }
     }
 
-    // TODO
+    /*
+     * Represents a class with the action to exit MoneyTrackerApp
+     */
     private class QuitAction extends AbstractAction {
         QuitAction() {
             super("Quit MoneyTrackerApp");
@@ -468,7 +480,9 @@ public class MoneyTrackerApp extends JFrame {
         }
     }
 
-    // TODO
+    /*
+     * Represents a class with the action to load the data state
+     */
     private class LoadDataAction extends AbstractAction {
         LoadDataAction() {
             super("Load Data");
@@ -482,7 +496,9 @@ public class MoneyTrackerApp extends JFrame {
         }
     }
 
-    // TODO
+    /*
+     * Represents a class with the action to not load the data state
+     */
     private class NotLoadDataAction extends AbstractAction {
         NotLoadDataAction() {
             super("Do Not Load Data");
@@ -495,6 +511,234 @@ public class MoneyTrackerApp extends JFrame {
         }
     }
 
+    /*
+     * Represents a class with the action to add new money tracker
+     */
+    private class AddMoneyTrackerAction extends AbstractAction {
+        AddMoneyTrackerAction() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    /*
+     * Represents a class with the action to open the view money tracker menu
+     */
+    private class ViewMoneyTrackerMenu extends AbstractAction {
+        ViewMoneyTrackerMenu() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    /*
+     * Represents a class with the action to edit a money tracker
+     */
+    private class EditMoneyTracker extends AbstractAction {
+        EditMoneyTracker() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    /*
+     * Represents a class with the action to remove a money tracker
+     */
+    private class RemoveMoneyTracker extends AbstractAction {
+        RemoveMoneyTracker() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    /*
+     * Represents a class with the action to return to the main menu
+     */
+    private class BackMainMenu extends AbstractAction {
+        BackMainMenu() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    /*
+     * Represents a class with the action to save the data state
+     */
+    private class SaveDataAction extends AbstractAction {
+        SaveDataAction() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    /*
+     * Represents a class with the action to not save the data state
+     */
+    private class NotSaveDataAction extends AbstractAction {
+        NotSaveDataAction() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    /*
+     * Represents a class with the action to open the credit category menu
+     */
+    private class CreditCategoryMenuAction extends AbstractAction {
+        CreditCategoryMenuAction() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    /*
+     * Represents a class with the action to open the debit category menu
+     */
+    private class DebitCategoryMenuAction extends AbstractAction {
+        DebitCategoryMenuAction() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    /*
+     * Represents a class with the action to add a debit category
+     */
+    private class AddDebitCategoryAction extends AbstractAction {
+        AddDebitCategoryAction() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    /*
+     * Represents a class with the action to delete a debit category
+     */
+    private class DeleteDebitCategoryAction extends AbstractAction {
+        DeleteDebitCategoryAction() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    /*
+     * Represents a class with the action to view debit categories
+     */
+    private class ViewDebitCategoryAction extends AbstractAction {
+        ViewDebitCategoryAction() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    /*
+     * Represents a class with the action to add a credit category
+     */
+    private class AddCreditCategoryAction extends AbstractAction {
+        AddCreditCategoryAction() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    /*
+     * Represents a class with the action to delete a credit category
+     */
+    private class DeleteCreditCategoryAction extends AbstractAction {
+        DeleteCreditCategoryAction() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    /*
+     * Represents a class with the action to view credit categories
+     */
+    private class ViewCreditCategoryAction extends AbstractAction {
+        ViewCreditCategoryAction() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    /*
+     * Represents a class with the action to add an account
+     */
+    private class AddAccountAction extends AbstractAction {
+        AddAccountAction() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    /*
+     * Represents a class with the action to delete an account
+     */
+    private class DeleteAccountAction extends AbstractAction {
+        DeleteAccountAction() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    /*
+     * Represents a class with the action to view list of all accounts
+     */
+    private class ViewListOfAccountsAction extends AbstractAction {
+        ViewListOfAccountsAction() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    /*
+     * Represents a class with the action to view list of an account
+     */
+    private class ViewAnAccountBalanceAction extends AbstractAction {
+        ViewAnAccountBalanceAction() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+    
     // EFFECTS: loads moneysummary to the file
     private void loadData() {
         try {
