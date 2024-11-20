@@ -42,8 +42,14 @@ public class MoneyTrackerApp extends JFrame {
     private JFrame window;
     private ImagePanel ip;
 
-    private JPanel loadMenu = new JPanel();
     private JPanel mainMenu = new JPanel();
+    private JPanel moneyTrackerMenu = new JPanel();
+    private JPanel loadMenu = new JPanel();
+    private JPanel saveMenu = new JPanel();
+    private JPanel categoryMenu = new JPanel();
+    private JPanel debitCategoryMenu = new JPanel();
+    private JPanel creditCategoryMenu = new JPanel();
+    private JPanel accountMenu = new JPanel();
 
     // EFFECTS: creates an instance of the MoneyTracker application
     public MoneyTrackerApp() {
@@ -100,7 +106,10 @@ public class MoneyTrackerApp extends JFrame {
         ip.setBackground(Color.LIGHT_GRAY);
         window.add(ip, BorderLayout.NORTH);
 
-        setLoadMenu();
+        initAllMenu();
+        setAllInvinsible();
+
+        loadMenu.setVisible(true);
 
     }
 
@@ -111,26 +120,32 @@ public class MoneyTrackerApp extends JFrame {
         window.repaint();
     }
 
-    // EFFECTS: creates buttons for load option
-    public void setLoadMenu() {
-        loadMenu.setLayout(new GridLayout(1, 1));
-
-        JButton loadButton = new JButton(new LoadDataAction());
-        loadButton.setPreferredSize(new Dimension(20, 300));
-
-        JButton notLoadButton = new JButton(new NotLoadDataAction());
-        notLoadButton.setPreferredSize(new Dimension(20, 300));
-
-        loadMenu.add(loadButton);
-        loadMenu.add(notLoadButton);
-
-        window.add(loadMenu, BorderLayout.SOUTH);
-
-        fixWindow();
+    // EFFECTS: initializes all menu for the MoneyTrackerApp
+    private void initAllMenu() {
+        initMainMenu();
+        initMoneyTrackerMenu();
+        initLoadMenu();
+        initSaveMenu();
+        initCategoryMenu();
+        initDebitCategoryMenu();
+        initCreditCategoryMenu();
+        initAccountMenu();
     }
 
-    // EFFECTS: creates buttons for load option
-    public void setMainMenu() {
+    // EFFECTS: sets all menu to be invinsible
+    private void setAllInvinsible() {
+        mainMenu.setVisible(false);
+        moneyTrackerMenu.setVisible(false);
+        loadMenu.setVisible(false);
+        saveMenu.setVisible(false);
+        categoryMenu.setVisible(false);
+        debitCategoryMenu.setVisible(false);
+        creditCategoryMenu.setVisible(false);
+        accountMenu.setVisible(false);
+    }
+
+    // EFFECTS: creates buttons for the main menu
+    public void initMainMenu() {
         mainMenu.setLayout(new GridLayout(3, 3));
 
         JButton moneyTrackerMenuButton = new JButton(new MoneyTrackerMenuAction());
@@ -152,13 +167,195 @@ public class MoneyTrackerApp extends JFrame {
         quitButton.setPreferredSize(new Dimension(20, 100));
 
         mainMenu.add(moneyTrackerMenuButton);
-        mainMenu.add(categoryMenuButton);
-        mainMenu.add(accountMenuButton);
         mainMenu.add(saveMenuButton);
+        mainMenu.add(categoryMenuButton);
         mainMenu.add(loadMenuButton);
+        mainMenu.add(accountMenuButton);
         mainMenu.add(quitButton);
 
         window.add(mainMenu, BorderLayout.SOUTH);
+
+        fixWindow();
+    }
+
+    // EFFECTS: initializes buttons for money tracker menu
+    public void initMoneyTrackerMenu() {
+        moneyTrackerMenu.setLayout(new GridLayout(3, 3));
+
+        JButton addMoneyTrackerButton = new JButton(new MoneyTrackerMenuAction());
+        addMoneyTrackerButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton viewMoneyTrackerMenuButton = new JButton(new CategoryMenuAction());
+        viewMoneyTrackerMenuButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton editMoneyTrackerButton = new JButton(new AccountMenuAction());
+        editMoneyTrackerButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton removeMoneyTrackerButton = new JButton(new SaveMenuAction());
+        removeMoneyTrackerButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton backMainMenuButton = new JButton(new LoadMenuAction());
+        backMainMenuButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton quitButton = new JButton(new QuitAction());
+        quitButton.setPreferredSize(new Dimension(20, 100));
+
+        moneyTrackerMenu.add(addMoneyTrackerButton);
+        moneyTrackerMenu.add(viewMoneyTrackerMenuButton);
+        moneyTrackerMenu.add(editMoneyTrackerButton);
+        moneyTrackerMenu.add(removeMoneyTrackerButton);
+        moneyTrackerMenu.add(backMainMenuButton);
+        moneyTrackerMenu.add(quitButton);
+
+        window.add(moneyTrackerMenu, BorderLayout.SOUTH);
+
+        fixWindow();
+    }
+
+    // EFFECTS: creates buttons for load option
+    public void initLoadMenu() {
+        loadMenu.setLayout(new GridLayout(1, 1));
+
+        JButton loadButton = new JButton(new LoadDataAction());
+        loadButton.setPreferredSize(new Dimension(20, 300));
+
+        JButton notLoadButton = new JButton(new NotLoadDataAction());
+        notLoadButton.setPreferredSize(new Dimension(20, 300));
+
+        loadMenu.add(loadButton);
+        loadMenu.add(notLoadButton);
+
+        window.add(loadMenu, BorderLayout.SOUTH);
+
+        fixWindow();
+    }
+
+    // EFFECTS: creates buttons for save option
+    public void initSaveMenu() {
+        saveMenu.setLayout(new GridLayout(1, 1));
+
+        JButton saveButton = new JButton(new LoadDataAction());
+        saveButton.setPreferredSize(new Dimension(20, 300));
+
+        JButton notSaveButton = new JButton(new NotLoadDataAction());
+        notSaveButton.setPreferredSize(new Dimension(20, 300));
+
+        saveMenu.add(saveButton);
+        saveMenu.add(notSaveButton);
+
+        window.add(saveMenu, BorderLayout.SOUTH);
+
+        fixWindow();
+    }
+
+    // EFFECTS: creates buttons for the category menu
+    public void initCategoryMenu() {
+        categoryMenu.setLayout(new GridLayout(2, 2));
+
+        JButton creditCategoryMenuButton = new JButton(new MoneyTrackerMenuAction());
+        creditCategoryMenuButton.setPreferredSize(new Dimension(20, 150));
+
+        JButton debitCategoryMenuButton = new JButton(new CategoryMenuAction());
+        debitCategoryMenuButton.setPreferredSize(new Dimension(20, 150));
+
+        JButton backMainMenuButton = new JButton(new AccountMenuAction());
+        backMainMenuButton.setPreferredSize(new Dimension(20, 150));
+
+        JButton quitButton = new JButton(new SaveMenuAction());
+        quitButton.setPreferredSize(new Dimension(20, 150));
+
+        categoryMenu.add(creditCategoryMenuButton);
+        categoryMenu.add(debitCategoryMenuButton);
+        categoryMenu.add(backMainMenuButton);
+        categoryMenu.add(quitButton);
+
+        window.add(categoryMenu, BorderLayout.SOUTH);
+
+        fixWindow();
+    }
+
+    // EFFECTS: creates buttons for the debit category menu
+    public void initDebitCategoryMenu() {
+        debitCategoryMenu.setLayout(new GridLayout(2, 2));
+
+        JButton addDebitCategoryButton = new JButton(new MoneyTrackerMenuAction());
+        addDebitCategoryButton.setPreferredSize(new Dimension(20, 150));
+
+        JButton deleteDebitCategoryButton = new JButton(new CategoryMenuAction());
+        deleteDebitCategoryButton.setPreferredSize(new Dimension(20, 150));
+
+        JButton viewAllDebitCategoryButton = new JButton(new AccountMenuAction());
+        viewAllDebitCategoryButton.setPreferredSize(new Dimension(20, 150));
+
+        JButton backCategoryMenuButton = new JButton(new SaveMenuAction());
+        backCategoryMenuButton.setPreferredSize(new Dimension(20, 150));
+
+        debitCategoryMenu.add(addDebitCategoryButton);
+        debitCategoryMenu.add(deleteDebitCategoryButton);
+        debitCategoryMenu.add(viewAllDebitCategoryButton);
+        debitCategoryMenu.add(backCategoryMenuButton);
+
+        window.add(debitCategoryMenu, BorderLayout.SOUTH);
+
+        fixWindow();
+    }
+
+    // EFFECTS: creates buttons for the credit category menu
+    public void initCreditCategoryMenu() {
+        creditCategoryMenu.setLayout(new GridLayout(2, 2));
+
+        JButton addCreditCategoryButton = new JButton(new MoneyTrackerMenuAction());
+        addCreditCategoryButton.setPreferredSize(new Dimension(20, 150));
+
+        JButton deleteCreditCategoryButton = new JButton(new CategoryMenuAction());
+        deleteCreditCategoryButton.setPreferredSize(new Dimension(20, 150));
+
+        JButton viewAllCreditCategoryButton = new JButton(new AccountMenuAction());
+        viewAllCreditCategoryButton.setPreferredSize(new Dimension(20, 150));
+
+        JButton backCategoryMenuButton = new JButton(new SaveMenuAction());
+        backCategoryMenuButton.setPreferredSize(new Dimension(20, 150));
+
+        creditCategoryMenu.add(addCreditCategoryButton);
+        creditCategoryMenu.add(deleteCreditCategoryButton);
+        creditCategoryMenu.add(viewAllCreditCategoryButton);
+        creditCategoryMenu.add(backCategoryMenuButton);
+
+        window.add(creditCategoryMenu, BorderLayout.SOUTH);
+
+        fixWindow();
+    }
+
+    // EFFECTS: creates buttons for the account menu
+    public void initAccountMenu() {
+        accountMenu.setLayout(new GridLayout(3, 3));
+
+        JButton addAccountButton = new JButton(new MoneyTrackerMenuAction());
+        addAccountButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton deleteAccountButton = new JButton(new CategoryMenuAction());
+        deleteAccountButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton viewListOfAccountsButton = new JButton(new AccountMenuAction());
+        viewListOfAccountsButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton viewAnAccountBalanceButton = new JButton(new SaveMenuAction());
+        viewAnAccountBalanceButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton backMainMenuButton = new JButton(new LoadMenuAction());
+        backMainMenuButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton quitButton = new JButton(new QuitAction());
+        quitButton.setPreferredSize(new Dimension(20, 100));
+
+        accountMenu.add(addAccountButton);
+        accountMenu.add(deleteAccountButton);
+        accountMenu.add(viewListOfAccountsButton);
+        accountMenu.add(viewAnAccountBalanceButton);
+        accountMenu.add(backMainMenuButton);
+        accountMenu.add(quitButton);
+
+        window.add(accountMenu, BorderLayout.SOUTH);
 
         fixWindow();
     }
@@ -199,33 +396,6 @@ public class MoneyTrackerApp extends JFrame {
     }
 
     // TODO
-    private class LoadDataAction extends AbstractAction {
-        LoadDataAction() {
-            super("Load Data");
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            loadData();
-            loadMenu.setVisible(false);
-            setMainMenu();
-        }
-    }
-
-    // TODO
-    private class NotLoadDataAction extends AbstractAction {
-        NotLoadDataAction() {
-            super("Do Not Load Data");
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            loadMenu.setVisible(false);
-            setMainMenu();
-        }
-    }
-
-    // TODO
     private class MoneyTrackerMenuAction extends AbstractAction {
         MoneyTrackerMenuAction() {
             super("Money Tracker Menu");
@@ -234,7 +404,6 @@ public class MoneyTrackerApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             mainMenu.setVisible(false);
-            setMainMenu();
         }
     }
 
@@ -247,7 +416,6 @@ public class MoneyTrackerApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             mainMenu.setVisible(false);
-            setMainMenu();
         }
     }
 
@@ -260,7 +428,6 @@ public class MoneyTrackerApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             mainMenu.setVisible(false);
-            setMainMenu();
         }
     }
 
@@ -273,7 +440,6 @@ public class MoneyTrackerApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             mainMenu.setVisible(false);
-            setMainMenu();
         }
     }
 
@@ -286,7 +452,7 @@ public class MoneyTrackerApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             mainMenu.setVisible(false);
-            setMainMenu();
+            loadMenu.setVisible(true);
         }
     }
 
@@ -299,7 +465,33 @@ public class MoneyTrackerApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             mainMenu.setVisible(false);
-            setMainMenu();
+        }
+    }
+
+    // TODO
+    private class LoadDataAction extends AbstractAction {
+        LoadDataAction() {
+            super("Load Data");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            loadData();
+            loadMenu.setVisible(false);
+            mainMenu.setVisible(true);
+        }
+    }
+
+    // TODO
+    private class NotLoadDataAction extends AbstractAction {
+        NotLoadDataAction() {
+            super("Do Not Load Data");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            loadMenu.setVisible(false);
+            mainMenu.setVisible(true);
         }
     }
 
