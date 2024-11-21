@@ -8,17 +8,21 @@ import persistence.JsonWriter;
 import java.util.*;
 
 import javax.swing.AbstractAction;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -50,6 +54,25 @@ public class MoneyTrackerApp extends JFrame {
     private JPanel debitCategoryMenu = new JPanel();
     private JPanel creditCategoryMenu = new JPanel();
     private JPanel accountMenu = new JPanel();
+    private JPanel addStatusMoneyTrackerForm = new JPanel();
+    private JPanel addAccountMoneyTrackerForm = new JPanel();
+    private JPanel addCategoryMoneyTrackerForm = new JPanel();
+    private JPanel addDateMoneyTrackerForm = new JPanel();
+    private JPanel addTimeMoneyTrackerForm = new JPanel();
+    private JPanel addDescriptionMoneyTrackerForm = new JPanel();
+    private JPanel addAmountMoneyTrackerForm = new JPanel();
+
+    private Font labelFont = new Font("Arial", Font.PLAIN, 24);
+    private Font infoFont = new Font("Arial", Font.PLAIN, 12);
+
+    private String capturedStatus;
+    private String capturedAccount;
+    private String capturedCategory;
+    private String capturedDate;
+    private String capturedTime;
+    private String capturedDescription;
+    private double capturedAmount;
+
 
     // EFFECTS: creates an instance of the MoneyTracker application
     public MoneyTrackerApp() {
@@ -111,6 +134,7 @@ public class MoneyTrackerApp extends JFrame {
 
         loadMenu.setVisible(true);
 
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     // EFFECTS: helper method to ensure the button sizing properly
@@ -130,6 +154,7 @@ public class MoneyTrackerApp extends JFrame {
         initDebitCategoryMenu();
         initCreditCategoryMenu();
         initAccountMenu();
+        initAddMoneyTrackerForm();
     }
 
     // EFFECTS: sets all initialized to be invinsible
@@ -147,11 +172,19 @@ public class MoneyTrackerApp extends JFrame {
         debitCategoryMenu.setVisible(false);
         creditCategoryMenu.setVisible(false);
         accountMenu.setVisible(false);
+        addStatusMoneyTrackerForm.setVisible(false);
+        addAccountMoneyTrackerForm.setVisible(false);
+        addCategoryMoneyTrackerForm.setVisible(false);
+        addDateMoneyTrackerForm.setVisible(false);
+        addTimeMoneyTrackerForm.setVisible(false);
+        addDescriptionMoneyTrackerForm.setVisible(false);
+        addAmountMoneyTrackerForm.setVisible(false);
     }
 
     // EFFECTS: creates buttons for the main menu
     public void initMainMenu() {
         mainMenu.setLayout(new GridLayout(3, 3));
+        mainMenu.setPreferredSize(new Dimension(40, 300));
 
         JButton moneyTrackerMenuButton = new JButton(new MoneyTrackerMenuAction());
         moneyTrackerMenuButton.setPreferredSize(new Dimension(20, 100));
@@ -365,6 +398,380 @@ public class MoneyTrackerApp extends JFrame {
         fixWindow();
     }
 
+    // EFFECTS: initializes add money tracker form
+    public void initAddMoneyTrackerForm() {
+        initAddStatusCashFlowColumn();
+        initAddDateCashFlowColumn();
+        initAddTimeCashFlowColumn();
+        initAddDescriptionCashFlowColumn();
+        initAddAmountCashFlowColumn();
+    }
+
+    // EFFECTS: helper method to set layout and size in cashflow form
+    private void setCashFlowFormLayoutAndSize(JPanel jp) {
+        jp.setLayout(new BoxLayout(jp, BoxLayout.Y_AXIS));
+        jp.setPreferredSize(new Dimension(40, 300));
+    }
+
+    // EFFECTS: helper method to set label font
+    private void setCashFlowFormLabelAndInfoFont(JLabel label, JLabel info) {
+        label.setFont(labelFont);
+        info.setFont(infoFont);
+    }
+
+    // EFFECTS: helper method to add all panel to the form
+    private void addAllPanelCashFlowForm(JPanel form, JPanel label, JPanel info, JPanel column, JPanel button) {
+        form.add(label);
+        form.add(info);
+        form.add(column);
+        form.add(button);
+    }
+    
+    // EFFECTS: helper method to add action listener to capture inputted status
+    private void captureStatus(JButton submitButton, JTextField textField) {
+        submitButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                capturedStatus = textField.getText();
+            }
+
+        });
+    }
+
+    // EFFECTS: helper method to add action listener to capture inputted account
+    private void captureAccount(JButton submitButton, JTextField textField) {
+        submitButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                capturedAccount = textField.getText();
+            }
+
+        });
+    }
+
+    // EFFECTS: helper method to add action listener to capture inputted category
+    private void captureCategory(JButton submitButton, JTextField textField) {
+        submitButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                capturedCategory = textField.getText();
+            }
+
+        });
+    }
+
+    // EFFECTS: helper method to add action listener to capture inputted date
+    private void captureDate(JButton submitButton, JTextField textField) {
+        submitButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                capturedDate = textField.getText();
+            }
+
+        });
+    }
+
+    // EFFECTS: helper method to add action listener to capture inputted date
+    private void captureTime(JButton submitButton, JTextField textField) {
+        submitButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                capturedTime = textField.getText();
+            }
+
+        });
+    }
+
+    // EFFECTS: helper method to add action listener to capture inputted description
+    private void captureDescription(JButton submitButton, JTextField textField) {
+        submitButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                capturedDescription = textField.getText();
+            }
+
+        });
+    }
+
+    // EFFECTS: helper method to add action listener to capture inputted amount of money
+    private void captureAmount(JButton submitButton, JTextField textField) {
+        submitButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                capturedAmount = Double.parseDouble(textField.getText());
+            }
+
+        });
+    }
+
+    // EFFECTS: initializes the add status of cash flow form
+    public void initAddStatusCashFlowColumn() {
+        setCashFlowFormLayoutAndSize(addStatusMoneyTrackerForm);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter status");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel("credit/debit");
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField statusTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        statusTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton continueToAddAccountButton = new JButton(new ContinueToAddAccount());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        labelPanel.add(label);
+        infoPanel.add(infoLabel);
+        fieldPanel.add(statusTextField);
+        buttonPanel.add(continueToAddAccountButton);
+
+        addAllPanelCashFlowForm(addStatusMoneyTrackerForm, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(addStatusMoneyTrackerForm, BorderLayout.SOUTH);
+
+        fixWindow();
+
+        captureStatus(continueToAddAccountButton, statusTextField);
+    }
+
+    // EFFECTS: initializes the add account of cash flow form
+    public void initAddAccountCashFlowColumn() {
+        addAccountMoneyTrackerForm = new JPanel();
+        setCashFlowFormLayoutAndSize(addAccountMoneyTrackerForm);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter account");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel(viewAccounts());
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField accountTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        accountTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton continueToAddCategoryButton = new JButton(new ContinueToAddCategory());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        labelPanel.add(label);
+        infoPanel.add(infoLabel);
+        fieldPanel.add(accountTextField);
+        buttonPanel.add(continueToAddCategoryButton);
+
+        addAllPanelCashFlowForm(addAccountMoneyTrackerForm, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(addAccountMoneyTrackerForm, BorderLayout.SOUTH);
+
+        fixWindow();
+        
+        captureAccount(continueToAddCategoryButton, accountTextField);
+    }
+
+    // EFFECTS: initializes the add category of cash flow form
+    public void initAddCategoryCashFlowColumn() {
+        addCategoryMoneyTrackerForm = new JPanel();
+        setCashFlowFormLayoutAndSize(addCategoryMoneyTrackerForm);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter category");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel(capturedStatus == "debit" ? viewDebitCategory() : viewCreditCategory());
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField categoryTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        categoryTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton continueToAddDateButton = new JButton(new ContinueToAddDate());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        labelPanel.add(label);
+        infoPanel.add(infoLabel);
+        fieldPanel.add(categoryTextField);
+        buttonPanel.add(continueToAddDateButton);
+
+        addAllPanelCashFlowForm(addCategoryMoneyTrackerForm, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(addCategoryMoneyTrackerForm, BorderLayout.SOUTH);
+
+        fixWindow();
+
+        captureCategory(continueToAddDateButton, categoryTextField);
+    }
+
+    // EFFECTS: initializes the add date of cash flow form
+    public void initAddDateCashFlowColumn() {
+        setCashFlowFormLayoutAndSize(addDateMoneyTrackerForm);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter date");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel("YYYY/MM/DD");
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField dateTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        dateTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton continueToAddTimeButton = new JButton(new ContinueToAddTime());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        labelPanel.add(label);
+        infoPanel.add(infoLabel);
+        fieldPanel.add(dateTextField);
+        buttonPanel.add(continueToAddTimeButton);
+
+        addAllPanelCashFlowForm(addDateMoneyTrackerForm, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(addDateMoneyTrackerForm, BorderLayout.SOUTH);
+
+        fixWindow();
+
+        captureDate(continueToAddTimeButton, dateTextField);
+    }
+
+    // EFFECTS: initializes the add time of cash flow form
+    public void initAddTimeCashFlowColumn() {
+        setCashFlowFormLayoutAndSize(addTimeMoneyTrackerForm);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter time");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel("HH:MM");
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField timeTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        timeTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton continueToAddDescription = new JButton(new ContinueToAddDescription());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        labelPanel.add(label);
+        infoPanel.add(infoLabel);
+        fieldPanel.add(timeTextField);
+        buttonPanel.add(continueToAddDescription);
+
+        addAllPanelCashFlowForm(addTimeMoneyTrackerForm, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(addTimeMoneyTrackerForm, BorderLayout.SOUTH);
+
+        fixWindow();
+
+        captureTime(continueToAddDescription, timeTextField);
+    }
+
+    // EFFECTS: initializes the add description of cash flow form
+    public void initAddDescriptionCashFlowColumn() {
+        setCashFlowFormLayoutAndSize(addDescriptionMoneyTrackerForm);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter description");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel("");
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField descriptionTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        descriptionTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton continueToAddDescription = new JButton(new ContinueToAddAmount());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        labelPanel.add(label);
+        infoPanel.add(infoLabel);
+        fieldPanel.add(descriptionTextField);
+        buttonPanel.add(continueToAddDescription);
+
+        addAllPanelCashFlowForm(addDescriptionMoneyTrackerForm, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(addDescriptionMoneyTrackerForm, BorderLayout.SOUTH);
+
+        fixWindow();
+
+        captureDescription(continueToAddDescription, descriptionTextField);
+    }
+
+    // EFFECTS: initializes the add amouunt of cash flow form
+    public void initAddAmountCashFlowColumn() {
+        setCashFlowFormLayoutAndSize(addAmountMoneyTrackerForm);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter amount of money");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel("Number only");
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField amountTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        amountTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton continueToAddCashFlow = new JButton(new continueToAddCashFlow());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        labelPanel.add(label);
+        infoPanel.add(infoLabel);
+        fieldPanel.add(amountTextField);
+        buttonPanel.add(continueToAddCashFlow);
+
+        addAllPanelCashFlowForm(addAmountMoneyTrackerForm, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(addAmountMoneyTrackerForm, BorderLayout.SOUTH);
+
+        fixWindow();
+
+        captureAmount(continueToAddCashFlow, amountTextField);
+    }
+
     // EFFECTS: runs an interactive menu with options to load data from file or not
     private void handleLoadMenu() {
         displayLoadMenu();
@@ -500,7 +907,7 @@ public class MoneyTrackerApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             loadData();
-            loadMenu.setVisible(false);
+            setAllMenuInvinsible();
             mainMenu.setVisible(true);
         }
     }
@@ -515,7 +922,7 @@ public class MoneyTrackerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            loadMenu.setVisible(false);
+            setAllMenuInvinsible();
             mainMenu.setVisible(true);
         }
     }
@@ -530,6 +937,8 @@ public class MoneyTrackerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            setAllMenuInvinsible();
+            addStatusMoneyTrackerForm.setVisible(true);
             // TODO
         }
     }
@@ -602,7 +1011,7 @@ public class MoneyTrackerApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             saveData();
-            saveMenu.setVisible(false);
+            setAllMenuInvinsible();
             mainMenu.setVisible(true);
         }
     }
@@ -617,7 +1026,7 @@ public class MoneyTrackerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            saveMenu.setVisible(false);
+            setAllMenuInvinsible();
             mainMenu.setVisible(true);
         }
     }
@@ -779,7 +1188,7 @@ public class MoneyTrackerApp extends JFrame {
     }
 
     /*
-     * Represents a class with the action to view list of an account
+     * Represents a class with the action to view an account balance
      */
     private class ViewAnAccountBalanceAction extends AbstractAction {
         ViewAnAccountBalanceAction() {
@@ -789,6 +1198,113 @@ public class MoneyTrackerApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             // TODO
+        }
+    }
+
+    /*
+     * Represents a class with the action to direct to add account section in cash flow form
+     */
+    private class ContinueToAddAccount extends AbstractAction {
+        ContinueToAddAccount() {
+            super("Next");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            initAddAccountCashFlowColumn();
+        }
+    }
+
+    /*
+     * Represents a class with the action to direct to add category section in cash flow form
+     */
+    private class ContinueToAddCategory extends AbstractAction {
+        ContinueToAddCategory() {
+            super("Next");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            initAddCategoryCashFlowColumn();
+        }
+    }
+
+    /*
+     * Represents a class with the action to direct to add date section in cash flow form
+     */
+    private class ContinueToAddDate extends AbstractAction {
+        ContinueToAddDate() {
+            super("Next");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            addDateMoneyTrackerForm.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class with the action to direct to add time section in cash flow form
+     */
+    private class ContinueToAddTime extends AbstractAction {
+        ContinueToAddTime() {
+            super("Next");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            addTimeMoneyTrackerForm.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class with the action to direct to add description section in cash flow form
+     */
+    private class ContinueToAddDescription extends AbstractAction {
+        ContinueToAddDescription() {
+            super("Next");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            addDescriptionMoneyTrackerForm.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class with the action to direct to add amount section in cash flow form
+     */
+    private class ContinueToAddAmount extends AbstractAction {
+        ContinueToAddAmount() {
+            super("Next");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            addAmountMoneyTrackerForm.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class with the action to direct to add amount section in cash flow form
+     */
+    private class continueToAddCashFlow extends AbstractAction {
+        continueToAddCashFlow() {
+            super("Add cashflow");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            CashFlow cf = new CashFlow(capturedStatus, capturedAccount, capturedCategory, capturedDate, capturedTime, capturedDescription, capturedAmount);
+            moneySummary.addCashFlow(cf);
+            moneyTrackerMenu.setVisible(true);
         }
     }
     
@@ -1029,7 +1545,7 @@ public class MoneyTrackerApp extends JFrame {
     }
 
     // EFFECTS: displays the list of registered accounts
-    public void displayAccountList() {
+    public String displayAccountList() {
         List<String> accounts = this.moneySummary.getAccounts();
         String accountList = "";
         for (int i = 0; i < accounts.size(); i++) {
@@ -1039,6 +1555,7 @@ public class MoneyTrackerApp extends JFrame {
             }
         }
         System.out.println(accountList);
+        return accountList;
     }
 
     // EFFECTS: returns true if inputted account exists in accounts
@@ -1863,7 +2380,7 @@ public class MoneyTrackerApp extends JFrame {
     }
 
     // EFFECTS: displays all registered debit category
-    public void viewDebitCategory() {
+    public String viewDebitCategory() {
         List<String> debitCategories = this.moneySummary.getDebitCategories();
         String debitCategoryList = "";
         for (int i = 0; i < debitCategories.size(); i++) {
@@ -1873,6 +2390,7 @@ public class MoneyTrackerApp extends JFrame {
             }
         }
         System.out.println(debitCategoryList);
+        return debitCategoryList;
     }
 
     // EFFECTS: runs an interactive creditCategories menu that allows user to add
@@ -1957,7 +2475,7 @@ public class MoneyTrackerApp extends JFrame {
     }
 
     // EFFECTS: displays all registered credit category
-    public void viewCreditCategory() { 
+    public String viewCreditCategory() { 
         List<String> creditCategories = this.moneySummary.getCreditCategories();
         String creditCategoryList = "";
         for (int i = 0; i < creditCategories.size(); i++) {
@@ -1967,6 +2485,7 @@ public class MoneyTrackerApp extends JFrame {
             }
         }
         System.out.println(creditCategoryList);
+        return creditCategoryList;
     }
 
     // EFFECTS: runs an interactive accounts menu that allows user to add or
@@ -2060,10 +2579,10 @@ public class MoneyTrackerApp extends JFrame {
     }
 
     // EFFECTS: displays all accounts in the accounts
-    public void viewAccounts() {
+    public String viewAccounts() {
         spaceSeparator();
         System.out.println("Registered accounts: \n");
-        displayAccountList();
+        return "Registered accounts: \n" + displayAccountList();
     }
 
     // EFFECTS: displays the balance of a specified account
