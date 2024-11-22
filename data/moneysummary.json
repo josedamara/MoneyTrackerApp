@@ -22,17 +22,8 @@
     "cashflows": [
         {
             "date": "2004/11/11",
-            "amount": 4000,
+            "amount": 4500,
             "description": "Tuition Fee",
-            "time": "14:00",
-            "category": "Education",
-            "account": "RBC",
-            "status": "credit"
-        },
-        {
-            "date": "2024/11/02",
-            "amount": 4000,
-            "description": "Hello world",
             "time": "14:00",
             "category": "Education",
             "account": "RBC",
@@ -46,6 +37,15 @@
             "category": "Grocery",
             "account": "RBC",
             "status": "debit"
+        },
+        {
+            "date": "2024/11/02",
+            "amount": 4000,
+            "description": "Hello world",
+            "time": "14:00",
+            "category": "Education",
+            "account": "RBC",
+            "status": "credit"
         }
     ]
 }

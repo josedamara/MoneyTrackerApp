@@ -14,8 +14,7 @@ This project is based on my habit of tracking my cash flow using a digital appli
 - As a user, I want to be able to see the list of cash flows for each month listed in sequence to one another.
 - As a user, I want to be able to select a cash flow and edit any  of the status, the category, the date, the time, and the description.
 - As a user, I want to be able to delete a cash flow from the list of cash flows.
-- As a user, I want to be able to see a chart comparing my incomes and expenses for each day of the week.
-- As a user, I want to be able to add a category and just use a dropdown menu to choose any category in the future use.
+- As a user, I want to be able to add a category based on the list provided
 - As a user, when I select to quit from the application, I want to be reminded to save my MoneySummary to a file and have the option to do so or not.
 - As a user, when I start the application, I want to be given the option to load my MoneySummary from a file.
 

@@ -56,6 +56,7 @@ public class MoneyTrackerApp extends JFrame {
     private JPanel moneyTrackerMenu = new JPanel();
     private JPanel loadMenu = new JPanel();
     private JPanel saveMenu = new JPanel();
+    private JPanel saveMenuBeforeQuit = new JPanel();
     private JPanel categoryMenu = new JPanel();
     private JPanel debitCategoryMenu = new JPanel();
     private JPanel creditCategoryMenu = new JPanel();
@@ -79,6 +80,21 @@ public class MoneyTrackerApp extends JFrame {
     private JPanel removeFindByCategory = new JPanel();
     private JPanel removeFindByDate = new JPanel();
     private JPanel removeCashFlow = new JPanel();
+
+    private JPanel editMoneyTrackerMenu = new JPanel();
+    private JPanel editFindByStatus = new JPanel();
+    private JPanel editFindByAccount = new JPanel();
+    private JPanel editFindByCategory = new JPanel();
+    private JPanel editFindByDate = new JPanel();
+    private JPanel editChooseCashFlow = new JPanel();
+    private JPanel editOptionCashFlow = new JPanel();
+    private JPanel editStatus = new JPanel();
+    private JPanel editAccount = new JPanel();
+    private JPanel editCategory = new JPanel();
+    private JPanel editDate = new JPanel();
+    private JPanel editTime = new JPanel();
+    private JPanel editDescription = new JPanel();
+    private JPanel editAmount = new JPanel();
 
     private ImagePanel cashflowsPanel = new ImagePanel();
 
@@ -127,6 +143,8 @@ public class MoneyTrackerApp extends JFrame {
         }
 
         handleSaveMenu();
+
+        System.exit(0);
     }
 
     // MODIFIES: this
@@ -178,6 +196,7 @@ public class MoneyTrackerApp extends JFrame {
         initMoneyTrackerMenu();
         initLoadMenu();
         initSaveMenu();
+        initSaveMenuBeforeQuit();
         initCategoryMenu();
         initDebitCategoryMenu();
         initCreditCategoryMenu();
@@ -190,6 +209,20 @@ public class MoneyTrackerApp extends JFrame {
         initRemoveFindByStatus();
         initRemoveFindByDate();
         initRemoveCashFlow();
+        initEditMoneyTrackerMenu();
+        initEditFindByDate();
+        initEditChooseCashFlow();
+        initEditOptionCashFlow();
+        initAllEditCashFlow();
+    }
+
+    // EFFECTS: helper method to initialize all panel related to editing cash flow
+    private void initAllEditCashFlow() {
+        initEditStatus();
+        initEditDate();
+        initEditTime();
+        initEditDescription();
+        initEditAmount();
     }
 
     // EFFECTS: sets all initialized to be invinsible
@@ -203,6 +236,7 @@ public class MoneyTrackerApp extends JFrame {
         moneyTrackerMenu.setVisible(false);
         loadMenu.setVisible(false);
         saveMenu.setVisible(false);
+        saveMenuBeforeQuit.setVisible(false);
         categoryMenu.setVisible(false);
         debitCategoryMenu.setVisible(false);
         creditCategoryMenu.setVisible(false);
@@ -218,6 +252,7 @@ public class MoneyTrackerApp extends JFrame {
         viewMonthlyMoneyTracker.setVisible(false);
         viewMonthlyCashFlowForm.setVisible(false);
         setAllRemoveCashFlowInvisible();
+        setAllEditCashFlowInvisible();
     }
 
     // EFFECTS: helper method to hide panel related to remove cash flow
@@ -229,6 +264,25 @@ public class MoneyTrackerApp extends JFrame {
         removeFindByDate.setVisible(false);
         removeCashFlow.setVisible(false);
     }
+
+    // EFFECTS: helper method to hide panel related to edit a cash flow
+    private void setAllEditCashFlowInvisible() {
+        editMoneyTrackerMenu.setVisible(false);
+        editFindByStatus.setVisible(false);
+        editFindByAccount.setVisible(false);
+        editFindByCategory.setVisible(false);
+        editFindByDate.setVisible(false);
+        editChooseCashFlow.setVisible(false);
+        editOptionCashFlow.setVisible(false);
+        editStatus.setVisible(false);
+        editAccount.setVisible(false);
+        editCategory.setVisible(false);
+        editDate.setVisible(false);
+        editTime.setVisible(false);
+        editDescription.setVisible(false);
+        editAmount.setVisible(false);
+    }
+
 
     // EFFECTS: sets the image panel to display the logo
     private void displayLogo() {
@@ -350,6 +404,26 @@ public class MoneyTrackerApp extends JFrame {
         saveMenu.add(notSaveButton);
 
         window.add(saveMenu, BorderLayout.SOUTH);
+
+        fixWindow();
+    }
+
+    // EFFECTS: creates buttons for save option before quitting
+    public void initSaveMenuBeforeQuit() {
+        saveMenuBeforeQuit.setLayout(new GridLayout(1, 2));
+
+        JButton saveButton = new JButton(new SaveDataAction());
+        saveButton.addActionListener(new Quit());
+        saveButton.setPreferredSize(new Dimension(20, 300));
+
+        JButton notSaveButton = new JButton(new NotSaveDataAction());
+        notSaveButton.addActionListener(new Quit());
+        notSaveButton.setPreferredSize(new Dimension(20, 300));
+
+        saveMenuBeforeQuit.add(saveButton);
+        saveMenuBeforeQuit.add(notSaveButton);
+
+        window.add(saveMenuBeforeQuit, BorderLayout.SOUTH);
 
         fixWindow();
     }
@@ -952,20 +1026,534 @@ public class MoneyTrackerApp extends JFrame {
     }
 
     // EFFECTS: initializes the menu for removing cash flow
+    public void initEditMoneyTrackerMenu() {
+        editMoneyTrackerMenu.setLayout(new GridLayout(3, 3));
+        editMoneyTrackerMenu.setPreferredSize(new Dimension(40, 300));
+
+        JButton editFindByStatusButton = new JButton(new EditFindByStatusAction());
+        editFindByStatusButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton editFindByAccountButton = new JButton(new EditFindByAccountAction());
+        editFindByAccountButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton editFindByCategoryButton = new JButton(new EditFindByCategoryAction());
+        editFindByCategoryButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton editFindByDateButton = new JButton(new EditFindByDateAction());
+        editFindByDateButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton backMainMenuButton = new JButton(new BackMainMenu());
+        backMainMenuButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton quitButton = new JButton(new QuitAction());
+        quitButton.setPreferredSize(new Dimension(20, 100));
+
+        editMoneyTrackerMenu.add(editFindByStatusButton);
+        editMoneyTrackerMenu.add(editFindByAccountButton);
+        editMoneyTrackerMenu.add(editFindByCategoryButton);
+        editMoneyTrackerMenu.add(editFindByDateButton);
+        editMoneyTrackerMenu.add(backMainMenuButton);
+        editMoneyTrackerMenu.add(quitButton);
+
+        window.add(editMoneyTrackerMenu, BorderLayout.SOUTH);
+
+        fixWindow();
+    }
+
+    // EFFECTS: initializes the find by status form in remove mode
+    public void initEditFindByStatus() {
+        editFindByStatus = new JPanel();
+        setCashFlowFormLayoutAndSize(editFindByStatus);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter status");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel("credit/debit");
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField statusTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        statusTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton findByStatusButton = new JButton(new OpenEditCashFlow());
+        findByStatusButton.addActionListener(new DisplayFindByStatusAction());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, statusTextField, buttonPanel,
+                findByStatusButton);
+
+        addAllPanelCashFlowForm(editFindByStatus, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(editFindByStatus, BorderLayout.SOUTH);
+
+        captureStatus(findByStatusButton, statusTextField);
+    }
+
+    // EFFECTS: initializes the find by account form in remove mode
+    public void initEditFindByAccount() {
+        editFindByAccount = new JPanel();
+        setCashFlowFormLayoutAndSize(editFindByAccount);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter account");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel(viewAccounts());
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField accountTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        accountTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton findByAccountButton = new JButton(new OpenEditCashFlow());
+        findByAccountButton.addActionListener(new DisplayFindByAccountAction());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, accountTextField, buttonPanel,
+                findByAccountButton);
+
+        addAllPanelCashFlowForm(editFindByAccount, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(editFindByAccount, BorderLayout.SOUTH);
+
+        fixWindow();
+        
+        captureAccount(findByAccountButton, accountTextField);
+    }
+
+    // EFFECTS: initializes the find by category form in remove mode
+    public void initEditFindByCategory() {
+        editFindByCategory = new JPanel();
+        setCashFlowFormLayoutAndSize(editFindByCategory);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter category");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel(capturedStatus == "debit" ? viewDebitCategory() : viewCreditCategory());
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField categoryTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        categoryTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton findByCategoryButton = new JButton(new OpenEditCashFlow());
+        findByCategoryButton.addActionListener(new DisplayFindByCategoryAction());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, categoryTextField, buttonPanel,
+                findByCategoryButton);
+
+        addAllPanelCashFlowForm(editFindByCategory, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(editFindByCategory, BorderLayout.SOUTH);
+
+        fixWindow();
+
+        captureCategory(findByCategoryButton, categoryTextField);
+    }
+
+    // EFFECTS: initializes the add date of cash flow form
+    public void initEditFindByDate() {
+        setCashFlowFormLayoutAndSize(editFindByDate);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter date");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel("YYYY/MM/DD");
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField dateTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        dateTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton findByDateButton = new JButton(new OpenEditCashFlow());
+        findByDateButton.addActionListener(new DisplayFindByDateAction());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, dateTextField, buttonPanel,
+                findByDateButton);
+
+        addAllPanelCashFlowForm(editFindByDate, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(editFindByDate, BorderLayout.SOUTH);
+
+        fixWindow();
+
+        captureDate(findByDateButton, dateTextField);
+    }
+
+    // EFFECTS: initializes the panel to choose what to edit
+    public void initEditChooseCashFlow() {
+        setCashFlowFormLayoutAndSize(editChooseCashFlow);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Choose the number of cash flow to be edited");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel("e.g: 1/2/...");
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField numTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        numTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton chooseButton = new JButton(new EditChooseCashFlowAction());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        labelPanel.add(label);
+        infoPanel.add(infoLabel);
+        fieldPanel.add(numTextField);
+        buttonPanel.add(chooseButton);
+
+        addAllPanelCashFlowForm(editChooseCashFlow, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(editChooseCashFlow, BorderLayout.SOUTH);
+
+        fixWindow();
+
+        captureIndex(chooseButton, numTextField);
+    }
+
+    // EFFECTS: initializes the options to edit a cash flow
+    public void initEditOptionCashFlow() {
+        editOptionCashFlow.setLayout(new GridLayout(4, 2));
+        editOptionCashFlow.setPreferredSize(new Dimension(40, 300));
+
+        JButton openEditStatusButton = new JButton(new OpenEditStatusAction());
+        openEditStatusButton.setPreferredSize(new Dimension(20, 75));
+
+        JButton openEditAccountButton = new JButton(new OpenEditAccountAction());
+        openEditAccountButton.setPreferredSize(new Dimension(20, 75));
+
+        JButton openEditCategoryButton = new JButton(new OpenEditCategoryAction());
+        openEditCategoryButton.setPreferredSize(new Dimension(20, 75));
+
+        JButton openEditDateButton = new JButton(new OpenEditDateAction());
+        openEditDateButton.setPreferredSize(new Dimension(20, 75));
+
+        JButton openEditTimeButton = new JButton(new OpenEditTimeAction());
+        openEditTimeButton.setPreferredSize(new Dimension(20, 75));
+
+        JButton openEditDescriptiButton = new JButton(new OpenEditDescriptionAction());
+        openEditDescriptiButton.setPreferredSize(new Dimension(20, 75));
+
+        JButton openEditAmountButton = new JButton(new OpenEditAmountAction());
+        openEditAmountButton.setPreferredSize(new Dimension(20, 75));
+
+        JButton quitButton = new JButton(new QuitAction());
+        quitButton.setPreferredSize(new Dimension(20, 75));
+
+        addAllButtonEditOptionCashFlow(openEditStatusButton, openEditAccountButton, openEditCategoryButton,
+                openEditTimeButton, openEditDateButton, openEditDescriptiButton, openEditAmountButton, quitButton);
+
+        window.add(editOptionCashFlow, BorderLayout.SOUTH);
+
+        fixWindow();
+    }
+
+    // EFFECTS: helper method to add all buttons to editOptionCashFlow panel
+    private void addAllButtonEditOptionCashFlow(JButton b1, JButton b2, JButton b3, JButton b4, JButton b5,
+            JButton b6, JButton b7, JButton b8) {
+        editOptionCashFlow.add(b1);
+        editOptionCashFlow.add(b2);
+        editOptionCashFlow.add(b3);
+        editOptionCashFlow.add(b4);
+        editOptionCashFlow.add(b5);
+        editOptionCashFlow.add(b6);
+        editOptionCashFlow.add(b7);
+        editOptionCashFlow.add(b8);
+    }
+
+    // EFFECTS: initializes the edit status of cash flow form
+    public void initEditStatus() {
+        setCashFlowFormLayoutAndSize(editStatus);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter status");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel("credit/debit");
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField statusTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        statusTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton editStatusButton = new JButton(new EditStatusAction());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, statusTextField, buttonPanel,
+                editStatusButton);
+
+        addAllPanelCashFlowForm(editStatus, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(editStatus, BorderLayout.SOUTH);
+
+        fixWindow();
+
+        captureStatus(editStatusButton, statusTextField);
+    }
+
+    // EFFECTS: initializes the edit account of cash flow form
+    public void initEditAccount() {
+        editAccount = new JPanel();
+        setCashFlowFormLayoutAndSize(editAccount);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter account");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel(viewAccounts());
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField accountTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        accountTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton editAccountButton = new JButton(new EditAccountAction());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, accountTextField, buttonPanel,
+                editAccountButton);
+
+        addAllPanelCashFlowForm(editAccount, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(editAccount, BorderLayout.SOUTH);
+
+        fixWindow();
+        
+        captureAccount(editAccountButton, accountTextField);
+    }
+
+    // EFFECTS: initializes the edit category of cash flow form
+    public void initEditCategory() {
+        editCategory = new JPanel();
+        setCashFlowFormLayoutAndSize(editCategory);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter category");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel(capturedStatus == "debit" ? viewDebitCategory() : viewCreditCategory());
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField categoryTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        categoryTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton editCategoryButton = new JButton(new EditCategoryAction());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, categoryTextField, buttonPanel,
+                editCategoryButton);
+
+        addAllPanelCashFlowForm(editCategory, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(editCategory, BorderLayout.SOUTH);
+
+        fixWindow();
+
+        captureCategory(editCategoryButton, categoryTextField);
+    }
+
+    // EFFECTS: initializes the edit date of cash flow form
+    public void initEditDate() {
+        setCashFlowFormLayoutAndSize(editDate);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter date");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel("YYYY/MM/DD");
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField dateTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        dateTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton editDateButton = new JButton(new EditDateAction());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, dateTextField, buttonPanel,
+                editDateButton);
+
+        addAllPanelCashFlowForm(editDate, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(editDate, BorderLayout.SOUTH);
+
+        fixWindow();
+
+        captureDate(editDateButton, dateTextField);
+    }
+
+    // EFFECTS: initializes the edit time of cash flow form
+    public void initEditTime() {
+        setCashFlowFormLayoutAndSize(editTime);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter time");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel("HH:MM");
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField timeTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        timeTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton editTimeButton = new JButton(new EditTimeAction());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, timeTextField, buttonPanel,
+                editTimeButton);
+
+        addAllPanelCashFlowForm(editTime, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(editTime, BorderLayout.SOUTH);
+
+        fixWindow();
+
+        captureTime(editTimeButton, timeTextField);
+    }
+
+    // EFFECTS: initializes the edit description of cash flow form
+    public void initEditDescription() {
+        setCashFlowFormLayoutAndSize(editDescription);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter description");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel("");
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField descriptionTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        descriptionTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton editDescriptionButton = new JButton(new EditDescriptionAction());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, descriptionTextField,
+                buttonPanel, editDescriptionButton);
+
+        addAllPanelCashFlowForm(editDescription, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(editDescription, BorderLayout.SOUTH);
+
+        fixWindow();
+
+        captureDescription(editDescriptionButton, descriptionTextField);
+    }
+
+    // EFFECTS: initializes the edit amount of cash flow form
+    public void initEditAmount() {
+        setCashFlowFormLayoutAndSize(editAmount);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter amount of money");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel("Number only");
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField amountTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        amountTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton editAmountButton = new JButton(new EditAmountAction());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, amountTextField, buttonPanel,
+                editAmountButton);
+
+        addAllPanelCashFlowForm(editAmount, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(editAmount, BorderLayout.SOUTH);
+
+        fixWindow();
+
+        captureAmount(editAmountButton, amountTextField);
+    }
+
+    // EFFECTS: initializes the menu for removing cash flow
     public void initRemoveMoneyTrackerMenu() {
         removeMoneyTrackerMenu.setLayout(new GridLayout(3, 3));
         removeMoneyTrackerMenu.setPreferredSize(new Dimension(40, 300));
 
-        JButton removeFindByStatusButton = new JButton(new FindByStatusAction());
+        JButton removeFindByStatusButton = new JButton(new RemoveFindByStatusAction());
         removeFindByStatusButton.setPreferredSize(new Dimension(20, 100));
 
-        JButton removeFindByAccountButton = new JButton(new FindByAccountAction());
+        JButton removeFindByAccountButton = new JButton(new RemoveFindByAccountAction());
         removeFindByAccountButton.setPreferredSize(new Dimension(20, 100));
 
-        JButton removeFindByCategoryButton = new JButton(new FindByCategoryAction());
+        JButton removeFindByCategoryButton = new JButton(new RemoveFindByCategoryAction());
         removeFindByCategoryButton.setPreferredSize(new Dimension(20, 100));
 
-        JButton removeFindByDateButton = new JButton(new FindByDateAction());
+        JButton removeFindByDateButton = new JButton(new RemoveFindByDateAction());
         removeFindByDateButton.setPreferredSize(new Dimension(20, 100));
 
         JButton backMainMenuButton = new JButton(new BackMainMenu());
@@ -1289,6 +1877,20 @@ public class MoneyTrackerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            saveMenuBeforeQuit.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class with the action to exit MoneyTrackerApp
+     */
+    private class Quit extends AbstractAction {
+        Quit() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
             System.exit(0);
         }
     }
@@ -1468,7 +2070,383 @@ public class MoneyTrackerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO
+            setAllInvinsible();
+            editMoneyTrackerMenu.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class with the action to open the column to find the cash flow by status
+     */
+    private class EditFindByStatusAction extends AbstractAction {
+        EditFindByStatusAction() {
+            super("Find by status");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            initEditFindByStatus();
+            editFindByStatus.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class with the action to open the column to find the cash flow by account
+     */
+    private class EditFindByAccountAction extends AbstractAction {
+        EditFindByAccountAction() {
+            super("Find by account");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            editFindByAccount.setVisible(true);
+            initEditFindByAccount();
+        }
+    }
+
+    /*
+     * Represents a class with the action to open the column to find the cash flow by category
+     */
+    private class EditFindByCategoryAction extends AbstractAction {
+        EditFindByCategoryAction() {
+            super("Find by category");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            editFindByCategory.setVisible(true);
+            initEditFindByCategory();
+        }
+    }
+
+    /*
+     * Represents a class with the action to open the column to find the cash flow by date
+     */
+    private class EditFindByDateAction extends AbstractAction {
+        EditFindByDateAction() {
+            super("Find by date");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            editFindByDate.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class with the action to open the options to choose what to edit
+     */
+    private class OpenEditCashFlow extends AbstractAction {
+        OpenEditCashFlow() {
+            super("Find");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllMenuInvinsible();
+            editChooseCashFlow.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class with the action to open the options to choose what to edit
+     */
+    private class EditChooseCashFlowAction extends AbstractAction {
+        EditChooseCashFlowAction() {
+            super("Choose");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllMenuInvinsible();
+            editChooseCashFlow.setVisible(true);
+            List<CashFlow> chosenCashFlow = new ArrayList<>();
+            chosenCashFlow.add(filteredCashFlows.get(capturedNumber - 1));
+
+            setAllInvinsible();
+
+            cashflowsPanel.setVisible(false);
+            cashflowsPanel = new ImagePanel();
+            cashflowsPanel.setLayout(new BoxLayout(cashflowsPanel, BoxLayout.Y_AXIS));
+            cashflowsPanel.initImagePanel(imagePanelWidth, imagePanelHeight);
+            cashflowsPanel.setBackground(Color.LIGHT_GRAY);
+
+            JPanel listPanel = new JPanel();
+
+            JLabel cashflows = new JLabel(displayCashFlow(chosenCashFlow));
+            listPanel.add(cashflows);
+
+            cashflowsPanel.add(listPanel);
+
+            window.add(cashflowsPanel, BorderLayout.NORTH);
+
+            JScrollPane scrollCashFlow = new JScrollPane(listPanel);
+            scrollCashFlow.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            scrollCashFlow.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+            cashflowsPanel.add(scrollCashFlow, BorderLayout.CENTER);
+
+            editOptionCashFlow.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class to open edit status form
+     */
+    private class OpenEditStatusAction extends AbstractAction {
+        OpenEditStatusAction() {
+            super("Edit status");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllMenuInvinsible();
+            editStatus.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class to open edit account form
+     */
+    private class OpenEditAccountAction extends AbstractAction {
+        OpenEditAccountAction() {
+            super("Edit account");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllMenuInvinsible();
+            initEditAccount();
+            editAccount.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class to open edit category form
+     */
+    private class OpenEditCategoryAction extends AbstractAction {
+        OpenEditCategoryAction() {
+            super("Edit category");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllMenuInvinsible();
+            initEditCategory();
+            editCategory.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class to open edit date form
+     */
+    private class OpenEditDateAction extends AbstractAction {
+        OpenEditDateAction() {
+            super("Edit date");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllMenuInvinsible();
+            editDate.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class to open edit time form
+     */
+    private class OpenEditTimeAction extends AbstractAction {
+        OpenEditTimeAction() {
+            super("Edit time");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllMenuInvinsible();
+            editTime.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class to open edit description form
+     */
+    private class OpenEditDescriptionAction extends AbstractAction {
+        OpenEditDescriptionAction() {
+            super("Edit description");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllMenuInvinsible();
+            editDescription.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class to open edit amount form
+     */
+    private class OpenEditAmountAction extends AbstractAction {
+        OpenEditAmountAction() {
+            super("Edit amount");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllMenuInvinsible();
+            editAmount.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class to edit a cash flow status
+     */
+    private class EditStatusAction extends AbstractAction {
+        EditStatusAction() {
+            super("Edit");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllMenuInvinsible();
+            moneyTrackerMenu.setVisible(true);
+
+            CashFlow chosen = filteredCashFlows.get(0);
+            setStatus(chosen, capturedStatus);
+
+            cashflowsPanel.setVisible(false);
+            ip.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class to edit a cash flow account
+     */
+    private class EditAccountAction extends AbstractAction {
+        EditAccountAction() {
+            super("Edit");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllMenuInvinsible();
+            moneyTrackerMenu.setVisible(true);
+
+            CashFlow chosen = filteredCashFlows.get(0);
+            setAccount(chosen, capturedAccount);
+
+            cashflowsPanel.setVisible(false);
+            ip.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class to edit a cash flow category
+     */
+    private class EditCategoryAction extends AbstractAction {
+        EditCategoryAction() {
+            super("Edit");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllMenuInvinsible();
+            moneyTrackerMenu.setVisible(true);
+
+            CashFlow chosen = filteredCashFlows.get(0);
+            String chosenStatus = chosen.getStatus();
+            setCategory(chosen, capturedCategory, chosenStatus);
+
+            cashflowsPanel.setVisible(false);
+            ip.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class to edit a cash flow date
+     */
+    private class EditDateAction extends AbstractAction {
+        EditDateAction() {
+            super("Edit");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllMenuInvinsible();
+            moneyTrackerMenu.setVisible(true);
+
+            CashFlow chosen = filteredCashFlows.get(0);
+            setDate(chosen, capturedDate);
+
+            cashflowsPanel.setVisible(false);
+            ip.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class to edit a cash flow time
+     */
+    private class EditTimeAction extends AbstractAction {
+        EditTimeAction() {
+            super("Edit");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllMenuInvinsible();
+            moneyTrackerMenu.setVisible(true);
+
+            CashFlow chosen = filteredCashFlows.get(0);
+            setTime(chosen, capturedTime);
+
+            cashflowsPanel.setVisible(false);
+            ip.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class to edit a cash flow description
+     */
+    private class EditDescriptionAction extends AbstractAction {
+        EditDescriptionAction() {
+            super("Edit");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllMenuInvinsible();
+            moneyTrackerMenu.setVisible(true);
+
+            CashFlow chosen = filteredCashFlows.get(0);
+            setDescription(chosen, capturedDescription);
+
+            cashflowsPanel.setVisible(false);
+            ip.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class to edit a cash flow amount
+     */
+    private class EditAmountAction extends AbstractAction {
+        EditAmountAction() {
+            super("Edit");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllMenuInvinsible();
+            moneyTrackerMenu.setVisible(true);
+
+            CashFlow chosen = filteredCashFlows.get(0);
+            setAmount(chosen, String.valueOf(capturedAmount));
+
+            cashflowsPanel.setVisible(false);
+            ip.setVisible(true);
         }
     }
 
@@ -1490,8 +2468,8 @@ public class MoneyTrackerApp extends JFrame {
     /*
      * Represents a class with the action to open the column to find the cash flow by status
      */
-    private class FindByStatusAction extends AbstractAction {
-        FindByStatusAction() {
+    private class RemoveFindByStatusAction extends AbstractAction {
+        RemoveFindByStatusAction() {
             super("Find by status");
         }
 
@@ -1505,8 +2483,8 @@ public class MoneyTrackerApp extends JFrame {
     /*
      * Represents a class with the action to open the column to find the cash flow by account
      */
-    private class FindByAccountAction extends AbstractAction {
-        FindByAccountAction() {
+    private class RemoveFindByAccountAction extends AbstractAction {
+        RemoveFindByAccountAction() {
             super("Find by account");
         }
 
@@ -1521,8 +2499,8 @@ public class MoneyTrackerApp extends JFrame {
     /*
      * Represents a class with the action to open the column to find the cash flow by category
      */
-    private class FindByCategoryAction extends AbstractAction {
-        FindByCategoryAction() {
+    private class RemoveFindByCategoryAction extends AbstractAction {
+        RemoveFindByCategoryAction() {
             super("Find by category");
         }
 
@@ -1537,8 +2515,8 @@ public class MoneyTrackerApp extends JFrame {
     /*
      * Represents a class with the action to open the column to find the cash flow by date
      */
-    private class FindByDateAction extends AbstractAction {
-        FindByDateAction() {
+    private class RemoveFindByDateAction extends AbstractAction {
+        RemoveFindByDateAction() {
             super("Find by date");
         }
 
@@ -2669,15 +3647,20 @@ public class MoneyTrackerApp extends JFrame {
         spaceSeparator();
         System.out.println("Please specify the new status \n");
         String input = this.scanner.nextLine();
+        setStatus(cf, input);
+        editStatus(cf);
+    }
+
+    // MODIFIES: cf
+    // EFFECTS: sets the inputted status to the selected cash flow
+    private void setStatus(CashFlow cf, String input) {
         if (input.equals("credit")) {
             cf.setAsCredit();
             System.out.println("\nThe cash flow has been edited");
-        } else if (input.equals("debit")) {
+        } else {
             cf.setAsDebit();
             System.out.println("\nThe cash flow has been edited");
-        } else {
-            editStatus(cf);
-        }
+        } 
     }
 
     // MODIFIES: cf
@@ -2687,14 +3670,19 @@ public class MoneyTrackerApp extends JFrame {
         System.out.println("Please specify the new account");
         displayAccountList();
         String account = this.scanner.nextLine();
-        if (isValidAccount(account)) {
-            cf.setAccount(account);
-            System.out.println("\nThe cash flow has been edited");
-        } else {
-            editAccount(cf);
-        }
+        setAccount(cf, account);
+        editAccount(cf);
     }
 
+    // MODIFIES: cf
+    // EFFECTS: sets the inputted account to the selected cash flow
+    private void setAccount(CashFlow cf, String input) {
+        if (isValidAccount(input)) {
+            cf.setAccount(input);
+            System.out.println("\nThe cash flow has been edited");
+        } 
+    }
+    
     // MODIFIES: cf
     // EFFECTS: changes the category of the CashFlow object
     public void editCategory(CashFlow cf) {
@@ -2706,19 +3694,25 @@ public class MoneyTrackerApp extends JFrame {
 
         if (category.equals("q")) {
             System.exit(0);
-        } else if (status.equals("credit")) {
-            if (isValidCreditCategory(category)) {
-                cf.setCategory(category);
+        }
+        setCategory(cf, category, status);
+        editCategory(cf);
+    }
+
+    // MODIFIES: cf
+    // EFFECTS: sets the inputted category to the selected cash flow
+    private void setCategory(CashFlow cf, String input, String status) {
+        if (status.equals("credit")) {
+            if (isValidCreditCategory(input)) {
+                cf.setCategory(input);
                 System.out.println("\nThe cash flow has been edited");
             }
         } else if (status.equals("debit")) {
-            if (isValidDebitCategory(category)) {
-                cf.setCategory(category);
+            if (isValidDebitCategory(input)) {
+                cf.setCategory(input);
                 System.out.println("\nThe cash flow has been edited");
             }
-        } else {
-            editCategory(cf);
-        }
+        } 
     }
 
     // MODIFIES: cf
@@ -2727,13 +3721,17 @@ public class MoneyTrackerApp extends JFrame {
         spaceSeparator();
         System.out.println("Please specify the new date \n");
         String date = this.scanner.nextLine();
-        String format = "yyyy/MM/dd";
+        setDate(cf, date);
+        editDate(cf);
+    }
 
-        if (isValidDate(date, format)) {
-            cf.setDate(date);
+    // MODIFIES: cf
+    // EFFECTS: sets the inputted date to the selected cash flow
+    private void setDate(CashFlow cf, String input) {
+        String format = "yyyy/MM/dd";
+        if (isValidDate(input, format)) {
+            cf.setDate(input);
             System.out.println("\nThe cash flow has been edited");
-        } else {
-            editDate(cf);
         }
     }
 
@@ -2743,11 +3741,16 @@ public class MoneyTrackerApp extends JFrame {
         spaceSeparator();
         System.out.println("Please specify the new time \n");
         String time = this.scanner.nextLine();
-        if (isValidTime(time)) {
-            cf.setTime(time);
+        setTime(cf, time);
+        editTime(cf);
+    }
+
+    // MODIFIES: cf
+    // EFFECTS: sets the inputted time to the selected cash flow
+    private void setTime(CashFlow cf, String input) {
+        if (isValidTime(input)) {
+            cf.setTime(input);
             System.out.println("\nThe cash flow has been edited");
-        } else {
-            editTime(cf);
         }
     }
 
@@ -2757,7 +3760,13 @@ public class MoneyTrackerApp extends JFrame {
         spaceSeparator();
         System.out.println("Please specify the new category \n");
         String description = this.scanner.nextLine();
-        cf.setDescription(description);
+        setDescription(cf, description);
+    }
+
+    // MODIFIES: cf
+    // EFFECTS: sets the inputted description to the selected cash flow
+    private void setDescription(CashFlow cf, String input) {
+        cf.setDescription(input);
         System.out.println("\nThe cash flow has been edited");
     }
 
@@ -2767,14 +3776,19 @@ public class MoneyTrackerApp extends JFrame {
         spaceSeparator();
         System.out.println("Please specify the new amount \n");
         String amount = this.scanner.nextLine();
-        if (isValidAmount(amount)) {
-            double numAmount = Double.parseDouble(amount);
+        setAmount(cf, amount);
+        editAmount(cf);
+    }
+
+    // MODIFIES: cf
+    // EFFECTS: sets the inputted amount to the selected cash flow
+    private void setAmount(CashFlow cf, String input) {
+        if (isValidAmount(input)) {
+            double numAmount = Double.parseDouble(input);
             
             cf.setAmount(numAmount);
             System.out.println("\nThe cash flow has been edited");
-        } else {
-            editAmount(cf);
-        }
+        } 
     }
 
     // EFFECTS: runs an interactive options to find and remove a registered
@@ -3026,6 +4040,8 @@ public class MoneyTrackerApp extends JFrame {
 
     // EFFECTS: displays selected cash flows
     public String displayCashFlow(List<CashFlow> cashFlowList) {
+        sortByTime();
+        sortByDate();
         StringBuilder sb1 = new StringBuilder();
         StringBuilder sb2 = new StringBuilder();
         sb1.append("<html>");
