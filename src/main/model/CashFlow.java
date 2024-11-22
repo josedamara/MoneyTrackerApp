@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Collection;
-
 import org.json.JSONObject;
 
 import persistence.Writable;

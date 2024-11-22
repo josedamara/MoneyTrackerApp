@@ -8,7 +8,6 @@ import persistence.JsonWriter;
 import java.util.*;
 
 import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -58,7 +57,6 @@ public class MoneyTrackerApp extends JFrame {
     private JPanel saveMenu = new JPanel();
     private JPanel saveMenuBeforeQuit = new JPanel();
     private JPanel categoryMenu = new JPanel();
-    private JPanel debitCategoryMenu = new JPanel();
     private JPanel creditCategoryMenu = new JPanel();
     private JPanel accountMenu = new JPanel();
 
@@ -97,6 +95,21 @@ public class MoneyTrackerApp extends JFrame {
     private JPanel editAmount = new JPanel();
 
     private ImagePanel cashflowsPanel = new ImagePanel();
+
+    private JPanel debitCategoryMenu = new JPanel();
+    private JPanel addDebitCategory = new JPanel();
+    private JPanel deleteDebitCategory = new JPanel();
+    private JPanel viewDebitCategory = new JPanel();
+
+    private JPanel CreditCategoryMenu = new JPanel();
+    private JPanel addCreditCategory = new JPanel();
+    private JPanel deleteCreditCategory = new JPanel();
+    private JPanel viewCreditCategory = new JPanel();
+
+    private JPanel addAccount = new JPanel();
+    private JPanel deleteAccount = new JPanel();
+    private JPanel viewListOfAccounts = new JPanel();
+    private JPanel viewwAnAccountBalance = new JPanel();
 
     private Font labelFont = new Font("Arial", Font.PLAIN, 24);
     private Font infoFont = new Font("Arial", Font.PLAIN, 12);
@@ -241,6 +254,16 @@ public class MoneyTrackerApp extends JFrame {
         debitCategoryMenu.setVisible(false);
         creditCategoryMenu.setVisible(false);
         accountMenu.setVisible(false);
+        setAllAddCashFlowInvinsible();
+        setAllViewCashFlowInvinsible();
+        setAllRemoveCashFlowInvisible();
+        setAllEditCashFlowInvisible();
+        setAllDebitCategoryPanelInvinsible();
+        setAllCreditCategoryPanelInvinsible();
+    }
+
+    // EFFECTS: helper method to hide panel related to add cash flow
+    private void setAllAddCashFlowInvinsible() {
         addStatusMoneyTrackerForm.setVisible(false);
         addAccountMoneyTrackerForm.setVisible(false);
         addCategoryMoneyTrackerForm.setVisible(false);
@@ -248,11 +271,13 @@ public class MoneyTrackerApp extends JFrame {
         addTimeMoneyTrackerForm.setVisible(false);
         addDescriptionMoneyTrackerForm.setVisible(false);
         addAmountMoneyTrackerForm.setVisible(false);
+    }
+
+    // EFFECTS: helper method to hide panel related to view cash flow
+    private void setAllViewCashFlowInvinsible() {
         viewMoneyTrackerMenu.setVisible(false);
         viewMonthlyMoneyTracker.setVisible(false);
         viewMonthlyCashFlowForm.setVisible(false);
-        setAllRemoveCashFlowInvisible();
-        setAllEditCashFlowInvisible();
     }
 
     // EFFECTS: helper method to hide panel related to remove cash flow
@@ -283,6 +308,21 @@ public class MoneyTrackerApp extends JFrame {
         editAmount.setVisible(false);
     }
 
+    // EFFECTS: helper method to hide panel related to debit category
+    private void setAllDebitCategoryPanelInvinsible() {
+        debitCategoryMenu.setVisible(false);
+        addDebitCategory.setVisible(false);
+        deleteDebitCategory.setVisible(false);
+        viewDebitCategory.setVisible(false);
+    }
+
+    // EFFECTS: helper method to hide panel related to credit category
+    private void setAllCreditCategoryPanelInvinsible() {
+        creditCategoryMenu.setVisible(false);
+        addCreditCategory.setVisible(false);
+        deleteCreditCategory.setVisible(false);
+        viewCreditCategory.setVisible(false);
+    }
 
     // EFFECTS: sets the image panel to display the logo
     private void displayLogo() {
@@ -476,6 +516,110 @@ public class MoneyTrackerApp extends JFrame {
         debitCategoryMenu.add(backCategoryMenuButton);
 
         window.add(debitCategoryMenu, BorderLayout.SOUTH);
+
+        fixWindow();
+    }
+
+    // EFFECTS: initializes the add debit category of cash flow form
+    public void initAddDebitCategory() {
+        addDebitCategory = new JPanel();
+        setCashFlowFormLayoutAndSize(addDebitCategory);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter new debit category");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel(viewDebitCategory());
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField categoryTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        categoryTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton addDebitCategoryButton = new JButton(new AddDebitCategory());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, categoryTextField, buttonPanel,
+                addDebitCategoryButton);
+
+        addAllPanelCashFlowForm(addDebitCategory, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(addDebitCategory, BorderLayout.SOUTH);
+
+        fixWindow();
+
+        captureCategory(addDebitCategoryButton, categoryTextField);
+    }
+
+    // EFFECTS: initializes the delete debit category of cash flow form
+    public void initDeleteDebitCategory() {
+        deleteDebitCategory = new JPanel();
+        setCashFlowFormLayoutAndSize(deleteDebitCategory);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter an existing debit category");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel(viewDebitCategory());
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField categoryTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        categoryTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton addDebitCategoryButton = new JButton(new DeleteDebitCategory());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, categoryTextField, buttonPanel,
+                addDebitCategoryButton);
+
+        addAllPanelCashFlowForm(deleteDebitCategory, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(deleteDebitCategory, BorderLayout.SOUTH);
+
+        fixWindow();
+
+        captureCategory(addDebitCategoryButton, categoryTextField);
+    }
+
+    // EFFECTS: initializes the view debit category of cash flow form
+    public void initViewDebitCategory() {
+        viewDebitCategory = new JPanel();
+        setCashFlowFormLayoutAndSize(viewDebitCategory);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("List of all debit categories");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel(viewDebitCategory());
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel buttonPanel = new JPanel();
+        JButton backToDebitCategoryMenuButton = new JButton(new BackDebitCategoryAction());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        labelPanel.add(label);
+        infoPanel.add(infoLabel);
+        buttonPanel.add(backToDebitCategoryMenuButton);
+
+        viewDebitCategory.add(labelPanel);
+        viewDebitCategory.add(infoPanel);
+        viewDebitCategory.add(buttonPanel);
+
+        window.add(viewDebitCategory, BorderLayout.SOUTH);
 
         fixWindow();
     }
@@ -2800,7 +2944,24 @@ public class MoneyTrackerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO
+            setAllInvinsible();
+            initAddDebitCategory();
+        }
+    }
+
+    /*
+     * Represents a class with the action to add a debit category
+     */
+    private class AddDebitCategory extends AbstractAction {
+        AddDebitCategory() {
+            super("Add a debit category");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            debitCategoryMenu.setVisible(true);
+            moneySummary.addDebitCategory(capturedCategory);
         }
     }
 
@@ -2814,7 +2975,24 @@ public class MoneyTrackerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO
+            setAllInvinsible();
+            initDeleteDebitCategory();
+        }
+    }
+
+    /*
+     * Represents a class with the action to delete a debit category
+     */
+    private class DeleteDebitCategory extends AbstractAction {
+        DeleteDebitCategory() {
+            super("Delete a debit category");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            debitCategoryMenu.setVisible(true);
+            moneySummary.deleteDebitCategory(capturedCategory);
         }
     }
 
@@ -2828,7 +3006,23 @@ public class MoneyTrackerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TOOD
+            setAllInvinsible();
+            initViewDebitCategory();
+        }
+    }
+
+    /*
+     * Represents a class with the action to return to debit category menu
+     */
+    private class BackDebitCategoryAction extends AbstractAction {
+        BackDebitCategoryAction() {
+            super("Back to debit category menu");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            debitCategoryMenu.setVisible(true);
         }
     }
 
