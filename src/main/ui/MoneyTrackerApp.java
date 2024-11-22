@@ -73,6 +73,13 @@ public class MoneyTrackerApp extends JFrame {
     private JPanel viewMonthlyMoneyTracker = new JPanel();
     private JPanel viewMonthlyCashFlowForm = new JPanel();
 
+    private JPanel removeMoneyTrackerMenu = new JPanel();
+    private JPanel removeFindByStatus = new JPanel();
+    private JPanel removeFindByAccount = new JPanel();
+    private JPanel removeFindByCategory = new JPanel();
+    private JPanel removeFindByDate = new JPanel();
+    private JPanel removeCashFlow = new JPanel();
+
     private ImagePanel cashflowsPanel = new ImagePanel();
 
     private Font labelFont = new Font("Arial", Font.PLAIN, 24);
@@ -88,6 +95,9 @@ public class MoneyTrackerApp extends JFrame {
 
     private String capturedMonth;
     private String capturedYear;
+
+    private int capturedNumber;
+    private List<CashFlow> filteredCashFlows;
 
     private final int frameWidth = 800;
     private final int frameHeight = 600;
@@ -176,6 +186,11 @@ public class MoneyTrackerApp extends JFrame {
         initViewMoneyTrackerMenu();
         initViewMonthlyMoneyTracker();
         initViewMonthlyMoneyTrackerForm();
+        initRemoveMoneyTrackerMenu();
+        initRemoveFindByStatus();
+        initRemoveFindByCategory();
+        initRemoveFindByDate();
+        initRemoveCashFlow();
     }
 
     // EFFECTS: sets all initialized to be invinsible
@@ -203,6 +218,17 @@ public class MoneyTrackerApp extends JFrame {
         viewMoneyTrackerMenu.setVisible(false);
         viewMonthlyMoneyTracker.setVisible(false);
         viewMonthlyCashFlowForm.setVisible(false);
+        setAllRemoveCashFlowInvisible();
+    }
+
+    // EFFECTS: helper method to hide panel related to remove cash flow
+    private void setAllRemoveCashFlowInvisible() {
+        removeMoneyTrackerMenu.setVisible(false);
+        removeFindByStatus.setVisible(false);
+        removeFindByAccount.setVisible(false);
+        removeFindByCategory.setVisible(false);
+        removeFindByDate.setVisible(false);
+        removeCashFlow.setVisible(false);
     }
 
     // EFFECTS: sets the image panel to display the logo
@@ -578,6 +604,27 @@ public class MoneyTrackerApp extends JFrame {
         });
     }
 
+    // EFFECTS: helper method to add action listener to capture inputted index
+    private void captureIndex(JButton submitButton, JTextField textField) {
+        submitButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                capturedNumber = Integer.parseInt(textField.getText());
+            }
+
+        });
+    }
+
+    // EFFECTS: helper method to add each component to its panel
+    private void addAllComponentToItsPanel(JPanel lp, JLabel ll, JPanel ip, JLabel il, JPanel fp, JTextField fl,
+            JPanel bp, JButton bl) {
+        lp.add(ll);
+        ip.add(il);
+        fp.add(fl);
+        bp.add(bl);
+    }
+
     // EFFECTS: initializes the add status of cash flow form
     public void initAddStatusCashFlowColumn() {
         setCashFlowFormLayoutAndSize(addStatusMoneyTrackerForm);
@@ -601,10 +648,8 @@ public class MoneyTrackerApp extends JFrame {
         JButton continueToAddAccountButton = new JButton(new ContinueToAddAccount());
         buttonPanel.setPreferredSize(new Dimension(20, 50));
 
-        labelPanel.add(label);
-        infoPanel.add(infoLabel);
-        fieldPanel.add(statusTextField);
-        buttonPanel.add(continueToAddAccountButton);
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, statusTextField, buttonPanel,
+                continueToAddAccountButton);
 
         addAllPanelCashFlowForm(addStatusMoneyTrackerForm, labelPanel, infoPanel, fieldPanel, buttonPanel);
 
@@ -639,10 +684,8 @@ public class MoneyTrackerApp extends JFrame {
         JButton continueToAddCategoryButton = new JButton(new ContinueToAddCategory());
         buttonPanel.setPreferredSize(new Dimension(20, 50));
 
-        labelPanel.add(label);
-        infoPanel.add(infoLabel);
-        fieldPanel.add(accountTextField);
-        buttonPanel.add(continueToAddCategoryButton);
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, accountTextField, buttonPanel,
+                continueToAddCategoryButton);
 
         addAllPanelCashFlowForm(addAccountMoneyTrackerForm, labelPanel, infoPanel, fieldPanel, buttonPanel);
 
@@ -677,10 +720,8 @@ public class MoneyTrackerApp extends JFrame {
         JButton continueToAddDateButton = new JButton(new ContinueToAddDate());
         buttonPanel.setPreferredSize(new Dimension(20, 50));
 
-        labelPanel.add(label);
-        infoPanel.add(infoLabel);
-        fieldPanel.add(categoryTextField);
-        buttonPanel.add(continueToAddDateButton);
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, categoryTextField, buttonPanel,
+                continueToAddDateButton);
 
         addAllPanelCashFlowForm(addCategoryMoneyTrackerForm, labelPanel, infoPanel, fieldPanel, buttonPanel);
 
@@ -714,10 +755,8 @@ public class MoneyTrackerApp extends JFrame {
         JButton continueToAddTimeButton = new JButton(new ContinueToAddTime());
         buttonPanel.setPreferredSize(new Dimension(20, 50));
 
-        labelPanel.add(label);
-        infoPanel.add(infoLabel);
-        fieldPanel.add(dateTextField);
-        buttonPanel.add(continueToAddTimeButton);
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, dateTextField, buttonPanel,
+                continueToAddTimeButton);
 
         addAllPanelCashFlowForm(addDateMoneyTrackerForm, labelPanel, infoPanel, fieldPanel, buttonPanel);
 
@@ -751,10 +790,8 @@ public class MoneyTrackerApp extends JFrame {
         JButton continueToAddDescription = new JButton(new ContinueToAddDescription());
         buttonPanel.setPreferredSize(new Dimension(20, 50));
 
-        labelPanel.add(label);
-        infoPanel.add(infoLabel);
-        fieldPanel.add(timeTextField);
-        buttonPanel.add(continueToAddDescription);
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, timeTextField, buttonPanel,
+                continueToAddDescription);
 
         addAllPanelCashFlowForm(addTimeMoneyTrackerForm, labelPanel, infoPanel, fieldPanel, buttonPanel);
 
@@ -785,13 +822,11 @@ public class MoneyTrackerApp extends JFrame {
         descriptionTextField.setPreferredSize(new Dimension(20, 50));
 
         JPanel buttonPanel = new JPanel();
-        JButton continueToAddDescription = new JButton(new ContinueToAddAmount());
+        JButton continueToAddAmount = new JButton(new ContinueToAddAmount());
         buttonPanel.setPreferredSize(new Dimension(20, 50));
 
-        labelPanel.add(label);
-        infoPanel.add(infoLabel);
-        fieldPanel.add(descriptionTextField);
-        buttonPanel.add(continueToAddDescription);
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, descriptionTextField,
+                buttonPanel, continueToAddAmount);
 
         addAllPanelCashFlowForm(addDescriptionMoneyTrackerForm, labelPanel, infoPanel, fieldPanel, buttonPanel);
 
@@ -799,7 +834,7 @@ public class MoneyTrackerApp extends JFrame {
 
         fixWindow();
 
-        captureDescription(continueToAddDescription, descriptionTextField);
+        captureDescription(continueToAddAmount, descriptionTextField);
     }
 
     // EFFECTS: initializes the add amouunt of cash flow form
@@ -825,10 +860,8 @@ public class MoneyTrackerApp extends JFrame {
         JButton continueToAddCashFlow = new JButton(new ContinueToAddCashFlowAction());
         buttonPanel.setPreferredSize(new Dimension(20, 50));
 
-        labelPanel.add(label);
-        infoPanel.add(infoLabel);
-        fieldPanel.add(amountTextField);
-        buttonPanel.add(continueToAddCashFlow);
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, amountTextField, buttonPanel,
+                continueToAddCashFlow);
 
         addAllPanelCashFlowForm(addAmountMoneyTrackerForm, labelPanel, infoPanel, fieldPanel, buttonPanel);
 
@@ -917,6 +950,224 @@ public class MoneyTrackerApp extends JFrame {
 
         captureMonth(displayMonthlyCashFlowButton, monthTextField);
         captureYear(displayMonthlyCashFlowButton, yearTextField);
+    }
+
+    // EFFECTS: initializes the menu for removing cash flow
+    public void initRemoveMoneyTrackerMenu() {
+        removeMoneyTrackerMenu.setLayout(new GridLayout(3, 3));
+        removeMoneyTrackerMenu.setPreferredSize(new Dimension(40, 300));
+
+        JButton removeFindByStatusButton = new JButton(new FindByStatusAction());
+        removeFindByStatusButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton removeFindByAccountButton = new JButton(new FindByAccountAction());
+        removeFindByAccountButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton removeFindByCategoryButton = new JButton(new FindByCategoryAction());
+        removeFindByCategoryButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton removeFindByDateButton = new JButton(new FindByDateAction());
+        removeFindByDateButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton backMainMenuButton = new JButton(new BackMainMenu());
+        backMainMenuButton.setPreferredSize(new Dimension(20, 100));
+
+        JButton quitButton = new JButton(new QuitAction());
+        quitButton.setPreferredSize(new Dimension(20, 100));
+
+        removeMoneyTrackerMenu.add(removeFindByStatusButton);
+        removeMoneyTrackerMenu.add(removeFindByAccountButton);
+        removeMoneyTrackerMenu.add(removeFindByCategoryButton);
+        removeMoneyTrackerMenu.add(removeFindByDateButton);
+        removeMoneyTrackerMenu.add(backMainMenuButton);
+        removeMoneyTrackerMenu.add(quitButton);
+
+        window.add(removeMoneyTrackerMenu, BorderLayout.SOUTH);
+
+        fixWindow();
+    }
+
+    // EFFECTS: initializes the find by status form in remove mode
+    public void initRemoveFindByStatus() {
+        setCashFlowFormLayoutAndSize(removeFindByStatus);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter status");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel("credit/debit");
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField statusTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        statusTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton findByStatusButton = new JButton(new OpenRemoveCashFlow());
+        findByStatusButton.addActionListener(new DisplayFindByStatusAction());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, statusTextField, buttonPanel,
+                findByStatusButton);
+
+        addAllPanelCashFlowForm(removeFindByStatus, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(removeFindByStatus, BorderLayout.SOUTH);
+
+        fixWindow();
+
+        captureStatus(findByStatusButton, statusTextField);
+    }
+
+    // EFFECTS: initializes the find by account form in remove mode
+    public void initRemoveFindByAccount() {
+        removeFindByAccount = new JPanel();
+        setCashFlowFormLayoutAndSize(removeFindByAccount);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter account");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel(viewAccounts());
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField accountTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        accountTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton findByAccountButton = new JButton(new OpenRemoveCashFlow());
+        findByAccountButton.addActionListener(new DisplayFindByAccountAction());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, accountTextField, buttonPanel,
+                findByAccountButton);
+
+        addAllPanelCashFlowForm(removeFindByAccount, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(removeFindByAccount, BorderLayout.SOUTH);
+
+        fixWindow();
+        
+        captureAccount(findByAccountButton, accountTextField);
+    }
+
+    // EFFECTS: initializes the find by category form in remove mode
+    public void initRemoveFindByCategory() {
+        removeFindByCategory = new JPanel();
+        setCashFlowFormLayoutAndSize(removeFindByCategory);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter category");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel(capturedStatus == "debit" ? viewDebitCategory() : viewCreditCategory());
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField categoryTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        categoryTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton findByCategoryButton = new JButton(new OpenRemoveCashFlow());
+        findByCategoryButton.addActionListener(new DisplayFindByCategoryAction());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, categoryTextField, buttonPanel,
+                findByCategoryButton);
+
+        addAllPanelCashFlowForm(removeFindByCategory, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(removeFindByCategory, BorderLayout.SOUTH);
+
+        fixWindow();
+
+        captureCategory(findByCategoryButton, categoryTextField);
+    }
+
+    // EFFECTS: initializes the add date of cash flow form
+    public void initRemoveFindByDate() {
+        setCashFlowFormLayoutAndSize(removeFindByDate);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter date");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel("YYYY/MM/DD");
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField dateTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        dateTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton findByDateButton = new JButton(new OpenRemoveCashFlow());
+        findByDateButton.addActionListener(new DisplayFindByDateAction());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, dateTextField, buttonPanel,
+                findByDateButton);
+
+        addAllPanelCashFlowForm(removeFindByDate, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(removeFindByDate, BorderLayout.SOUTH);
+
+        fixWindow();
+
+        captureDate(findByDateButton, dateTextField);
+    }
+
+    // EFFECTS: initializes the add date of cash flow form
+    public void initRemoveCashFlow() {
+        setCashFlowFormLayoutAndSize(removeCashFlow);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Choose the number of cash flow to be deleted");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel("e.g: 1/2/...");
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField numTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        numTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton removeButton = new JButton(new RemoveCashFlowAction());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        labelPanel.add(label);
+        infoPanel.add(infoLabel);
+        fieldPanel.add(numTextField);
+        buttonPanel.add(removeButton);
+
+        addAllPanelCashFlowForm(removeCashFlow, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(removeCashFlow, BorderLayout.SOUTH);
+
+        fixWindow();
+
+        captureIndex(removeButton, numTextField);
     }
 
     // EFFECTS: runs an interactive menu with options to load data from file or not
@@ -1232,7 +1483,257 @@ public class MoneyTrackerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO
+            setAllMenuInvinsible();
+            removeMoneyTrackerMenu.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class with the action to open the column to find the cash flow by status
+     */
+    private class FindByStatusAction extends AbstractAction {
+        FindByStatusAction() {
+            super("Find by status");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            removeFindByStatus.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class with the action to open the column to find the cash flow by account
+     */
+    private class FindByAccountAction extends AbstractAction {
+        FindByAccountAction() {
+            super("Find by account");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            removeFindByAccount.setVisible(true);
+            initRemoveFindByAccount();
+        }
+    }
+
+    /*
+     * Represents a class with the action to open the column to find the cash flow by category
+     */
+    private class FindByCategoryAction extends AbstractAction {
+        FindByCategoryAction() {
+            super("Find by category");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            removeFindByCategory.setVisible(true);
+            initRemoveFindByCategory();
+        }
+    }
+
+    /*
+     * Represents a class with the action to open the column to find the cash flow by date
+     */
+    private class FindByDateAction extends AbstractAction {
+        FindByDateAction() {
+            super("Find by date");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            removeFindByDate.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class with the action to display cashflows found by status
+     */
+    private class DisplayFindByStatusAction extends AbstractAction {
+        DisplayFindByStatusAction() {
+            super("Find");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+
+            cashflowsPanel.setVisible(false);
+            cashflowsPanel = new ImagePanel();
+            cashflowsPanel.setLayout(new BoxLayout(cashflowsPanel, BoxLayout.Y_AXIS));
+            cashflowsPanel.initImagePanel(imagePanelWidth, imagePanelHeight);
+            cashflowsPanel.setBackground(Color.LIGHT_GRAY);
+
+            JPanel listPanel = new JPanel();
+
+            filteredCashFlows = filterByStatus(moneySummary.getCashflows(), capturedStatus);
+            JLabel cashflows = new JLabel(displayCashFlow(filteredCashFlows));
+            listPanel.add(cashflows);
+
+            cashflowsPanel.add(listPanel);
+
+            window.add(cashflowsPanel, BorderLayout.NORTH);
+
+            ip.setVisible(false);
+
+            JScrollPane scrollCashFlow = new JScrollPane(listPanel);
+            scrollCashFlow.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            scrollCashFlow.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+            cashflowsPanel.add(scrollCashFlow, BorderLayout.CENTER);
+        }
+    }
+
+    /*
+     * Represents a class with the action to display cashflows found by account
+     */
+    private class DisplayFindByAccountAction extends AbstractAction {
+        DisplayFindByAccountAction() {
+            super("Find");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+
+            cashflowsPanel.setVisible(false);
+            cashflowsPanel = new ImagePanel();
+            cashflowsPanel.setLayout(new BoxLayout(cashflowsPanel, BoxLayout.Y_AXIS));
+            cashflowsPanel.initImagePanel(imagePanelWidth, imagePanelHeight);
+            cashflowsPanel.setBackground(Color.LIGHT_GRAY);
+
+            JPanel listPanel = new JPanel();
+
+            filteredCashFlows = filterByAccount(moneySummary.getCashflows(), capturedAccount);
+            JLabel cashflows = new JLabel(displayCashFlow(filteredCashFlows));
+            listPanel.add(cashflows);
+
+            cashflowsPanel.add(listPanel);
+
+            window.add(cashflowsPanel, BorderLayout.NORTH);
+
+            ip.setVisible(false);
+
+            JScrollPane scrollCashFlow = new JScrollPane(listPanel);
+            scrollCashFlow.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            scrollCashFlow.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+            cashflowsPanel.add(scrollCashFlow, BorderLayout.CENTER);
+        }
+    }
+
+    /*
+     * Represents a class with the action to display cashflows found by category
+     */
+    private class DisplayFindByCategoryAction extends AbstractAction {
+        DisplayFindByCategoryAction() {
+            super("Find");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+
+            cashflowsPanel.setVisible(false);
+            cashflowsPanel = new ImagePanel();
+            cashflowsPanel.setLayout(new BoxLayout(cashflowsPanel, BoxLayout.Y_AXIS));
+            cashflowsPanel.initImagePanel(imagePanelWidth, imagePanelHeight);
+            cashflowsPanel.setBackground(Color.LIGHT_GRAY);
+
+            JPanel listPanel = new JPanel();
+
+            filteredCashFlows = filterByCategory(moneySummary.getCashflows(), capturedCategory);
+            JLabel cashflows = new JLabel(displayCashFlow(filteredCashFlows));
+            listPanel.add(cashflows);
+
+            cashflowsPanel.add(listPanel);
+
+            window.add(cashflowsPanel, BorderLayout.NORTH);
+
+            ip.setVisible(false);
+
+            JScrollPane scrollCashFlow = new JScrollPane(listPanel);
+            scrollCashFlow.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            scrollCashFlow.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+            cashflowsPanel.add(scrollCashFlow, BorderLayout.CENTER);
+        }
+    }
+
+    /*
+     * Represents a class with the action to display cashflows found by date
+     */
+    private class DisplayFindByDateAction extends AbstractAction {
+        DisplayFindByDateAction() {
+            super("Find");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+
+            cashflowsPanel.setVisible(false);
+            cashflowsPanel = new ImagePanel();
+            cashflowsPanel.setLayout(new BoxLayout(cashflowsPanel, BoxLayout.Y_AXIS));
+            cashflowsPanel.initImagePanel(imagePanelWidth, imagePanelHeight);
+            cashflowsPanel.setBackground(Color.LIGHT_GRAY);
+
+            JPanel listPanel = new JPanel();
+
+            filteredCashFlows = filterByDate(moneySummary.getCashflows(), capturedDate);
+            JLabel cashflows = new JLabel(displayCashFlow(filteredCashFlows));
+            listPanel.add(cashflows);
+
+            cashflowsPanel.add(listPanel);
+
+            ip.setVisible(false);
+
+            window.add(cashflowsPanel, BorderLayout.NORTH);
+
+            JScrollPane scrollCashFlow = new JScrollPane(listPanel);
+            scrollCashFlow.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            scrollCashFlow.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+            cashflowsPanel.add(scrollCashFlow, BorderLayout.CENTER);
+            
+        }
+    }
+
+    /*
+     * Represents a class with the action to show the column to choose which cash flow to remove
+     */
+    private class OpenRemoveCashFlow extends AbstractAction {
+        OpenRemoveCashFlow() {
+            super("Find");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllMenuInvinsible();
+            removeCashFlow.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class with the action to show the column to choose which cash flow to remove
+     */
+    private class RemoveCashFlowAction extends AbstractAction {
+        RemoveCashFlowAction() {
+            super("Remove");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllMenuInvinsible();
+            removeMoneyTrackerMenu.setVisible(true);
+            CashFlow chosenCashFlow = filteredCashFlows.get(capturedNumber - 1);
+            moneySummary.getCashflows().remove(chosenCashFlow);
+            cashflowsPanel.setVisible(false);
+            ip.setVisible(true);
         }
     }
 
@@ -2320,13 +2821,7 @@ public class MoneyTrackerApp extends JFrame {
         System.out.println("Please specify which status to be filtered \n");
         String status = this.scanner.nextLine();
         List<CashFlow> cashFlowList = this.moneySummary.getCashflows();
-        List<CashFlow> newCashFlowList = new ArrayList<>();
-
-        for (int i = 0; i < cashFlowList.size(); i++) {
-            if (cashFlowList.get(i).getStatus().equals(status)) {
-                newCashFlowList.add(cashFlowList.get(i));
-            }
-        }
+        List<CashFlow> newCashFlowList = filterByStatus(cashFlowList, status);
 
         if (newCashFlowList.size() > 0) {
             CashFlow foundCashFlow = pickCashFlow(newCashFlowList);
@@ -2335,6 +2830,18 @@ public class MoneyTrackerApp extends JFrame {
             System.out.println("No cash flow found. Please try again!");
             handleEditCashFlow();
         }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: helper method to filter by status
+    private List<CashFlow> filterByStatus(List<CashFlow> cashFlowList, String status) {
+        List<CashFlow> newCashFlowList = new ArrayList<>();
+        for (int i = 0; i < cashFlowList.size(); i++) {
+            if (cashFlowList.get(i).getStatus().equals(status)) {
+                newCashFlowList.add(cashFlowList.get(i));
+            }
+        }
+        return newCashFlowList;
     }
 
     // MODIFIES: this
@@ -2345,13 +2852,7 @@ public class MoneyTrackerApp extends JFrame {
         displayAccountList();
         String account = this.scanner.nextLine();
         List<CashFlow> cashFlowList = this.moneySummary.getCashflows();
-        List<CashFlow> newCashFlowList = new ArrayList<>();
-
-        for (int i = 0; i < cashFlowList.size(); i++) {
-            if (cashFlowList.get(i).getAccount().equals(account)) {
-                newCashFlowList.add(cashFlowList.get(i));
-            }
-        }
+        List<CashFlow> newCashFlowList = filterByAccount(cashFlowList, account);
 
         if (newCashFlowList.size() > 0) {
             CashFlow foundCashFlow = pickCashFlow(newCashFlowList);
@@ -2360,6 +2861,18 @@ public class MoneyTrackerApp extends JFrame {
             System.out.println("No cash flow found. Please try again!");
             handleEditCashFlow();
         }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: helper method to filter by account
+    private List<CashFlow> filterByAccount(List<CashFlow> cashFlowList, String account) {
+        List<CashFlow> newCashFlowList = new ArrayList<>();
+        for (int i = 0; i < cashFlowList.size(); i++) {
+            if (cashFlowList.get(i).getAccount().equals(account)) {
+                newCashFlowList.add(cashFlowList.get(i));
+            }
+        }
+        return newCashFlowList;
     }
 
     // MODIFIES: this
@@ -2369,13 +2882,7 @@ public class MoneyTrackerApp extends JFrame {
         System.out.println("Please specify which category to be filtered \n");
         String category = this.scanner.nextLine();
         List<CashFlow> cashFlowList = this.moneySummary.getCashflows();
-        List<CashFlow> newCashFlowList = new ArrayList<>();
-
-        for (int i = 0; i < cashFlowList.size(); i++) {
-            if (cashFlowList.get(i).getCategory().equals(category)) {
-                newCashFlowList.add(cashFlowList.get(i));
-            }
-        }
+        List<CashFlow> newCashFlowList = filterByCategory(cashFlowList, category);
 
         if (newCashFlowList.size() > 0) {
             CashFlow foundCashFlow = pickCashFlow(newCashFlowList);
@@ -2387,19 +2894,25 @@ public class MoneyTrackerApp extends JFrame {
     }
 
     // MODIFIES: this
+    // EFFECTS: helper method to filter by category
+    private List<CashFlow> filterByCategory(List<CashFlow> cashFlowList, String category) {
+        List<CashFlow> newCashFlowList = new ArrayList<>();
+        for (int i = 0; i < cashFlowList.size(); i++) {
+            if (cashFlowList.get(i).getCategory().equals(category)) {
+                newCashFlowList.add(cashFlowList.get(i));
+            }
+        }
+        return newCashFlowList;
+    }
+
+    // MODIFIES: this
     // EFFECTS: find a CashFlow to be removed based on date inputted by the user
     public void removeCashFlowByDate() {
         spaceSeparator();
         System.out.println("Please specify which date to be filtered \n");
         String date = this.scanner.nextLine();
         List<CashFlow> cashFlowList = this.moneySummary.getCashflows();
-        List<CashFlow> newCashFlowList = new ArrayList<>();
-
-        for (int i = 0; i < cashFlowList.size(); i++) {
-            if (cashFlowList.get(i).getDate().equals(date)) {
-                newCashFlowList.add(cashFlowList.get(i));
-            }
-        }
+        List<CashFlow> newCashFlowList = filterByDate(cashFlowList, date);
 
         if (newCashFlowList.size() > 0) {
             CashFlow foundCashFlow = pickCashFlow(newCashFlowList);
@@ -2408,6 +2921,18 @@ public class MoneyTrackerApp extends JFrame {
             System.out.println("No cash flow found. Please try again!");
             handleEditCashFlow();
         }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: helper method to filter by date
+    private List<CashFlow> filterByDate(List<CashFlow> cashFlowList, String date) {
+        List<CashFlow> newCashFlowList = new ArrayList<>();
+        for (int i = 0; i < cashFlowList.size(); i++) {
+            if (cashFlowList.get(i).getDate().equals(date)) {
+                newCashFlowList.add(cashFlowList.get(i));
+            }
+        }
+        return newCashFlowList;
     }
 
     // MODIFIES: this
