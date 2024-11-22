@@ -8,19 +8,25 @@ import persistence.JsonWriter;
 import java.util.*;
 
 import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -54,6 +60,7 @@ public class MoneyTrackerApp extends JFrame {
     private JPanel debitCategoryMenu = new JPanel();
     private JPanel creditCategoryMenu = new JPanel();
     private JPanel accountMenu = new JPanel();
+
     private JPanel addStatusMoneyTrackerForm = new JPanel();
     private JPanel addAccountMoneyTrackerForm = new JPanel();
     private JPanel addCategoryMoneyTrackerForm = new JPanel();
@@ -61,6 +68,12 @@ public class MoneyTrackerApp extends JFrame {
     private JPanel addTimeMoneyTrackerForm = new JPanel();
     private JPanel addDescriptionMoneyTrackerForm = new JPanel();
     private JPanel addAmountMoneyTrackerForm = new JPanel();
+
+    private JPanel viewMoneyTrackerMenu = new JPanel();
+    private JPanel viewMonthlyMoneyTracker = new JPanel();
+    private JPanel viewMonthlyCashFlowForm = new JPanel();
+
+    private ImagePanel cashflowsPanel = new ImagePanel();
 
     private Font labelFont = new Font("Arial", Font.PLAIN, 24);
     private Font infoFont = new Font("Arial", Font.PLAIN, 12);
@@ -73,6 +86,15 @@ public class MoneyTrackerApp extends JFrame {
     private String capturedDescription;
     private double capturedAmount;
 
+    private String capturedMonth;
+    private String capturedYear;
+
+    private final int frameWidth = 800;
+    private final int frameHeight = 600;
+    private final int imagePanelWidth = frameWidth;
+    private final int imagePanelHeight = 280;
+
+    private ImageIcon logo = new ImageIcon("./data/logo.png");
 
     // EFFECTS: creates an instance of the MoneyTracker application
     public MoneyTrackerApp() {
@@ -111,11 +133,6 @@ public class MoneyTrackerApp extends JFrame {
 
     // EFFECTS: creates a JFrame as the base of the MoneyTrackerApp
     public void initFrame() {
-        int frameWidth = 800;
-        int frameHeight = 600;
-        int imagePanelWidth = frameWidth;
-        int imagePanelHeight = 280;
-
         window = new JFrame();
         window.setTitle("MoneyTrackerApp");
         window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -127,6 +144,7 @@ public class MoneyTrackerApp extends JFrame {
         ip = new ImagePanel();
         ip.initImagePanel(imagePanelWidth, imagePanelHeight);
         ip.setBackground(Color.LIGHT_GRAY);
+        displayLogo();
         window.add(ip, BorderLayout.NORTH);
 
         initAllMenu();
@@ -155,6 +173,9 @@ public class MoneyTrackerApp extends JFrame {
         initCreditCategoryMenu();
         initAccountMenu();
         initAddMoneyTrackerForm();
+        initViewMoneyTrackerMenu();
+        initViewMonthlyMoneyTracker();
+        initViewMonthlyMoneyTrackerForm();
     }
 
     // EFFECTS: sets all initialized to be invinsible
@@ -179,6 +200,28 @@ public class MoneyTrackerApp extends JFrame {
         addTimeMoneyTrackerForm.setVisible(false);
         addDescriptionMoneyTrackerForm.setVisible(false);
         addAmountMoneyTrackerForm.setVisible(false);
+        viewMoneyTrackerMenu.setVisible(false);
+        viewMonthlyMoneyTracker.setVisible(false);
+        viewMonthlyCashFlowForm.setVisible(false);
+    }
+
+    // EFFECTS: sets the image panel to display the logo
+    private void displayLogo() {
+        ip.setLayout(new BoxLayout(ip, BoxLayout.Y_AXIS));
+
+        JLabel title = new JLabel("MoneyTrackerApp");
+        title.setFont(new Font("Montserrat", Font.PLAIN, 36));
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        Image scaledLogo = logo.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        JLabel logoLabel = new JLabel(new ImageIcon(scaledLogo));
+        logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        ip.add(Box.createVerticalGlue());
+        ip.add(title);
+        ip.add(Box.createVerticalStrut(10));
+        ip.add(logoLabel);
+        ip.add(Box.createVerticalGlue());
     }
 
     // EFFECTS: creates buttons for the main menu
@@ -511,6 +554,30 @@ public class MoneyTrackerApp extends JFrame {
         });
     }
 
+    // EFFECTS: helper method to add action listener to capture inputted month
+    private void captureMonth(JButton submitButton, JTextField textField) {
+        submitButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                capturedMonth = textField.getText();
+            }
+
+        });
+    }
+
+    // EFFECTS: helper method to add action listener to capture inputted year
+    private void captureYear(JButton submitButton, JTextField textField) {
+        submitButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                capturedYear = textField.getText();
+            }
+
+        });
+    }
+
     // EFFECTS: initializes the add status of cash flow form
     public void initAddStatusCashFlowColumn() {
         setCashFlowFormLayoutAndSize(addStatusMoneyTrackerForm);
@@ -755,7 +822,7 @@ public class MoneyTrackerApp extends JFrame {
         amountTextField.setPreferredSize(new Dimension(20, 50));
 
         JPanel buttonPanel = new JPanel();
-        JButton continueToAddCashFlow = new JButton(new continueToAddCashFlow());
+        JButton continueToAddCashFlow = new JButton(new ContinueToAddCashFlowAction());
         buttonPanel.setPreferredSize(new Dimension(20, 50));
 
         labelPanel.add(label);
@@ -770,6 +837,86 @@ public class MoneyTrackerApp extends JFrame {
         fixWindow();
 
         captureAmount(continueToAddCashFlow, amountTextField);
+    }
+
+    // EFFECTS: initializes the view money tracker menu
+    public void initViewMoneyTrackerMenu() {
+        viewMoneyTrackerMenu.setLayout(new GridLayout(2, 2));
+
+        JButton viewAllCashFlowButton = new JButton(new ViewAllCashFlowAction());
+        viewAllCashFlowButton.setPreferredSize(new Dimension(20, 150));
+
+        JButton viewMonthlyCashFlowButton = new JButton(new ViewMonthlyCashFlowAction());
+        viewMonthlyCashFlowButton.setPreferredSize(new Dimension(20, 150));
+
+        JButton backCashFlowMenuButton = new JButton(new BackCashFlowMenuAction());
+        backCashFlowMenuButton.setPreferredSize(new Dimension(20, 150));
+
+        JButton quitButton = new JButton(new QuitAction());
+        quitButton.setPreferredSize(new Dimension(20, 150));
+
+        viewMoneyTrackerMenu.add(viewAllCashFlowButton);
+        viewMoneyTrackerMenu.add(viewMonthlyCashFlowButton);
+        viewMoneyTrackerMenu.add(backCashFlowMenuButton);
+        viewMoneyTrackerMenu.add(quitButton);
+
+        window.add(viewMoneyTrackerMenu, BorderLayout.SOUTH);
+
+        fixWindow();
+    }
+
+    // EFFECTS: initializes the view monthly tracker menu
+    public void initViewMonthlyMoneyTracker() {
+        viewMonthlyMoneyTracker.setLayout(new GridLayout(2, 2));
+
+        JButton viewAllCashFlowButton = new JButton(new ViewAllCashFlowAction());
+        viewAllCashFlowButton.setPreferredSize(new Dimension(20, 150));
+
+        viewMonthlyCashFlowForm.setPreferredSize(new Dimension(20, 150));
+
+        JButton backCashFlowMenuButton = new JButton(new BackCashFlowMenuAction());
+        backCashFlowMenuButton.setPreferredSize(new Dimension(20, 150));
+
+        JButton quitButton = new JButton(new QuitAction());
+        quitButton.setPreferredSize(new Dimension(20, 150));
+
+        viewMonthlyMoneyTracker.add(viewAllCashFlowButton);
+        viewMonthlyMoneyTracker.add(viewMonthlyCashFlowForm);
+        viewMonthlyMoneyTracker.add(backCashFlowMenuButton);
+        viewMonthlyMoneyTracker.add(quitButton);
+
+        window.add(viewMonthlyMoneyTracker, BorderLayout.SOUTH);
+        
+        fixWindow();
+    }
+
+    // EFFECTS: initializes the view monthly tracker form
+    public void initViewMonthlyMoneyTrackerForm() {
+        viewMonthlyCashFlowForm.setLayout(new GridLayout(3, 2));
+
+        JLabel monthLabel = new JLabel("Month");
+        monthLabel.setPreferredSize(new Dimension(20, 150));
+
+        JTextField monthTextField = new JTextField();
+        monthTextField.setPreferredSize(new Dimension(20, 150));
+
+        JLabel yearLabel = new JLabel("Year");
+        yearLabel.setPreferredSize(new Dimension(20, 150));
+
+        JTextField yearTextField = new JTextField();
+        yearTextField.setPreferredSize(new Dimension(20, 150));
+
+        JButton displayMonthlyCashFlowButton = new JButton(new DisplayMonthlyCashFlowAction());
+        displayMonthlyCashFlowButton.setPreferredSize(new Dimension(20, 150));
+
+        viewMonthlyCashFlowForm.add(monthLabel);
+        viewMonthlyCashFlowForm.add(yearLabel);
+        viewMonthlyCashFlowForm.add(monthTextField);
+        viewMonthlyCashFlowForm.add(yearTextField);
+        viewMonthlyCashFlowForm.add(displayMonthlyCashFlowButton);
+
+        captureMonth(displayMonthlyCashFlowButton, monthTextField);
+        captureYear(displayMonthlyCashFlowButton, yearTextField);
     }
 
     // EFFECTS: runs an interactive menu with options to load data from file or not
@@ -939,7 +1086,6 @@ public class MoneyTrackerApp extends JFrame {
         public void actionPerformed(ActionEvent e) {
             setAllMenuInvinsible();
             addStatusMoneyTrackerForm.setVisible(true);
-            // TODO
         }
     }
 
@@ -953,7 +1099,112 @@ public class MoneyTrackerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO
+            setAllInvinsible();
+            viewMoneyTrackerMenu.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class with the action to show all cash flows
+     */
+    private class ViewAllCashFlowAction extends AbstractAction {
+        ViewAllCashFlowAction() {
+            super("View all cash flow");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            cashflowsPanel.setVisible(false);
+            cashflowsPanel = new ImagePanel();
+            cashflowsPanel.setLayout(new BoxLayout(cashflowsPanel, BoxLayout.Y_AXIS));
+            cashflowsPanel.initImagePanel(imagePanelWidth, imagePanelHeight);
+            cashflowsPanel.setBackground(Color.LIGHT_GRAY);
+
+            JPanel listPanel = new JPanel();
+
+            JLabel cashflows = new JLabel(displayCashFlow(moneySummary.getCashflows()));
+            listPanel.add(cashflows);
+
+            cashflowsPanel.add(listPanel);
+
+            window.add(cashflowsPanel, BorderLayout.NORTH);
+
+            ip.setVisible(false);
+
+            JScrollPane scrollCashFlow = new JScrollPane(listPanel);
+            scrollCashFlow.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            scrollCashFlow.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+            cashflowsPanel.add(scrollCashFlow, BorderLayout.CENTER);
+
+        }
+    }
+
+    /*
+     * Represents a class with the action to open column to show monthly cash flow
+     */
+    private class ViewMonthlyCashFlowAction extends AbstractAction {
+        ViewMonthlyCashFlowAction() {
+            super("View monthly cash flow");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            viewMoneyTrackerMenu.setVisible(false);
+            viewMonthlyMoneyTracker.setVisible(true);
+            viewMonthlyCashFlowForm.setVisible(true);
+        }
+    }
+
+    /*
+     * Represents a class with the action to display cashflow based on month and year
+     */
+    private class DisplayMonthlyCashFlowAction extends AbstractAction {
+        DisplayMonthlyCashFlowAction() {
+            super("View");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            cashflowsPanel.setVisible(false);
+            cashflowsPanel = new ImagePanel();
+            cashflowsPanel.setLayout(new BoxLayout(cashflowsPanel, BoxLayout.Y_AXIS));
+            cashflowsPanel.initImagePanel(imagePanelWidth, imagePanelHeight);
+            cashflowsPanel.setBackground(Color.LIGHT_GRAY);
+
+            JPanel listPanel = new JPanel();
+
+            JLabel cashflows = new JLabel(displayMonthlyCashFlow(capturedYear, capturedMonth));
+            listPanel.add(cashflows);
+
+            cashflowsPanel.add(listPanel);
+
+            window.add(cashflowsPanel, BorderLayout.NORTH);
+
+            ip.setVisible(false);
+
+            JScrollPane scrollCashFlow = new JScrollPane(listPanel);
+            scrollCashFlow.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            scrollCashFlow.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+            cashflowsPanel.add(scrollCashFlow, BorderLayout.CENTER);
+        }
+    }
+
+    /*
+     * Represents a class with the action to return to money tracker menu
+     */
+    private class BackCashFlowMenuAction extends AbstractAction {
+        BackCashFlowMenuAction() {
+            super("Back to money tracker menu");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            cashflowsPanel.setVisible(false);
+            ip.setVisible(true);
+            moneyTrackerMenu.setVisible(true);
         }
     }
 
@@ -1294,15 +1545,16 @@ public class MoneyTrackerApp extends JFrame {
     /*
      * Represents a class with the action to direct to add amount section in cash flow form
      */
-    private class continueToAddCashFlow extends AbstractAction {
-        continueToAddCashFlow() {
+    private class ContinueToAddCashFlowAction extends AbstractAction {
+        ContinueToAddCashFlowAction() {
             super("Add cashflow");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
             setAllInvinsible();
-            CashFlow cf = new CashFlow(capturedStatus, capturedAccount, capturedCategory, capturedDate, capturedTime, capturedDescription, capturedAmount);
+            CashFlow cf = new CashFlow(capturedStatus, capturedAccount, capturedCategory, capturedDate, capturedTime,
+                    capturedDescription, capturedAmount);
             moneySummary.addCashFlow(cf);
             moneyTrackerMenu.setVisible(true);
         }
@@ -2211,6 +2463,11 @@ public class MoneyTrackerApp extends JFrame {
         System.out.println("Please type the month");
         String month = this.scanner.nextLine();
         System.out.println();
+        displayMonthlyCashFlow(year, month);
+    }
+
+    // EFFECTS: helper method to display monthly cashflow
+    private String displayMonthlyCashFlow(String year, String month) {
         if (isValidYear(year) && isValidMonth(month)) {
             List<CashFlow> cashflows = this.moneySummary.getCashflows();
             List<CashFlow> filtered = new ArrayList<>();
@@ -2222,11 +2479,11 @@ public class MoneyTrackerApp extends JFrame {
                 }
             }
 
-            displayCashFlow(filtered);
+            return displayCashFlow(filtered);
         } else {
             viewMonthlyCashFlow();
         }
-
+        return  "";
     }
 
     // EFFECTS: returns true if it is a valid year
@@ -2244,18 +2501,29 @@ public class MoneyTrackerApp extends JFrame {
     }
 
     // EFFECTS: displays selected cash flows
-    public void displayCashFlow(List<CashFlow> cashFlowList) {
+    public String displayCashFlow(List<CashFlow> cashFlowList) {
+        StringBuilder sb1 = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
+        sb1.append("<html>");
         for (int i = 0; i < cashFlowList.size(); i++) {
             CashFlow cf = cashFlowList.get(i);
-            System.out.println(Integer.toString(i + 1) + ".");
-            System.out.println("Status: " + cf.getStatus());
-            System.out.println("Account: " + cf.getAccount());
-            System.out.println("Category: " + cf.getCategory());
-            System.out.println("Date: " + cf.getDate());
-            System.out.println("Time: " + cf.getTime());
-            System.out.println("Description: " + cf.getDescription());
-            System.out.println("Amount: " + cf.getAmount());
+            sb1.append(Integer.toString(i + 1) + "<br>" + "Status: " + cf.getStatus() + "<br>");
+            sb1.append("Account: " + cf.getAccount() + "<br>" + "Category: " + cf.getCategory() + "<br>");
+            sb1.append("Date: " + cf.getDate() + "<br>");
+            sb1.append("Time: " + cf.getTime() + "<br>");
+            sb1.append("Description: " + cf.getDescription() + "<br>");
+            sb1.append("Amount: " + cf.getAmount() + "<br>");
+
+            sb2.append(Integer.toString(i + 1) + ".\n" + "Status: " + cf.getStatus() + "\n");
+            sb2.append("Account: " + cf.getAccount() + "\n" + "Category: " + cf.getCategory() + "\n");
+            sb2.append("Date: " + cf.getDate() + "\n");
+            sb2.append("Time: " + cf.getTime() + "\n");
+            sb2.append("Description: " + cf.getDescription() + "\n");
+            sb2.append("Amount: " + cf.getAmount() + "\n");
         }
+        sb1.append("</html>");
+        System.out.println(sb2.toString());
+        return sb1.toString();
     }
 
     // EFFECTS: runs an interactive categories menu that allows user to navigate

@@ -19,13 +19,33 @@
         "Salary",
         "Sport"
     ],
-    "cashflows": [{
-        "date": "2004/11/11",
-        "amount": 4000,
-        "description": "Tuition Fee",
-        "time": "14:00",
-        "category": "Education",
-        "account": "RBC",
-        "status": "credit"
-    }]
+    "cashflows": [
+        {
+            "date": "2004/11/11",
+            "amount": 4000,
+            "description": "Tuition Fee",
+            "time": "14:00",
+            "category": "Education",
+            "account": "RBC",
+            "status": "credit"
+        },
+        {
+            "date": "2024/11/02",
+            "amount": 4000,
+            "description": "Hello world",
+            "time": "14:00",
+            "category": "Education",
+            "account": "RBC",
+            "status": "credit"
+        },
+        {
+            "date": "2023/12/12",
+            "amount": 2450,
+            "description": "Hello there",
+            "time": "12:25",
+            "category": "Grocery",
+            "account": "RBC",
+            "status": "debit"
+        }
+    ]
 }
