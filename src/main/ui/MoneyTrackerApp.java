@@ -109,6 +109,7 @@ public class MoneyTrackerApp extends JFrame {
     private JPanel deleteAccount = new JPanel();
     private JPanel viewListOfAccounts = new JPanel();
     private JPanel viewAnAccountBalance = new JPanel();
+    private JPanel showAnAccountBalance = new JPanel();
 
     private Font labelFont = new Font("Arial", Font.PLAIN, 24);
     private Font infoFont = new Font("Arial", Font.PLAIN, 12);
@@ -331,6 +332,7 @@ public class MoneyTrackerApp extends JFrame {
         deleteAccount.setVisible(false);
         viewListOfAccounts.setVisible(false);
         viewAnAccountBalance.setVisible(false);
+        showAnAccountBalance.setVisible(false);
     }
 
     // EFFECTS: sets the image panel to display the logo
@@ -893,6 +895,70 @@ public class MoneyTrackerApp extends JFrame {
         viewListOfAccounts.add(buttonPanel);
 
         window.add(viewListOfAccounts, BorderLayout.SOUTH);
+    }
+
+    // EFFECTS: initializes the column to view an account balance
+    public void initViewAnAccountBalance() {
+        viewAnAccountBalance = new JPanel();
+        setCashFlowFormLayoutAndSize(viewAnAccountBalance);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter an existing account");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel(viewAccounts());
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField accountTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        accountTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton viewBalanceButton = new JButton(new ShowBalanceAction());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, accountTextField, buttonPanel,
+                viewBalanceButton);
+
+        addAllPanelCashFlowForm(viewAnAccountBalance, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(viewAnAccountBalance, BorderLayout.SOUTH);
+
+        captureAccount(viewBalanceButton, accountTextField);
+    }
+
+    // EFFECTS: initializes the show balance panel
+    public void initShowAnAccountBalance() {
+        showAnAccountBalance = new JPanel();
+        setCashFlowFormLayoutAndSize(showAnAccountBalance);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel(capturedAccount);
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel(String.valueOf(calculateBalance(capturedAccount)));
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel buttonPanel = new JPanel();
+        JButton backToAccountMenuButton = new JButton(new BackAccountMenu());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        labelPanel.add(label);
+        infoPanel.add(infoLabel);
+        buttonPanel.add(backToAccountMenuButton);
+
+        showAnAccountBalance.add(labelPanel);
+        showAnAccountBalance.add(infoPanel);
+        showAnAccountBalance.add(buttonPanel);
+
+        window.add(showAnAccountBalance, BorderLayout.SOUTH);
     }
 
     // EFFECTS: initializes add money tracker form
@@ -3431,6 +3497,23 @@ public class MoneyTrackerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            initViewAnAccountBalance();
+        }
+    }
+
+    /*
+     * Represents a class with the action to view an account balance
+     */
+    private class ShowBalanceAction extends AbstractAction {
+        ShowBalanceAction() {
+            super("View an account balance");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            initShowAnAccountBalance();
         }
     }
 
