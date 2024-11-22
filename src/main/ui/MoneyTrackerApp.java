@@ -797,6 +797,104 @@ public class MoneyTrackerApp extends JFrame {
         fixWindow();
     }
 
+    // EFFECTS: initializes the add account form
+    public void initAddAccount() {
+        addAccount = new JPanel();
+        setCashFlowFormLayoutAndSize(addAccount);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter new account");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel(viewAccounts());
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField accountTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        accountTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton addAccountButton = new JButton(new AddAccount());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, accountTextField, buttonPanel,
+                addAccountButton);
+
+        addAllPanelCashFlowForm(addAccount, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(addAccount, BorderLayout.SOUTH);
+
+        captureAccount(addAccountButton, accountTextField);
+    }
+
+    // EFFECTS: initializes the delete account form
+    public void initDeleteAccount() {
+        deleteAccount = new JPanel();
+        setCashFlowFormLayoutAndSize(deleteAccount);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("Enter an existing account");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel(viewAccounts());
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel fieldPanel = new JPanel();
+        JTextField accountTextField = new JTextField(20);
+        fieldPanel.setPreferredSize(new Dimension(20, 200));
+        accountTextField.setPreferredSize(new Dimension(20, 50));
+
+        JPanel buttonPanel = new JPanel();
+        JButton deleteAccountButton = new JButton(new DeleteAccount());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        addAllComponentToItsPanel(labelPanel, label, infoPanel, infoLabel, fieldPanel, accountTextField, buttonPanel,
+                deleteAccountButton);
+
+        addAllPanelCashFlowForm(deleteAccount, labelPanel, infoPanel, fieldPanel, buttonPanel);
+
+        window.add(deleteAccount, BorderLayout.SOUTH);
+
+        captureAccount(deleteAccountButton, accountTextField);
+    }
+
+    // EFFECTS: initializes the view all accounts form
+    public void initViewListOfAccounts() {
+        viewListOfAccounts = new JPanel();
+        setCashFlowFormLayoutAndSize(viewListOfAccounts);
+        
+        JPanel labelPanel = new JPanel();
+        JLabel label = new JLabel("List of all accounts");
+        labelPanel.setPreferredSize(new Dimension(20, 40));
+
+        JPanel infoPanel = new JPanel();
+        JLabel infoLabel = new JLabel(viewAccounts());
+        infoPanel.setPreferredSize(new Dimension(20, 40));
+
+        setCashFlowFormLabelAndInfoFont(label, infoLabel);
+
+        JPanel buttonPanel = new JPanel();
+        JButton backToAccountMenuButton = new JButton(new BackAccountMenu());
+        buttonPanel.setPreferredSize(new Dimension(20, 50));
+
+        labelPanel.add(label);
+        infoPanel.add(infoLabel);
+        buttonPanel.add(backToAccountMenuButton);
+
+        viewListOfAccounts.add(labelPanel);
+        viewListOfAccounts.add(infoPanel);
+        viewListOfAccounts.add(buttonPanel);
+
+        window.add(viewListOfAccounts, BorderLayout.SOUTH);
+    }
+
     // EFFECTS: initializes add money tracker form
     public void initAddMoneyTrackerForm() {
         initAddStatusCashFlowColumn();
@@ -3232,7 +3330,7 @@ public class MoneyTrackerApp extends JFrame {
     }
 
     /*
-     * Represents a class with the action to add an account
+     * Represents a class with the action to open the form to add an account
      */
     private class AddAccountAction extends AbstractAction {
         AddAccountAction() {
@@ -3241,12 +3339,29 @@ public class MoneyTrackerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO
+            setAllInvinsible();
+            initAddAccount();
         }
     }
 
     /*
-     * Represents a class with the action to delete an account
+     * Represents a class with the action to add an account
+     */
+    private class AddAccount extends AbstractAction {
+        AddAccount() {
+            super("Add an account");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            accountMenu.setVisible(true);
+            moneySummary.addAccount(capturedAccount);
+        }
+    }
+
+    /*
+     * Represents a class with the action to open the form to delete an account
      */
     private class DeleteAccountAction extends AbstractAction {
         DeleteAccountAction() {
@@ -3255,7 +3370,24 @@ public class MoneyTrackerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO
+            setAllInvinsible();
+            initDeleteAccount();
+        }
+    }
+
+    /*
+     * Represents a class with the action to delete an account
+     */
+    private class DeleteAccount extends AbstractAction {
+        DeleteAccount() {
+            super("Delete an account");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            accountMenu.setVisible(true);
+            moneySummary.deleteAccount(capturedAccount);
         }
     }
 
@@ -3269,7 +3401,23 @@ public class MoneyTrackerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO
+            setAllInvinsible();
+            initViewListOfAccounts();
+        }
+    }
+    
+    /*
+     * Represents a class with the action to view list of all accounts
+     */
+    private class BackAccountMenu extends AbstractAction {
+        BackAccountMenu() {
+            super("Back to account menu");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setAllInvinsible();
+            accountMenu.setVisible(true);
         }
     }
 
@@ -3283,7 +3431,6 @@ public class MoneyTrackerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO
         }
     }
 
