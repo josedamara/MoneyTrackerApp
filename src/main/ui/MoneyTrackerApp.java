@@ -188,7 +188,6 @@ public class MoneyTrackerApp extends JFrame {
         initViewMonthlyMoneyTrackerForm();
         initRemoveMoneyTrackerMenu();
         initRemoveFindByStatus();
-        initRemoveFindByCategory();
         initRemoveFindByDate();
         initRemoveCashFlow();
     }
