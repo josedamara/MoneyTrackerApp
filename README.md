@@ -20,8 +20,9 @@ This project is based on my habit of tracking my cash flow using a digital appli
 
 # Instructions for End User
 
-- You can generate the first required action related to the user story "adding multiple Xs to a Y" by clicking the button labelled "Add a cash flow", located in the "Money Tracker menu"
-- You can generate the second required action related to the user story "adding multiple Xs to a Y" by clicking the button labelled "View cash flows" and then select "View month-specific cash flow", located in the "Money Tracker menu"
-- You can locate my visual component by clicking the button labelled "View cash flow graph", located in the "Money Tracker menu"
+- You can add a cash flow to the money summary by selecting the "Money Tracker menu" and clicking the button labelled "Add a new cash flow" and fill all component
+- You can generate the first required action related to the user story "adding multiple Xs to a Y" by clicking the button labelled "Edit a cash flow", located in the "Money Tracker menu", then choose to find by any component, fill in the column, and select which cash flow to be edited by typing the number
+- You can generate the second required action related to the user story "adding multiple Xs to a Y" by clicking the button labelled "View cash flows", located in the "Money Tracker menu", then choose view monthly cash flow, fill in the year and month to filter cash flow based on year and month
+- You can locate my visual component by starting the application and a logo will appear in the top panel
 - You can save the state of my application by clicking the button labelled "Save data", located in the "Save menu" or before closing my application
 - You can reload the state of my application by clicking the button labelled "Load data", located in the "Load menu" or after starting my application
