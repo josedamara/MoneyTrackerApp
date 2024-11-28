@@ -3,6 +3,8 @@ package model;
 import java.util.Calendar;
 import java.util.Date;
 
+// Referenced from the AlarmSystem application
+// https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git
 
 /**
  * Represents a money tracker event.

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+// Referenced from the AlarmSystem application
+// https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git
+
 /**
  * Represents a log of money tracker events.
  * We use the Singleton Design Pattern to ensure that there is only
