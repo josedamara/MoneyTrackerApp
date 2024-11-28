@@ -267,19 +267,19 @@ public class MoneySummary implements Writable {
 
     // EFFECTS: add some initial common debit categories
     public void addInitialDebitCategories() {
-        this.debitCategories.add("Cheque");
-        this.debitCategories.add("Parents");
+        this.debitCategories.add("Education");
+        this.debitCategories.add("Grocery");
+        this.debitCategories.add("Hobby");
         this.debitCategories.add("Other");
-        this.debitCategories.add("Salary");
         this.debitCategories.add("Sport");
     }
 
     // EFFECTS: add some initial common credit categories
     public void addInitialCreditCategories() {
-        this.creditCategories.add("Education");
-        this.creditCategories.add("Grocery");
-        this.creditCategories.add("Hobby");
+        this.creditCategories.add("Cheque");
+        this.creditCategories.add("Parents");
         this.creditCategories.add("Other");
+        this.creditCategories.add("Salary");
         this.creditCategories.add("Sport");
     }
 
