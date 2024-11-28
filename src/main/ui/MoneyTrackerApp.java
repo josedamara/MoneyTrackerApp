@@ -3132,7 +3132,7 @@ public class MoneyTrackerApp extends JFrame {
             setAllMenuInvinsible();
             removeMoneyTrackerMenu.setVisible(true);
             CashFlow chosenCashFlow = filteredCashFlows.get(capturedNumber - 1);
-            moneySummary.getCashflows().remove(chosenCashFlow);
+            moneySummary.deleteCashFlow(chosenCashFlow);
             cashflowsPanel.setVisible(false);
             ip.setVisible(true);
         }

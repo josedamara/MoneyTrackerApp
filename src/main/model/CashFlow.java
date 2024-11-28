@@ -40,12 +40,17 @@ public class CashFlow implements Writable {
     // EFFECTS: changes the status of the CashFlow object to credit
     public void setAsCredit() {
         this.status = "credit";
+        EventLog.getInstance().logEvent(new Event("The cashflow \"" + getDescription()
+                + "\" has been set as credit"));
+
     }
 
     // MODIFIES: this
     // EFFECTS: changes the status of the CashFlow object to debit
     public void setAsDebit() {
         this.status = "debit";
+        EventLog.getInstance().logEvent(new Event("The cashflow \"" + getDescription()
+                + "\" has been set as debit"));
     }
 
     // REQUIRES: inputted account must exist in the ListOfAccount
@@ -53,6 +58,8 @@ public class CashFlow implements Writable {
     // EFFECTS: changes the account of the CashFlow object to inputted account
     public void setAccount(String account) {
         this.account = account;
+        EventLog.getInstance().logEvent(new Event("The cashflow \"" + getDescription()
+                + "\" account has been set as " + account));
     }
 
     // REQUIRES: inputted category must exist in the ListOfCategory
@@ -61,6 +68,8 @@ public class CashFlow implements Writable {
     // category
     public void setCategory(String category) {
         this.category = category;
+        EventLog.getInstance().logEvent(new Event("The cashflow \"" + getDescription()
+                + "\" category has been set as " + category));
     }
 
     // REQUIRES: 1900 <= year <= 2100, 01 <= month <= 12, and date constraint
@@ -69,6 +78,8 @@ public class CashFlow implements Writable {
     // EFFECTS: changes the date of the CashFlow object to inputted date
     public void setDate(String date) {
         this.date = date;
+        EventLog.getInstance().logEvent(new Event("The cashflow \"" + getDescription()
+                + "\" date has been set to " + date));
     }
 
     // REQUIRES: 00 <= hour <= 23, 00 <= minutes <= 59
@@ -76,6 +87,8 @@ public class CashFlow implements Writable {
     // EFFECTS: changes the time of the CashFlow object to inputted time
     public void setTime(String time) {
         this.time = time;
+        EventLog.getInstance().logEvent(new Event("The cashflow \"" + getDescription()
+                + "\" time has been set to " + time));
     }
 
     // MODIFIES: this
@@ -83,6 +96,8 @@ public class CashFlow implements Writable {
     // description
     public void setDescription(String description) {
         this.description = description;
+        EventLog.getInstance().logEvent(new Event("The cashflow \"" + getDescription()
+                + "\" description has been set as \"" + description + "\""));
     }
 
     // MODIFIES: this
@@ -90,6 +105,8 @@ public class CashFlow implements Writable {
     // amount
     public void setAmount(double amount) {
         this.amount = amount;
+        EventLog.getInstance().logEvent(new Event("The cashflow \"" + getDescription()
+                + "\" amount has been set to " + amount));
     }
  
     // EFFECTS: returns the status of the CashFlow object

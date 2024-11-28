@@ -34,6 +34,8 @@ public class MoneySummary implements Writable {
     // EFFECTS: adds a CashFlow object to the cashflows
     public void addCashFlow(CashFlow cf) {
         this.cashflows.add(cf);
+        EventLog.getInstance().logEvent(new Event("A new cashflow \"" + cf.getDescription()
+                + "\" has been added to the MoneyTrackerApp"));
     }
 
     // REQUIRES: the specified CashFlow exists in the cashflows
@@ -41,6 +43,8 @@ public class MoneySummary implements Writable {
     // EFFECTS: deletes a CashFlow object from the cashflows
     public void deleteCashFlow(CashFlow cf) {
         this.cashflows.remove(cf);
+        EventLog.getInstance().logEvent(new Event("The cashflow \"" + cf.getDescription()
+                + "\" has been deleted from the MoneyTrackerApp"));
     }
 
     // REQUIRES: debitCategory must not exist in the debitCategories
