@@ -1,6 +1,8 @@
 package ui;
 
 import model.CashFlow;
+import model.Event;
+import model.EventLog;
 import model.MoneySummary;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -2312,6 +2314,7 @@ public class MoneyTrackerApp extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            printLog(EventLog.getInstance());
             System.exit(0);
         }
     }
@@ -5022,6 +5025,13 @@ public class MoneyTrackerApp extends JFrame {
         }
 
         return balance;
+    }
+
+    // prints the logged events to the console
+    public void printLog(EventLog el) {
+        for (Event next : el) {
+            System.out.println(next.toString() + "\n\n");
+        }
     }
 
     // MODIFIES: this
