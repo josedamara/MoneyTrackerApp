@@ -48,3 +48,6 @@ The cashflow "Monthly wage" account has been set as ScotiaBank
 Thu Nov 28 22:17:33 PST 2024
 The cashflow "Basketball" has been deleted from the MoneyTrackerApp
 
+# Phase 4: Task 3
+
+To improve my design, I would refactor the redundant codes inside my MoneyTrackerApp class which is shown by many duplicated codes to form many similar panel. I am thinking to refactor it and form a new class, similar to ImagePanel, and then create some fields with that class in MoneyTrackerApp.
