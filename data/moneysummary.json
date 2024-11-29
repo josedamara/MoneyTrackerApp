@@ -1,11 +1,10 @@
 {
     "creditCategories": [
-        "Education",
-        "Grocery",
-        "Hobby",
+        "Cheque",
+        "Parents",
         "Other",
-        "Sport",
-        "Food"
+        "Salary",
+        "Sport"
     ],
     "name": "My Money Summary",
     "accounts": [
@@ -13,39 +12,30 @@
         "ScotiaBank"
     ],
     "debitCategories": [
-        "Cheque",
-        "Parents",
+        "Education",
+        "Grocery",
+        "Hobby",
         "Other",
-        "Salary",
         "Sport"
     ],
     "cashflows": [
         {
-            "date": "2004/11/11",
-            "amount": 4500,
-            "description": "Tuition Fee",
-            "time": "14:00",
-            "category": "Education",
-            "account": "RBC",
+            "date": "2024/11/30",
+            "amount": 2500,
+            "description": "Monthly wage",
+            "time": "12:00",
+            "category": "Salary",
+            "account": "ScotiaBank",
             "status": "credit"
         },
         {
-            "date": "2023/12/12",
-            "amount": 2450,
-            "description": "Hello there",
-            "time": "12:25",
-            "category": "Grocery",
+            "date": "2024/12/01",
+            "amount": 1400,
+            "description": "Monthly rent",
+            "time": "10:00",
+            "category": "Other",
             "account": "RBC",
             "status": "debit"
-        },
-        {
-            "date": "2024/11/02",
-            "amount": 4000,
-            "description": "Hello world",
-            "time": "14:00",
-            "category": "Education",
-            "account": "RBC",
-            "status": "credit"
         }
     ]
 }

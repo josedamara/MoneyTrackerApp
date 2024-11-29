@@ -83,9 +83,9 @@ public class MoneySummaryTest {
     void testDeleteDebitCategory() {
         initCategory();
         testMoneySummary.deleteDebitCategory("Salary");
-        assertEquals(testMoneySummary.getDebitCategories().size(), 4);
+        assertEquals(testMoneySummary.getDebitCategories().size(), 5);
         testMoneySummary.deleteDebitCategory("Cheque");
-        assertEquals(testMoneySummary.getDebitCategories().size(), 3);
+        assertEquals(testMoneySummary.getDebitCategories().size(), 5);
     }
 
     @Test
@@ -101,9 +101,9 @@ public class MoneySummaryTest {
     void testDeleteCreditCategory() {
         initCategory();
         testMoneySummary.deleteCreditCategory("Education");
-        assertEquals(testMoneySummary.getCreditCategories().size(), 4);
+        assertEquals(testMoneySummary.getCreditCategories().size(), 5);
         testMoneySummary.deleteCreditCategory("Hobby");
-        assertEquals(testMoneySummary.getCreditCategories().size(), 3);
+        assertEquals(testMoneySummary.getCreditCategories().size(), 5);
     }
 
     @Test

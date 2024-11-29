@@ -466,11 +466,11 @@ public class MoneyTrackerApp extends JFrame {
         saveMenuBeforeQuit.setLayout(new GridLayout(1, 2));
 
         JButton saveButton = new JButton(new SaveDataAction());
-        saveButton.addActionListener(new Quit());
+        saveButton.addActionListener(new SaveAndQuit());
         saveButton.setPreferredSize(new Dimension(20, 300));
 
         JButton notSaveButton = new JButton(new NotSaveDataAction());
-        notSaveButton.addActionListener(new Quit());
+        notSaveButton.addActionListener(new NotSaveAndQuit());
         notSaveButton.setPreferredSize(new Dimension(20, 300));
 
         saveMenuBeforeQuit.add(saveButton);
@@ -1186,8 +1186,6 @@ public class MoneyTrackerApp extends JFrame {
         addAllPanelCashFlowForm(addAccountMoneyTrackerForm, labelPanel, infoPanel, fieldPanel, buttonPanel);
 
         window.add(addAccountMoneyTrackerForm, BorderLayout.SOUTH);
-
-        fixWindow();
         
         captureAccount(continueToAddCategoryButton, accountTextField);
     }
@@ -1202,7 +1200,7 @@ public class MoneyTrackerApp extends JFrame {
         labelPanel.setPreferredSize(new Dimension(20, 40));
 
         JPanel infoPanel = new JPanel();
-        JLabel infoLabel = new JLabel(capturedStatus == "debit" ? viewDebitCategory() : viewCreditCategory());
+        JLabel infoLabel = new JLabel(capturedStatus.equals("debit") ? viewDebitCategory() : viewCreditCategory());
         infoPanel.setPreferredSize(new Dimension(20, 40));
 
         setCashFlowFormLabelAndInfoFont(label, infoLabel);
@@ -1222,8 +1220,6 @@ public class MoneyTrackerApp extends JFrame {
         addAllPanelCashFlowForm(addCategoryMoneyTrackerForm, labelPanel, infoPanel, fieldPanel, buttonPanel);
 
         window.add(addCategoryMoneyTrackerForm, BorderLayout.SOUTH);
-
-        fixWindow();
 
         captureCategory(continueToAddDateButton, categoryTextField);
     }
@@ -1550,8 +1546,8 @@ public class MoneyTrackerApp extends JFrame {
 
         window.add(editFindByAccount, BorderLayout.SOUTH);
 
-        fixWindow();
-        
+        editFindByAccount.repaint();
+
         captureAccount(findByAccountButton, accountTextField);
     }
 
@@ -1587,7 +1583,7 @@ public class MoneyTrackerApp extends JFrame {
 
         window.add(editFindByCategory, BorderLayout.SOUTH);
 
-        fixWindow();
+        window.repaint();
 
         captureCategory(findByCategoryButton, categoryTextField);
     }
@@ -2306,10 +2302,27 @@ public class MoneyTrackerApp extends JFrame {
     }
 
     /*
-     * Represents a class with the action to exit MoneyTrackerApp
+     * Represents a class with the action to save and exit MoneyTrackerApp
      */
-    private class Quit extends AbstractAction {
-        Quit() {
+    private class SaveAndQuit extends AbstractAction {
+        SaveAndQuit() {
+            super("Save data");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            saveData();
+            printLog(EventLog.getInstance());
+            System.exit(0);
+        }
+    }
+    
+    /*
+     * Represents a class with the action to not save and exit MoneyTrackerApp
+     */
+    private class NotSaveAndQuit extends AbstractAction {
+        NotSaveAndQuit() {
+            super("Do not save data");
         }
 
         @Override
@@ -2526,8 +2539,8 @@ public class MoneyTrackerApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             setAllInvinsible();
-            editFindByAccount.setVisible(true);
             initEditFindByAccount();
+            editFindByAccount.setVisible(true);
         }
     }
 
@@ -2542,8 +2555,8 @@ public class MoneyTrackerApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             setAllInvinsible();
-            editFindByCategory.setVisible(true);
             initEditFindByCategory();
+            editFindByCategory.setVisible(true);
         }
     }
 
@@ -3532,6 +3545,7 @@ public class MoneyTrackerApp extends JFrame {
         public void actionPerformed(ActionEvent e) {
             setAllInvinsible();
             initAddAccountCashFlowColumn();
+            addAccountMoneyTrackerForm.setVisible(true);
         }
     }
 
@@ -3547,6 +3561,7 @@ public class MoneyTrackerApp extends JFrame {
         public void actionPerformed(ActionEvent e) {
             setAllInvinsible();
             initAddCategoryCashFlowColumn();
+            addCategoryMoneyTrackerForm.setVisible(true);
         }
     }
 
@@ -3874,7 +3889,6 @@ public class MoneyTrackerApp extends JFrame {
                 accountList += "\n";
             }
         }
-        System.out.println(accountList);
         return accountList;
     }
 
@@ -4163,7 +4177,7 @@ public class MoneyTrackerApp extends JFrame {
     // EFFECTS: helper method to pick a CashFlow
     public CashFlow pickCashFlow(List<CashFlow> newCashFlowList) {
         spaceSeparator();
-        displayCashFlow(newCashFlowList);
+        printCashFlow(newCashFlowList);
         System.out.println("Please specify the number of the cash flow \n");
         int index = this.scanner.nextInt();
         scanner.nextLine();
@@ -4237,20 +4251,25 @@ public class MoneyTrackerApp extends JFrame {
         spaceSeparator();
         System.out.println("Please specify the new status \n");
         String input = this.scanner.nextLine();
-        setStatus(cf, input);
-        editStatus(cf);
+        if (setStatus(cf, input)) {
+            System.out.println("\nThe cash flow has been edited");
+        } else {
+            editStatus(cf);
+        }
     }
 
     // MODIFIES: cf
     // EFFECTS: sets the inputted status to the selected cash flow
-    private void setStatus(CashFlow cf, String input) {
+    private boolean setStatus(CashFlow cf, String input) {
         if (input.equals("credit")) {
             cf.setAsCredit();
-            System.out.println("\nThe cash flow has been edited");
-        } else {
+            return true;
+        }
+        if (input.equals("debit")) {
             cf.setAsDebit();
-            System.out.println("\nThe cash flow has been edited");
-        } 
+            return true;
+        }
+        return false;
     }
 
     // MODIFIES: cf
@@ -4260,17 +4279,21 @@ public class MoneyTrackerApp extends JFrame {
         System.out.println("Please specify the new account");
         displayAccountList();
         String account = this.scanner.nextLine();
-        setAccount(cf, account);
-        editAccount(cf);
+        if (setAccount(cf, account)) {
+            System.out.println("\nThe cash flow has been edited");
+        } else {
+            editAccount(cf);
+        }
     }
 
     // MODIFIES: cf
     // EFFECTS: sets the inputted account to the selected cash flow
-    private void setAccount(CashFlow cf, String input) {
+    private boolean setAccount(CashFlow cf, String input) {
         if (isValidAccount(input)) {
             cf.setAccount(input);
-            System.out.println("\nThe cash flow has been edited");
+            return true;
         } 
+        return false;
     }
     
     // MODIFIES: cf
@@ -4285,24 +4308,28 @@ public class MoneyTrackerApp extends JFrame {
         if (category.equals("q")) {
             System.exit(0);
         }
-        setCategory(cf, category, status);
-        editCategory(cf);
+        if (setCategory(cf, category, status)) {
+            System.out.println("\nThe cash flow has been edited");
+        } else {
+            editCategory(cf);
+        }
     }
 
     // MODIFIES: cf
     // EFFECTS: sets the inputted category to the selected cash flow
-    private void setCategory(CashFlow cf, String input, String status) {
+    private boolean setCategory(CashFlow cf, String input, String status) {
         if (status.equals("credit")) {
             if (isValidCreditCategory(input)) {
                 cf.setCategory(input);
-                System.out.println("\nThe cash flow has been edited");
+                return true;
             }
         } else if (status.equals("debit")) {
             if (isValidDebitCategory(input)) {
                 cf.setCategory(input);
-                System.out.println("\nThe cash flow has been edited");
+                return true;
             }
-        } 
+        }
+        return false;
     }
 
     // MODIFIES: cf
@@ -4311,18 +4338,22 @@ public class MoneyTrackerApp extends JFrame {
         spaceSeparator();
         System.out.println("Please specify the new date \n");
         String date = this.scanner.nextLine();
-        setDate(cf, date);
-        editDate(cf);
+        if (setDate(cf, date)) {
+            System.out.println("\nThe cash flow has been edited");
+        } else {
+            editDate(cf);
+        }
     }
 
     // MODIFIES: cf
     // EFFECTS: sets the inputted date to the selected cash flow
-    private void setDate(CashFlow cf, String input) {
+    private boolean setDate(CashFlow cf, String input) {
         String format = "yyyy/MM/dd";
         if (isValidDate(input, format)) {
             cf.setDate(input);
-            System.out.println("\nThe cash flow has been edited");
+            return true;
         }
+        return false;
     }
 
     // MODIFIES: cf
@@ -4331,17 +4362,21 @@ public class MoneyTrackerApp extends JFrame {
         spaceSeparator();
         System.out.println("Please specify the new time \n");
         String time = this.scanner.nextLine();
-        setTime(cf, time);
-        editTime(cf);
+        if (setTime(cf, time)) {
+            System.out.println("\nThe cash flow has been edited");
+        } else {
+            editTime(cf);
+        }
     }
 
     // MODIFIES: cf
     // EFFECTS: sets the inputted time to the selected cash flow
-    private void setTime(CashFlow cf, String input) {
+    private boolean setTime(CashFlow cf, String input) {
         if (isValidTime(input)) {
             cf.setTime(input);
-            System.out.println("\nThe cash flow has been edited");
+            return true;
         }
+        return false;
     }
 
     // MODIFIES: cf
@@ -4350,14 +4385,16 @@ public class MoneyTrackerApp extends JFrame {
         spaceSeparator();
         System.out.println("Please specify the new category \n");
         String description = this.scanner.nextLine();
-        setDescription(cf, description);
+        if (setDescription(cf, description)) {
+            System.out.println("\nThe cash flow has been edited");
+        }
     }
 
     // MODIFIES: cf
     // EFFECTS: sets the inputted description to the selected cash flow
-    private void setDescription(CashFlow cf, String input) {
+    private boolean setDescription(CashFlow cf, String input) {
         cf.setDescription(input);
-        System.out.println("\nThe cash flow has been edited");
+        return true;
     }
 
     // MODIFIES: cf
@@ -4580,7 +4617,7 @@ public class MoneyTrackerApp extends JFrame {
     // EFFECTS: displays all registered cash flows
     public void viewAllCashFlow() {
         spaceSeparator();
-        displayCashFlow(this.moneySummary.getCashflows());
+        printCashFlow(this.moneySummary.getCashflows());
     }
 
     // EFFECTS: displays cash flows based on specified year and month
@@ -4591,7 +4628,26 @@ public class MoneyTrackerApp extends JFrame {
         System.out.println("Please type the month");
         String month = this.scanner.nextLine();
         System.out.println();
-        displayMonthlyCashFlow(year, month);
+        printMonthlyCashFlow(year, month);
+    }
+
+    // EFFECTS: helper method to print monthly cashflow
+    private void printMonthlyCashFlow(String year, String month) {
+        if (isValidYear(year) && isValidMonth(month)) {
+            List<CashFlow> cashflows = this.moneySummary.getCashflows();
+            List<CashFlow> filtered = new ArrayList<>();
+        
+            for (int i = 0; i < cashflows.size(); i++) {
+                if (cashflows.get(i).getDate().substring(0,4).equals(year) 
+                        && cashflows.get(i).getDate().substring(5,7).equals(month)) {
+                    filtered.add(cashflows.get(i));
+                }
+            }
+
+            printCashFlow(filtered);
+        } else {
+            viewMonthlyCashFlow();
+        }
     }
 
     // EFFECTS: helper method to display monthly cashflow
@@ -4633,7 +4689,6 @@ public class MoneyTrackerApp extends JFrame {
         sortByTime();
         sortByDate();
         StringBuilder sb1 = new StringBuilder();
-        StringBuilder sb2 = new StringBuilder();
         sb1.append("<html>");
         for (int i = 0; i < cashFlowList.size(); i++) {
             CashFlow cf = cashFlowList.get(i);
@@ -4643,7 +4698,18 @@ public class MoneyTrackerApp extends JFrame {
             sb1.append("Time: " + cf.getTime() + "<br>");
             sb1.append("Description: " + cf.getDescription() + "<br>");
             sb1.append("Amount: " + cf.getAmount() + "<br>");
+        }
+        sb1.append("</html>");
+        return sb1.toString();
+    }
 
+    // EFFECTS: prints selected cash flows to the console
+    public void printCashFlow(List<CashFlow> cashFlowList) {
+        sortByTime();
+        sortByDate();
+        StringBuilder sb2 = new StringBuilder();
+        for (int i = 0; i < cashFlowList.size(); i++) {
+            CashFlow cf = cashFlowList.get(i);
             sb2.append(Integer.toString(i + 1) + ".\n" + "Status: " + cf.getStatus() + "\n");
             sb2.append("Account: " + cf.getAccount() + "\n" + "Category: " + cf.getCategory() + "\n");
             sb2.append("Date: " + cf.getDate() + "\n");
@@ -4651,9 +4717,7 @@ public class MoneyTrackerApp extends JFrame {
             sb2.append("Description: " + cf.getDescription() + "\n");
             sb2.append("Amount: " + cf.getAmount() + "\n");
         }
-        sb1.append("</html>");
         System.out.println(sb2.toString());
-        return sb1.toString();
     }
 
     // EFFECTS: runs an interactive categories menu that allows user to navigate
@@ -4727,7 +4791,7 @@ public class MoneyTrackerApp extends JFrame {
                 break;
             case "v":
                 spaceSeparator();
-                viewDebitCategory();
+                System.out.println(viewDebitCategory());
                 break;
             case "c":
                 handleCategoriesMenu();
@@ -4763,7 +4827,7 @@ public class MoneyTrackerApp extends JFrame {
     public void deleteInputtedDebitCategory() {
         spaceSeparator();
         System.out.println("Please type a debit category to be deleted");
-        viewDebitCategory();
+        System.out.println(viewDebitCategory());
         System.out.println("q: Quit the MoneyTracker application \n");
         String debitCategory = this.scanner.nextLine();
 
@@ -4787,7 +4851,6 @@ public class MoneyTrackerApp extends JFrame {
                 debitCategoryList += "\n";
             }
         }
-        System.out.println(debitCategoryList);
         return debitCategoryList;
     }
 
@@ -4822,7 +4885,7 @@ public class MoneyTrackerApp extends JFrame {
                 break;
             case "v":
                 spaceSeparator();
-                viewCreditCategory();
+                System.out.println(viewCreditCategory());
                 break;
             case "c":
                 handleCategoriesMenu();
@@ -4858,7 +4921,7 @@ public class MoneyTrackerApp extends JFrame {
     public void deleteInputtedCreditCategory() {
         spaceSeparator();
         System.out.println("Please type a credit category to be deleted");
-        viewCreditCategory();
+        System.out.println(viewCreditCategory());
         System.out.println("q: Quit the MoneyTracker application \n");
         String creditCategory = this.scanner.nextLine();
 
@@ -4882,7 +4945,6 @@ public class MoneyTrackerApp extends JFrame {
                 creditCategoryList += "\n";
             }
         }
-        System.out.println(creditCategoryList);
         return creditCategoryList;
     }
 
@@ -4917,7 +4979,7 @@ public class MoneyTrackerApp extends JFrame {
                 deleteInputtedAccount();
                 break;
             case "l":
-                viewAccounts();
+                showAccounts();
                 break;
             case "v":
                 viewBalance();
@@ -4957,7 +5019,7 @@ public class MoneyTrackerApp extends JFrame {
         if (isAccountNotEmpty()) {
             spaceSeparator();
             System.out.println("Please type a registered account to be deleted");
-            displayAccountList();
+            System.out.println(displayAccountList());
             System.out.println("q: Quit the MoneyTracker application \n");
             String account = this.scanner.nextLine();
 
@@ -4977,9 +5039,13 @@ public class MoneyTrackerApp extends JFrame {
     }
 
     // EFFECTS: displays all accounts in the accounts
-    public String viewAccounts() {
+    public void showAccounts() {
         spaceSeparator();
-        System.out.println("Registered accounts: \n");
+        System.out.println(viewAccounts());
+    }
+
+    // EFFECTS: displays all accounts in the accounts
+    public String viewAccounts() {
         return "Registered accounts: \n" + displayAccountList();
     }
 
@@ -5017,9 +5083,9 @@ public class MoneyTrackerApp extends JFrame {
             CashFlow cashflow = this.moneySummary.getCashflows().get(i);
             if (cashflow.getAccount().equals(account)) {
                 if (cashflow.getStatus().equals("debit")) {
-                    balance += cashflow.getAmount();
-                } else {
                     balance -= cashflow.getAmount();
+                } else {
+                    balance += cashflow.getAmount();
                 }
             }
         }

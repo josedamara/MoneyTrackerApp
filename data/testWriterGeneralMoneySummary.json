@@ -1,9 +1,9 @@
 {
     "creditCategories": [
-        "Education",
-        "Grocery",
-        "Hobby",
+        "Cheque",
+        "Parents",
         "Other",
+        "Salary",
         "Sport"
     ],
     "name": "My Money Summary",
@@ -12,10 +12,10 @@
         "RBC"
     ],
     "debitCategories": [
-        "Cheque",
-        "Parents",
+        "Education",
+        "Grocery",
+        "Hobby",
         "Other",
-        "Salary",
         "Sport"
     ],
     "cashflows": [
