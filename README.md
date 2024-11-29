@@ -26,3 +26,25 @@ This project is based on my habit of tracking my cash flow using a digital appli
 - You can locate my visual component by starting the application and a logo will appear in the top panel
 - You can save the state of my application by clicking the button labelled "Save data", located in the "Save menu" or before closing my application
 - You can reload the state of my application by clicking the button labelled "Load data", located in the "Load menu" or after starting my application
+
+# Phase 4: Task 2
+
+Thu Nov 28 22:15:26 PST 2024
+A new cashflow "Monthly wage" has been added to the MoneyTrackerApp
+
+
+Thu Nov 28 22:16:04 PST 2024
+A new cashflow "Monthly rent" has been added to the MoneyTrackerApp
+
+
+Thu Nov 28 22:16:49 PST 2024
+A new cashflow "Basketball" has been added to the MoneyTrackerApp
+
+
+Thu Nov 28 22:17:21 PST 2024
+The cashflow "Monthly wage" account has been set as ScotiaBank
+
+
+Thu Nov 28 22:17:33 PST 2024
+The cashflow "Basketball" has been deleted from the MoneyTrackerApp
+
