@@ -5093,7 +5093,7 @@ public class MoneyTrackerApp extends JFrame {
         return balance;
     }
 
-    // prints the logged events to the console
+    // EFFECTS: prints the logged events to the console
     public void printLog(EventLog el) {
         for (Event next : el) {
             System.out.println(next.toString() + "\n\n");
